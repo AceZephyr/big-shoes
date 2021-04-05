@@ -26,7 +26,7 @@ BOTTOM_OFFSET = 18
 
 START_STEP = Step(0, 0)
 
-STEP_PER_GRIDLINE = 1
+STEP_PER_GRIDLINE = 2
 
 X_GRIDLINE_WIDTH = 12
 
@@ -154,13 +154,19 @@ def main():
         # battle checks
         x = LEFT_OFFSET + X_GRIDLINE_WIDTH
         step = copy.copy(START_STEP)
+        step.advance_steps(1)
         while x < surface.get_width():
             step_data = steplogic.encounter_at_step(step)
             if step_data[0] < TOP_DANGER:
                 y = y_coordinate_by_danger(surface, step_data[0])
-                pygame.draw.line(surface, BATTLE_CHECK_COLOR, (x, 0), (x, y), 3)
+                color = BATTLE_CHECK_PREEMPTIVE_COLOR if step_data[1] else BATTLE_CHECK_COLOR
+                pygame.draw.line(surface, color, (x, 0), (x, y), 3)
             x += (X_GRIDLINE_WIDTH // STEP_PER_GRIDLINE)
             step.advance_steps(1)
+
+        # offset text
+        txt = font.render(str(START_STEP.offset), False, (255, 255, 255))
+        surface.blit(txt, (2, surface.get_height() - txt.get_height() - 2))
 
         # bottom border
         pygame.draw.line(surface, BORDER_LINE_COLOR, (LEFT_OFFSET, surface.get_height() - BOTTOM_OFFSET),

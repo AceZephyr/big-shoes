@@ -9,8 +9,10 @@ def get_preempt_rate(preempt_equipped: int, preempt_stars: int):
 def encounter_at_step(step: Step, preempt_rate: int = 16):
     step = copy.copy(step)
     danger_threshold = (((RNG[step.stepid] - step.offset) % 256) + 1) * 256
-    step.advance_steps(-1)
-    preempt_threhsold = ((RNG[step.stepid] - step.offset) % 256)
+    # step.advance_steps(-1)
+    # if step.stepid == 2:
+    #     breakpoint()
+    preempt_threhsold = ((RNG[step.stepid - 1] - step.offset) % 256)
     preempt = preempt_threhsold < max(16, min(128, preempt_rate))
     return danger_threshold, preempt, preempt_threhsold
 
