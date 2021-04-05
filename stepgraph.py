@@ -4,6 +4,10 @@ import pygame
 import copy
 import steplogic
 
+CTRL = pygame.K_LCTRL | pygame.K_RCTRL
+
+SHIFT = pygame.K_LSHIFT | pygame.K_RSHIFT
+
 FLAGS = pygame.RESIZABLE
 
 DEFAULT_SIZE = (1500, 400)
@@ -14,21 +18,25 @@ BACKGROUND_COLOR = (0, 0, 0)
 
 GRAPH_BACKGROUND_COLOR_1 = (0, 0, 0)
 
-GRAPH_BACKGROUND_COLOR_2 = (10, 10, 10)
+GRAPH_BACKGROUND_COLOR_2 = (16, 16, 16)
 
 BORDER_LINE_COLOR = (255, 255, 255)
 
-GRIDLINE_COLOR = (30, 30, 30)
+GRIDLINE_COLOR = (32, 32, 32)
+
+GRAPH_LABEL_COLOR = (255, 255, 255)
 
 BATTLE_CHECK_COLOR = (0, 128, 128)
 
 BATTLE_CHECK_PREEMPTIVE_COLOR = (196, 0, 196)
 
+BATTLE_CHECK_SELECTED_OUTLINE_COLOR = (196, 196, 0)
+
 LEFT_OFFSET = 36
 
 BOTTOM_OFFSET = 18
 
-START_STEP = Step(1, 0)
+START_STEP = Step(0, 0)
 
 STEP_PER_GRIDLINE = 2
 
@@ -77,8 +85,9 @@ def step_nearest_x_coordinate(x: int):
     return step
 
 
-def x_coordinate_by_step(surface, step: Step):
-    return
+def x_coordinate_by_step(step: Step):
+    pixel_dist_from_left = START_STEP.distance_to_step(step) * (X_GRIDLINE_WIDTH // STEP_PER_GRIDLINE)
+    return pixel_dist_from_left + LEFT_OFFSET
 
 
 def graph_height(surface):
@@ -95,7 +104,12 @@ def danger_by_y_coordinate(surface, y: int):
     return (TOP_DANGER * (g_height - y)) // g_height
 
 
+running = True
+
+
 def main():
+    global SELECTED_STEP, running
+
     pygame.init()
     pygame.display.set_caption("Big Shoes")
 
@@ -106,8 +120,6 @@ def main():
     font = pygame.font.SysFont(FONT, 16)
 
     clock = pygame.time.Clock()
-
-    running = True
 
     update = True
 
@@ -121,21 +133,39 @@ def main():
                 update = True
                 surface = pygame.display.set_mode((event.w, event.h), FLAGS)
 
+            elif event.type == pygame.KEYDOWN:
+                if SELECTED_STEP is not None:
+                    if event.key == pygame.K_ESCAPE:
+                        update = True
+                        SELECTED_STEP = None
+                    elif event.key == pygame.K_RIGHT:
+                        update = True
+                        SELECTED_STEP.advance_steps(1)
+                        if (pygame.key.get_mods() & CTRL) != 0:
+                            while steplogic.encounter_at_step(SELECTED_STEP)[0] > TOP_DANGER:
+                                SELECTED_STEP.advance_steps(1)
+                    elif event.key == pygame.K_LEFT:
+                        update = True
+                        SELECTED_STEP.advance_steps(-1)
+                        if (pygame.key.get_mods() & CTRL) != 0:
+                            while steplogic.encounter_at_step(SELECTED_STEP)[0] > TOP_DANGER:
+                                SELECTED_STEP.advance_steps(-1)
+
             elif event.type == pygame.MOUSEWHEEL:
                 update = True
-                if (pygame.key.get_mods() & (pygame.K_LCTRL | pygame.K_RCTRL)) != 0:  # scroll in and out
+                if (pygame.key.get_mods() & CTRL) != 0:  # scroll in and out
                     scale_top_danger(-event.y)
-                elif (pygame.key.get_mods() & (pygame.K_LSHIFT | pygame.K_RSHIFT)) != 0:
+                elif (pygame.key.get_mods() & SHIFT) != 0:
                     scroll_starting_step_by(-event.y * HOLD_SHIFT_SCROLL_STEPS)
                 else:  # scroll left and right
                     scroll_starting_step_by(-event.y * DEFAULT_SCROLL_STEPS)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button in {1, 3}:
-                    step = step_nearest_x_coordinate(event.pos[0])
-                    if step is not None:
+                    selected_step = step_nearest_x_coordinate(event.pos[0])
+                    if selected_step is not None:
                         update = True
-                        SELECTED_STEP = step
+                        SELECTED_STEP = selected_step
 
 
             elif event.type == pygame.QUIT:
@@ -146,6 +176,18 @@ def main():
             # draw background
             surface.fill(BACKGROUND_COLOR)
 
+            # draw graph background
+            x = LEFT_OFFSET
+            step = copy.copy(START_STEP)
+            step.stepid %= 2
+            height = graph_height(surface)
+            while x <= surface.get_width():
+                step.advance_steps(128)
+                right_x = x_coordinate_by_step(step)
+                color = GRAPH_BACKGROUND_COLOR_1 if step.offset % 2 == 1 else GRAPH_BACKGROUND_COLOR_2
+                pygame.draw.rect(surface, color, ((x, 0), (right_x, height)))
+                x = right_x
+
             # gridlines
             x = LEFT_OFFSET
             gridline = 0
@@ -153,7 +195,7 @@ def main():
             while x < surface.get_width():
                 pygame.draw.line(surface, GRIDLINE_COLOR, (x, 0), (x, surface.get_height() - BOTTOM_OFFSET), 1)
                 if gridline % X_GRIDLINES_PER_TEXT == 0:
-                    txt = font.render(str(stepid), False, (255, 255, 255))
+                    txt = font.render(str(stepid), False, GRAPH_LABEL_COLOR)
                     surface.blit(txt, (x - (txt.get_width() // 2), surface.get_height() - BOTTOM_OFFSET + 4))
                 x += X_GRIDLINE_WIDTH
                 stepid = (stepid + (STEP_PER_GRIDLINE * 2)) % 256
@@ -162,7 +204,7 @@ def main():
             y = graph_height(surface)
             while y > 0:
                 pygame.draw.line(surface, GRIDLINE_COLOR, (LEFT_OFFSET, y), (surface.get_width(), y))
-                txt = font.render(str(danger_by_y_coordinate(surface, y)), False, (255, 255, 255))
+                txt = font.render(str(danger_by_y_coordinate(surface, y)), False, GRAPH_LABEL_COLOR)
                 surface.blit(txt, (LEFT_OFFSET - txt.get_width() - 4, y - txt.get_height() // 2))
                 y -= Y_GRIDLINE_HEIGHT
 
@@ -175,7 +217,10 @@ def main():
                 if step_data[0] < TOP_DANGER:
                     y = y_coordinate_by_danger(surface, step_data[0])
                     color = BATTLE_CHECK_PREEMPTIVE_COLOR if step_data[1] else BATTLE_CHECK_COLOR
+                    if SELECTED_STEP is not None and step == SELECTED_STEP:
+                        pygame.draw.line(surface, BATTLE_CHECK_SELECTED_OUTLINE_COLOR, (x, 0), (x, y + 1), 5)
                     pygame.draw.line(surface, color, (x, 0), (x, y), 3)
+
                 x += (X_GRIDLINE_WIDTH // STEP_PER_GRIDLINE)
                 step.advance_steps(1)
 
@@ -194,7 +239,3 @@ def main():
             pygame.display.update()
             update = False
         clock.tick(30)
-
-
-if __name__ == '__main__':
-    main()

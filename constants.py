@@ -92,14 +92,17 @@ class Step:
     def __str__(self):
         return "(" + str(self.stepid) + ", "  + str(self.offset) + ")"
 
+    def __eq__(self, other: "Step"):
+        return self.stepid == other.stepid and self.offset == other.offset
+
     def advance_steps(self, steps: int):
         new_stepid = self.stepid + (2 * steps)
         self.offset = OFFSET_TABLE[(INVERSE_OFFSET_TABLE[self.offset] + (new_stepid // 256)) % 256]
         self.stepid = new_stepid % 256
 
     def distance_to_step(self, other: "Step"):
-        return ((256 * (INVERSE_OFFSET_TABLE[other.offset] - INVERSE_OFFSET_TABLE[self.offset])) + (
-                other.stepid - self.stepid)) // 2
+        return (((256 * (INVERSE_OFFSET_TABLE[other.offset] - INVERSE_OFFSET_TABLE[self.offset])) + (
+                other.stepid - self.stepid)) // 2) % 32768
 
 
 FIELDS = dict()
