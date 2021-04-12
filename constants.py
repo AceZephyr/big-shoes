@@ -1,4 +1,5 @@
 import csv
+import math
 
 RNG = [177, 202, 238, 108, 90, 113, 46, 85, 214, 0, 204, 153, 144, 107, 125, 235, 79, 160, 7, 172, 223, 138, 86, 158,
        241, 154, 99, 117, 17, 145, 163, 184, 148, 115, 247, 84, 217, 110, 114, 192, 244, 128, 222, 185, 187, 141, 102,
@@ -63,46 +64,188 @@ class EncounterTable:
 
 
 class Field:
-    def __init__(self, fieldid: int, fieldname: str, table1: EncounterTable = None,
+    def __init__(self, field_id: int, field_name: str, table1: EncounterTable = None,
                  table2: EncounterTable = None):
-        self.fieldid = fieldid
-        self.fieldname = fieldname
+        self.field_id = field_id
+        self.field_name = field_name
         self.table1 = table1
         self.table2 = table2
 
     def __eq__(self, other: "Field"):
-        return self.table1 == other.table1 and ((self.table2 is None and other.table2 is None) or (
-                self.table2 is not None and other.table2 is not None) and self.table2 == other.table2)
+        return (self.field_id == other.field_id
+                and self.field_name == other.field_name
+                and self.table1 == other.table1
+                and (
+                        (self.table2 is None and other.table2 is None) or
+                        (self.table2 is not None and other.table2 is not None)
+                        and self.table2 == other.table2
+                )
+                )
 
+    def encounter_on_formation(self, formation: int, preempt_rate: int = 16, table: int = 0):
+        tbl = self.table1 if table == 1 or self.table2 is None else self.table2
 
-class State:
-    def __init__(self, field: Field, stepid: int, formation_value: int, offset: int, danger: int = 0):
-        self.field = field
-        self.stepid = stepid
-        self.formation_value = formation_value
-        self.offset = offset
-        self.danger = danger
+        comparison_value = 0
+
+        formation = (formation + 1) % 256
+        fm_rng = RNG[formation] // 4
+        # back attack 1
+        if preempt_rate < 128:
+            comparison_value += tbl.special[0].rate
+        else:
+            comparison_value += tbl.special[0].rate // 2
+        if fm_rng < comparison_value:
+            return tbl.special[0].formation, None, "Back Attack"
+        # back attack 2
+        if preempt_rate < 128:
+            comparison_value += tbl.special[1].rate
+        else:
+            comparison_value += tbl.special[1].rate // 2
+        if fm_rng < comparison_value:
+            return tbl.special[1].formation, None, "Back Attack"
+        # side attack
+        comparison_value += tbl.special[2].rate
+        if fm_rng < comparison_value:
+            return tbl.special[2].formation, None, "Side Attack"
+        # pincer
+        if preempt_rate < 128:
+            comparison_value += tbl.special[3].rate
+        else:
+            comparison_value += tbl.special[3].rate // 2
+        if fm_rng < comparison_value:
+            return tbl.special[3].formation, None, "Pincer Attack"
+
+        # hardcoded exception for an encounter glitch
+        if tbl.standard[0].rate > 32:
+            return tbl.standard[0].formation, tbl.standard[0].formation, "Normal"
+
+        formation = (formation + 1) % 256
+        fm_rng = RNG[formation] // 4
+        comparison_value = 0
+
+        encounter = tbl.standard[5].formation
+        for i in range(5):
+            comparison_value += tbl.standard[i].rate
+            if fm_rng < comparison_value:
+                encounter = tbl.standard[i].formation
+                break
+
+        formation2 = (formation + 1) % 256
+        fm_rng = RNG[formation2] // 4
+        comparison_value = 0
+
+        for i in range(5):
+            comparison_value += tbl.standard[i].rate
+            if fm_rng < comparison_value:
+                return encounter, tbl.standard[i].formation, "Normal"
+        return encounter, tbl.standard[5].formation, "Normal"
 
 
 class Step:
-    def __init__(self, stepid: int, offset: int):
-        self.stepid = stepid
+    def __init__(self, step_id: int, offset: int):
+        self.step_id = step_id
         self.offset = offset
 
     def __str__(self):
-        return "(" + str(self.stepid) + ", "  + str(self.offset) + ")"
+        return "(" + str(self.step_id) + ", " + str(self.offset) + ")"
 
     def __eq__(self, other: "Step"):
-        return self.stepid == other.stepid and self.offset == other.offset
+        return self.step_id == other.step_id and self.offset == other.offset
+
+    def __add__(self, steps):
+        if isinstance(steps, int):
+            new_stepid = self.step_id + (2 * steps)
+            return Step(new_stepid % 256,
+                        OFFSET_TABLE[(INVERSE_OFFSET_TABLE[self.offset] + (new_stepid // 256)) % 256])
+
+    def __sub__(self, other):
+        if isinstance(other, int):
+            return self.__add__(-other)
+        elif isinstance(other, Step):
+            return other.distance_to_step(self)
+
+    def plus_steps(self, other: int):
+        return self.__add__(other)
 
     def advance_steps(self, steps: int):
-        new_stepid = self.stepid + (2 * steps)
+        new_stepid = self.step_id + (2 * steps)
         self.offset = OFFSET_TABLE[(INVERSE_OFFSET_TABLE[self.offset] + (new_stepid // 256)) % 256]
-        self.stepid = new_stepid % 256
+        self.step_id = new_stepid % 256
 
     def distance_to_step(self, other: "Step"):
         return (((256 * (INVERSE_OFFSET_TABLE[other.offset] - INVERSE_OFFSET_TABLE[self.offset])) + (
-                other.stepid - self.stepid)) // 2) % 32768
+                other.step_id - self.step_id)) // 2) % 32768
+
+    # returns tuple: (danger threshold, is preemptive given current preempt rate, preemptive threshold)
+    def encounter_threshold(self, preempt_rate: int = 16):
+        danger_threshold = (((RNG[self.step_id] - self.offset) % 256) + 1) * 256
+        step = self - 1
+        preempt_threhsold = ((RNG[(step.step_id + 1) % 256] - step.offset) % 256)
+        preempt = preempt_threhsold < max(16, min(128, preempt_rate))
+        return danger_threshold, preempt, preempt_threhsold
+
+
+class State:
+
+    def field(self):
+        if self.field_id in FIELDS:
+            return FIELDS[self.field_id]
+        return None
+
+    def table(self):
+        field = self.field()
+        if field is not None:
+            return field.table1 if self.table_index == 1 or field.table2 is None else field.table2
+        return None
+
+    def danger_increase_per_step_running(self):
+        return (8 * self.danger_dividend_multiplier) // self.table().rate
+
+    def danger_increase_per_step_walking(self):
+        return (2 * self.danger_dividend_multiplier) // self.table().rate
+
+    def next_encounter_data(self, start_step: Step = None, start_danger: int = None):
+        if start_step is None:
+            start_step = self.step
+        if start_danger is None:
+            start_danger = self.danger
+
+        out = {}
+
+        dips_run = self.danger_increase_per_step_running()
+        dips_walk = self.danger_increase_per_step_walking()
+        walking_steps = 0
+        while True:
+            total_steps = walking_steps + 1
+            danger = (start_danger + walking_steps * dips_walk) + dips_run
+            while True:
+                if danger > (start_step + total_steps).encounter_threshold()[0]:
+                    out[walking_steps] = (start_step + walking_steps,
+                                          start_danger + walking_steps * dips_walk), (
+                                             start_step + total_steps, danger)
+                    break
+                danger += dips_run
+                total_steps += 1
+                if danger > 65536:
+                    raise OverflowError("how")
+            max_danger = (start_step + total_steps).encounter_threshold()[0] - 1
+            if max_danger < 0:
+                break  # should never happen but who knows
+            _a = max_danger - (dips_run * total_steps)
+            walking_steps = int(math.ceil((start_danger - _a) / (dips_run - dips_walk)))
+            if walking_steps > total_steps:
+                out[-1] = (start_step, start_danger), (start_step + total_steps, start_danger + total_steps * dips_walk)
+                return out
+
+    def __init__(self, field_id: int, step: Step, formation_value: int = 0, step_fraction: int = 0, danger: int = 0,
+                 table_index: int = 1, danger_dividend_multiplier: int = 512):
+        self.field_id = field_id
+        self.step = step
+        self.step_fraction = step_fraction
+        self.formation_value = formation_value
+        self.danger = danger
+        self.table_index = table_index
+        self.danger_dividend_multiplier = danger_dividend_multiplier
 
 
 FIELDS = dict()
@@ -122,7 +265,7 @@ with open("encdata.csv", "r") as f:
             _special = []
             for _i in range(4):
                 _special.append(EncounterSlot(int(_line[2 * _i + 0xE]), int(_line[2 * _i + 0xF])))
-            _table1 = EncounterTable(int(_line[3]), _standard, _special)
+            _table1 = EncounterTable(int(_line[1]), _standard, _special)
         if int(_line[24]) == 1:
             _standard = []
             for _i in range(6):
@@ -130,7 +273,7 @@ with open("encdata.csv", "r") as f:
             _special = []
             for _i in range(4):
                 _special.append(EncounterSlot(int(_line[2 * _i + 0x18 + 0xE]), int(_line[2 * _i + 0x18 + 0xF])))
-            _table2 = EncounterTable(int(_line[3]), _standard, _special)
+            _table2 = EncounterTable(int(_line[1]), _standard, _special)
         FIELDS[_map_id] = Field(_map_id, _name, _table1, _table2)
         NAME_ID_MAP[_name] = _map_id
 
