@@ -199,10 +199,10 @@ class State:
         return None
 
     def danger_increase_per_step_running(self):
-        return (8 * self.danger_dividend_multiplier) // self.table().rate
+        return (8 * self.danger_divisor_multipler) // self.table().rate
 
     def danger_increase_per_step_walking(self):
-        return (2 * self.danger_dividend_multiplier) // self.table().rate
+        return (2 * self.danger_divisor_multipler) // self.table().rate
 
     def next_encounter_data(self, start_step: Step = None, start_danger: int = None):
         if start_step is None:
@@ -238,14 +238,16 @@ class State:
                 return out
 
     def __init__(self, field_id: int, step: Step, formation_value: int = 0, step_fraction: int = 0, danger: int = 0,
-                 table_index: int = 1, danger_dividend_multiplier: int = 512):
+                 table_index: int = 1, danger_divisor_multiplier: int = 512, lure_rate: int = 16, preempt_rate: int = 16):
         self.field_id = field_id
         self.step = step
         self.step_fraction = step_fraction
         self.formation_value = formation_value
         self.danger = danger
         self.table_index = table_index
-        self.danger_dividend_multiplier = danger_dividend_multiplier
+        self.danger_divisor_multipler = danger_divisor_multiplier
+        self.lure_rate = lure_rate
+        self.preempt_rate = preempt_rate
 
 
 FIELDS = dict()

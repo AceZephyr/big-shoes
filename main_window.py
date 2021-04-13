@@ -6,8 +6,9 @@ from tkinter import ttk, messagebox
 import threading
 import stepgraph
 import hook
-import win32gui as wgui
-import win32process as wproc
+import win32gui
+import win32process
+import win32security
 import time
 
 
@@ -27,6 +28,16 @@ class DisplayTable(ttk.Frame):
         self.data[row][1].set(value=value)
 
 
+def adjust_privilege(name, attr=win32security.SE_PRIVILEGE_ENABLED):
+    if isinstance(name, str):
+        state = (win32security.LookupPrivilegeValue(None, name), attr)
+    else:
+        state = name
+    hToken = win32security.OpenProcessToken(win32process.GetCurrentProcess(),
+                                            win32security.TOKEN_ALL_ACCESS)
+    return win32security.AdjustTokenPrivileges(hToken, False, [state])
+
+
 class Application(ttk.Frame):
 
     def read(self, size: int, address: hook.Address):
@@ -34,7 +45,7 @@ class Application(ttk.Frame):
 
     def hook_main(self):
         hook._BASE_ADDRESS_CACHE = None
-
+        adjust_privilege(win32security.SE_DEBUG_NAME)
         # hook into platform
         self.hooked_process_handle = hook.OpenProcess(0x1F0FFF, False, self.hooked_process_id)
 
@@ -43,6 +54,8 @@ class Application(ttk.Frame):
         self.stepgraph.display_mode = stepgraph.DisplayMode.TRACK
 
         self.hook_running = True
+
+        last_update_time = time.time() - 1
         while self.hook_running:
             try:
                 # update display
@@ -53,47 +66,49 @@ class Application(ttk.Frame):
                 new_fmaccum = self.read(8, hook.Address.FORMATION_ACCUMULATOR)
                 new_field_id = self.read(16, hook.Address.FIELD_ID)
                 new_selected_table = self.read(8, hook.Address.SELECTED_TABLE) + 1
-                new_danger_dividend_multiplier = self.read(16, hook.Address.DANGER_DIVIDEND_MULTIPLIER)
+                new_danger_divisor_multiplier = self.read(16, hook.Address.DANGER_DIVISOR_MULTIPLIER)
 
                 update = False
+                force_update = time.time() - last_update_time > 1
 
-                if new_stepid != self.stepgraph.current_step_state.step.step_id:
+                if force_update or new_stepid != self.stepgraph.current_step_state.step.step_id:
                     update = True
                     app.memory_view.set_row_value(0, new_stepid)
                     self.stepgraph.current_step_state.step.step_id = new_stepid
-                if new_step_fraction != self.stepgraph.current_step_state.step_fraction:
+                if force_update or new_step_fraction != self.stepgraph.current_step_state.step_fraction:
                     # update = True  # stepgraph doesn't care about fraction
                     app.memory_view.set_row_value(1, new_step_fraction)
                     self.stepgraph.current_step_state.step_fraction = new_step_fraction
-                if new_offset != self.stepgraph.current_step_state.step.offset:
+                if force_update or new_offset != self.stepgraph.current_step_state.step.offset:
                     update = True
                     app.memory_view.set_row_value(2, new_offset)
                     self.stepgraph.current_step_state.step.offset = new_offset
-                if new_danger != self.stepgraph.current_step_state.danger:
+                if force_update or new_danger != self.stepgraph.current_step_state.danger:
                     update = True
                     app.memory_view.set_row_value(3, new_danger)
                     self.stepgraph.current_step_state.danger = new_danger
-                if new_fmaccum != self.stepgraph.current_step_state.formation_value:
+                if force_update or new_fmaccum != self.stepgraph.current_step_state.formation_value:
                     update = True
                     app.memory_view.set_row_value(4, new_fmaccum)
                     self.stepgraph.current_step_state.formation_value = new_fmaccum
-                if new_field_id != self.stepgraph.current_step_state.field_id:
+                if force_update or new_field_id != self.stepgraph.current_step_state.field_id:
                     field_id = new_field_id
                     if field_id in constants.FIELDS:
                         update = True
                         app.memory_view.set_row_value(5, new_field_id)
                         self.stepgraph.current_step_state.field_id = field_id
-                if new_selected_table != self.stepgraph.current_step_state.table_index:
+                if force_update or new_selected_table != self.stepgraph.current_step_state.table_index:
                     update = True
                     app.memory_view.set_row_value(6, new_selected_table)
                     self.stepgraph.current_step_state.table_index = new_selected_table
-                if new_danger_dividend_multiplier != self.stepgraph.current_step_state.danger_dividend_multiplier:
+                if force_update or new_danger_divisor_multiplier != self.stepgraph.current_step_state.danger_divisor_multipler:
                     update = True
-                    app.memory_view.set_row_value(7, new_danger_dividend_multiplier)
-                    self.stepgraph.current_step_state.danger_dividend_multiplier = new_danger_dividend_multiplier
+                    app.memory_view.set_row_value(7, new_danger_divisor_multiplier)
+                    self.stepgraph.current_step_state.danger_divisor_multipler = new_danger_divisor_multiplier
 
                 if update:
                     self.stepgraph.update_requests += 1
+                    last_update_time = time.time()
 
             except Exception as e:
                 if e is RuntimeError:
@@ -103,8 +118,11 @@ class Application(ttk.Frame):
                         self.hook_running = False
                         break
             time.sleep(1 / self.settings.UPDATES_PER_SECOND)
+        # adjust_privilege(prev_state[0])
+
         hook.CloseHandle(self.hooked_process_handle)
         self.hooked_process_handle = None
+        self.hooked_process_id = None
         self.hooked_platform = None
 
         self.stepgraph.display_mode = stepgraph.DisplayMode.DEFAULT
@@ -113,8 +131,6 @@ class Application(ttk.Frame):
 
     def disconnect(self):
         self.hook_running = False
-        if self.hook_thread.is_alive():
-            self.hook_thread.join()
 
     def connect_pc(self):
         if self.hook_running:
@@ -124,6 +140,9 @@ class Application(ttk.Frame):
         if pid is None:
             messagebox.showinfo("FF7 PC Not Detected", "FF7 PC was not detected.")
             return
+        self.hooked_platform = hook.PC_PLATFORM
+        self.hooked_process_id = pid
+        self.hook_thread = threading.Thread(target=self.hook_main)
         self.hook_thread.start()
 
     def connect_emulator(self):
@@ -136,14 +155,14 @@ class Application(ttk.Frame):
             return
         emu_connect_window = tk.Toplevel(app)
         emu_connect_window.grid()
-        emu_connect_window.geometry('500x250')
+        emu_connect_window.geometry('650x250')
 
         emu_select_out = tk.StringVar()
-        emu_select = ttk.Combobox(emu_connect_window, textvariable=emu_select_out, state="readonly")
+        emu_select = ttk.Combobox(emu_connect_window, textvariable=emu_select_out, state="readonly", width=30)
         process_select_out = tk.StringVar()
-        process_select = ttk.Combobox(emu_connect_window, textvariable=process_select_out, state="readonly")
+        process_select = ttk.Combobox(emu_connect_window, textvariable=process_select_out, state="readonly", width=30)
         version_select_out = tk.StringVar()
-        version_select = ttk.Combobox(emu_connect_window, textvariable=version_select_out, state="readonly")
+        version_select = ttk.Combobox(emu_connect_window, textvariable=version_select_out, state="readonly", width=30)
 
         def on_emu_select(index, value, op):
             process_select['values'] = sorted(list(pids[emu_select_out.get()]))
@@ -176,11 +195,11 @@ class Application(ttk.Frame):
 
         def show_window_button():
             def _callback(hwnd, pid):
-                thread_id, process_id = wproc.GetWindowThreadProcessId(hwnd)
+                thread_id, process_id = win32process.GetWindowThreadProcessId(hwnd)
                 if process_id == pid:
-                    wgui.BringWindowToTop(hwnd)
+                    win32gui.BringWindowToTop(hwnd)
 
-            wgui.EnumWindows(_callback, int(process_select_out.get()))
+            win32gui.EnumWindows(_callback, int(process_select_out.get()))
 
         ttk.Button(emu_connect_window, text="Show This Window", command=show_window_button).grid(row=2, column=1)
 
@@ -200,7 +219,7 @@ class Application(ttk.Frame):
 
     def on_close(self):
         self.stepgraph.stop()
-        self.hook_running = False
+        self.disconnect()
         try:
             self.master.destroy()
         except Exception:

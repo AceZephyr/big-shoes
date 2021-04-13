@@ -2,6 +2,7 @@ class Settings:
     def __init__(self):
         self.DEFAULT_SIZE = (1500, 400)
         self.FONT = None
+
         self.BACKGROUND_COLOR = (0, 0, 0)
         self.GRAPH_BACKGROUND_COLOR_1 = (0, 0, 0)
         self.GRAPH_BACKGROUND_COLOR_2 = (16, 16, 16)
@@ -14,6 +15,8 @@ class Settings:
         self.WALK_EXTRAPOLATION_COLOR = (64, 255, 64)
         self.RUN_EXTRAPOLATION_COLOR = (64, 64, 255)
         self.BATTLE_MARK_COLOR = (255, 64, 64)
+        self.POSITION_MARK_COLOR = (255, 0, 0)
+
         self.LEFT_OFFSET = 36
         self.BOTTOM_OFFSET = 18
         self.STEP_PER_GRIDLINE = 2
@@ -21,8 +24,14 @@ class Settings:
         self.X_GRIDLINES_PER_TEXT = 2
         self.MIN_TOP_DANGER = 100
         self.MAX_TOP_DANGER = 65536
+        self.DEFAULT_TOP_DANGER = 5000
         self.Y_GRIDLINE_HEIGHT = 12
         self.SCROLL_STEPS = self.STEP_PER_GRIDLINE
         self.HOLD_SHIFT_SCROLL_MULTIPLIER = 10
         self.UPDATES_PER_SECOND = 30
         self.DEFAULT_TRACK_LEFT_OFFSET = 4
+
+        self.DISPLAY_PREEMPTIVE_BATTLE_CHECKS_DEFAULT = True
+        self.DISPLAY_PREEMPTIVE_STEPIDS_DEFAULT = True
+        self.DISPLAY_EXTRAPOLATION_DEFAULT = True
+        self.DISPLAY_BATTLE_MARKS_DEFAULT = True

@@ -21,20 +21,6 @@ class DisplayMode(Enum):
 
 class Stepgraph:
 
-    def scroll_starting_step_by(self, steps):
-        if self.display_mode == DisplayMode.DEFAULT:
-            self.left_edge_step.advance_steps(steps)
-        elif self.display_mode == DisplayMode.TRACK:
-            self.track_mode_left_offset -= steps
-
-    def scale_top_danger(self, y):
-        if y > 0:
-            self.top_danger = int(self.top_danger * (1.25 * abs(y)))
-        elif y < 0:
-            self.top_danger = int(self.top_danger * (0.8 * abs(y)))
-        self.top_danger = max(self.settings.MIN_TOP_DANGER, self.top_danger)
-        self.top_danger = min(self.settings.MAX_TOP_DANGER, self.top_danger)
-
     def step_nearest_x_coordinate(self, x: int):
         step_width = self.settings.X_GRIDLINE_WIDTH // self.settings.STEP_PER_GRIDLINE
         x += (step_width // 2) - self.settings.LEFT_OFFSET
@@ -57,6 +43,32 @@ class Stepgraph:
 
     def danger_by_y_coordinate(self, y: int):
         return (self.top_danger * (self.graph_height() - y)) // self.graph_height()
+
+    def scroll_starting_step_by(self, steps):
+        if self.display_mode == DisplayMode.DEFAULT:
+            self.left_edge_step.advance_steps(steps)
+        elif self.display_mode == DisplayMode.TRACK:
+            self.track_mode_left_offset -= steps
+
+    def scale_top_danger(self, y):
+        if y > 0:
+            self.top_danger = int(self.top_danger * (1.25 * abs(y)))
+        elif y < 0:
+            self.top_danger = int(self.top_danger * (0.8 * abs(y)))
+        self.top_danger = max(self.settings.MIN_TOP_DANGER, self.top_danger)
+        self.top_danger = min(self.settings.MAX_TOP_DANGER, self.top_danger)
+
+    def select(self, coords) -> bool:
+        # select step
+        step = self.step_nearest_x_coordinate(coords[0])
+        if self.y_coordinate_by_danger(step.encounter_threshold(self.current_step_state.preempt_rate)[0]) > coords[1]:
+            self.selected_step = step
+            return True
+        self.deselect()
+        return True
+
+    def deselect(self):
+        self.selected_step = None
 
     def main(self):
         pygame.init()
@@ -84,10 +96,19 @@ class Stepgraph:
                     self.surface = pygame.display.set_mode((event.w, event.h), FLAGS)
 
                 elif event.type == pygame.KEYDOWN:
-                    if self.selected_step is not None:
+                    if event.key == pygame.K_p:
+                        update = True
+                        self.display_preemptive_battle_checks = not self.display_preemptive_battle_checks
+                    elif event.key == pygame.K_m:
+                        update = True
+                        self.display_battle_marks = not self.display_battle_marks
+                    elif event.key == pygame.K_x:
+                        update = True
+                        self.display_extrapolation = not self.display_extrapolation
+                    elif self.selected_step is not None:
                         if event.key == pygame.K_ESCAPE:
                             update = True
-                            self.selected_step = None
+                            self.deselect()
                         elif event.key == pygame.K_RIGHT:
                             update = True
                             self.selected_step.advance_steps(1)
@@ -112,12 +133,9 @@ class Stepgraph:
                         self.scroll_starting_step_by(-event.y * self.settings.SCROLL_STEPS)
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button in {1, 3}:
-                        selected_step = self.step_nearest_x_coordinate(event.pos[0])
-                        if selected_step is not None:
+                    if event.button == pygame.BUTTON_RIGHT:
+                        if self.select(event.pos):
                             update = True
-                            self.selected_step = selected_step
-
 
                 elif event.type == pygame.QUIT:
                     self.running = False
@@ -160,7 +178,6 @@ class Stepgraph:
                     x += self.settings.X_GRIDLINE_WIDTH
                     stepid = (stepid + (self.settings.STEP_PER_GRIDLINE * 2)) % 256
                     gridline += 1
-
                 y = self.graph_height()
                 while y > 0:
                     pygame.draw.line(self.surface, self.settings.GRIDLINE_COLOR, (self.settings.LEFT_OFFSET, y),
@@ -173,7 +190,7 @@ class Stepgraph:
                 battle_marks = []
 
                 # extrapolation lines
-                if self.display_mode == DisplayMode.TRACK:
+                if self.display_extrapolation and self.display_mode == DisplayMode.TRACK:
                     x = self.x_coordinate_by_step(self.current_step_state.step)
                     if x <= self.surface.get_width():
                         next_encounter_data = self.current_step_state.next_encounter_data()
@@ -185,6 +202,7 @@ class Stepgraph:
                             color = self.settings.WALK_EXTRAPOLATION_COLOR if walking_steps == -1 else self.settings.RUN_EXTRAPOLATION_COLOR
                             pygame.draw.line(self.surface, color, (x_start, y_start), (x_end, y_end), width=3)
                             battle_marks.append((x_end, y_end))
+
                 # battle checks
                 x = self.settings.LEFT_OFFSET + (self.settings.X_GRIDLINE_WIDTH // self.settings.STEP_PER_GRIDLINE)
                 step = copy.copy(self.left_edge_step)
@@ -193,8 +211,9 @@ class Stepgraph:
                     step_data = step.encounter_threshold()
                     if step_data[0] < self.top_danger:
                         y = self.y_coordinate_by_danger(step_data[0])
-                        color = self.settings.BATTLE_CHECK_PREEMPTIVE_COLOR if step_data[
-                            1] else self.settings.BATTLE_CHECK_COLOR
+                        color = self.settings.BATTLE_CHECK_PREEMPTIVE_COLOR if (
+                                self.display_preemptive_battle_checks and step_data[1]
+                        ) else self.settings.BATTLE_CHECK_COLOR
                         if self.selected_step is not None and step == self.selected_step:
                             pygame.draw.line(self.surface, self.settings.BATTLE_CHECK_SELECTED_OUTLINE_COLOR, (x, 0),
                                              (x, y + 1), 5)
@@ -216,17 +235,19 @@ class Stepgraph:
                 pygame.draw.line(self.surface, self.settings.BORDER_LINE_COLOR, (self.settings.LEFT_OFFSET, 0),
                                  (self.settings.LEFT_OFFSET, self.graph_height()), 2)
 
-                for mark in battle_marks:
-                    pygame.draw.line(self.surface, self.settings.BATTLE_MARK_COLOR,
-                                     (mark[0] - 5, mark[1] - 5), (mark[0] + 5, mark[1] + 5), width=3)
-                    pygame.draw.line(self.surface, self.settings.BATTLE_MARK_COLOR,
-                                     (mark[0] - 5, mark[1] + 5), (mark[0] + 5, mark[1] - 5), width=3)
+                # battle marks
+                if self.display_battle_marks:
+                    for mark in battle_marks:
+                        pygame.draw.line(self.surface, self.settings.BATTLE_MARK_COLOR,
+                                         (mark[0] - 5, mark[1] - 5), (mark[0] + 5, mark[1] + 5), width=3)
+                        pygame.draw.line(self.surface, self.settings.BATTLE_MARK_COLOR,
+                                         (mark[0] - 5, mark[1] + 5), (mark[0] + 5, mark[1] - 5), width=3)
 
                 # current position dot
                 if self.display_mode == DisplayMode.TRACK:
                     x = self.x_coordinate_by_step(self.current_step_state.step)
                     y = self.y_coordinate_by_danger(self.current_step_state.danger)
-                    pygame.draw.rect(self.surface, (255, 0, 0), ((x - 3, y - 3), (7, 7)), width=0)
+                    pygame.draw.rect(self.surface, self.settings.POSITION_MARK_COLOR, ((x - 3, y - 3), (7, 7)), width=0)
 
                 pygame.display.update()
                 update = False
@@ -257,7 +278,7 @@ class Stepgraph:
         self.current_step_state: State = State(field_id=117, step=Step(0, 0), danger=0, step_fraction=0,
                                                formation_value=0)
         self.selected_step = None
-        self.top_danger = 10000
+        self.top_danger = self.settings.DEFAULT_TOP_DANGER
         self.start_danger = 0
         self.display_mode = DisplayMode.DEFAULT
         self.running = False
@@ -265,3 +286,8 @@ class Stepgraph:
         self.local_update_count = 0
         self.update_requests = 0
         self.track_mode_left_offset = self.settings.DEFAULT_TRACK_LEFT_OFFSET
+
+        self.display_preemptive_battle_checks = self.settings.DISPLAY_PREEMPTIVE_BATTLE_CHECKS_DEFAULT
+        self.display_preemptive_stepids = self.settings.DISPLAY_PREEMPTIVE_STEPIDS_DEFAULT
+        self.display_extrapolation = self.settings.DISPLAY_EXTRAPOLATION_DEFAULT
+        self.display_battle_marks = self.settings.DISPLAY_BATTLE_MARKS_DEFAULT
