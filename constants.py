@@ -238,7 +238,8 @@ class State:
                 return out
 
     def __init__(self, field_id: int, step: Step, formation_value: int = 0, step_fraction: int = 0, danger: int = 0,
-                 table_index: int = 1, danger_divisor_multiplier: int = 512, lure_rate: int = 16, preempt_rate: int = 16):
+                 table_index: int = 1, danger_divisor_multiplier: int = 512, lure_rate: int = 16,
+                 preempt_rate: int = 16):
         self.field_id = field_id
         self.step = step
         self.step_fraction = step_fraction
@@ -252,6 +253,8 @@ class State:
 
 FIELDS = dict()
 NAME_ID_MAP = dict()
+FORMATION_BATTLE_TYPE_MAP = dict()
+FORMATION_PREEMPTABLE_MAP = dict()
 
 with open("encdata.csv", "r") as f:
     _r = csv.reader(f)
@@ -278,6 +281,16 @@ with open("encdata.csv", "r") as f:
             _table2 = EncounterTable(int(_line[1]), _standard, _special)
         FIELDS[_map_id] = Field(_map_id, _name, _table1, _table2)
         NAME_ID_MAP[_name] = _map_id
+
+with open("formation.txt", "r") as f:
+    for _line in f.readlines():
+        _a = _line.split(" | ")[0].split(": ")
+        FORMATION_BATTLE_TYPE_MAP[int(_a[0])] = int(_a[1])
+
+with open("preemptive.txt", "r") as f:
+    for _line in f.readlines():
+        _a = _line.split(": ")
+        FORMATION_PREEMPTABLE_MAP[int(_a[0])] = (int(_a[1]) == 1)
 
 ENEMY_DATA = {
     "16": {
