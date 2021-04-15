@@ -67,6 +67,8 @@ class Application(ttk.Frame):
                 new_field_id = self.read(16, hook.Address.FIELD_ID)
                 new_selected_table = self.read(8, hook.Address.SELECTED_TABLE) + 1
                 new_danger_divisor_multiplier = self.read(16, hook.Address.DANGER_DIVISOR_MULTIPLIER)
+                new_lure_rate = self.read(8, hook.Address.LURE_RATE)
+                new_preempt_rate = self.read(8, hook.Address.PREEMPT_RATE)
 
                 update = False
                 force_update = time.time() - last_update_time > 1
@@ -105,9 +107,17 @@ class Application(ttk.Frame):
                     update = True
                     app.memory_view.set_row_value(7, new_danger_divisor_multiplier)
                     self.stepgraph.current_step_state.danger_divisor_multipler = new_danger_divisor_multiplier
+                if force_update or new_lure_rate != self.stepgraph.current_step_state.lure_rate:
+                    update = True
+                    app.memory_view.set_row_value(8, new_lure_rate)
+                    self.stepgraph.current_step_state.lure_rate = new_lure_rate
+                if force_update or new_preempt_rate != self.stepgraph.current_step_state.preempt_rate:
+                    update = True
+                    app.memory_view.set_row_value(9, new_preempt_rate)
+                    self.stepgraph.current_step_state.preempt_rate = new_preempt_rate
 
                 if update:
-                    self.stepgraph.update_requests += 1
+                    self.stepgraph.update()
                     last_update_time = time.time()
 
             except Exception as e:
@@ -118,8 +128,6 @@ class Application(ttk.Frame):
                         self.hook_running = False
                         break
             time.sleep(1 / self.settings.UPDATES_PER_SECOND)
-        # adjust_privilege(prev_state[0])
-
         hook.CloseHandle(self.hooked_process_handle)
         self.hooked_process_handle = None
         self.hooked_process_id = None
@@ -128,6 +136,8 @@ class Application(ttk.Frame):
         self.stepgraph.display_mode = stepgraph.DisplayMode.DEFAULT
 
         self.connected_text.set("Disconnected.")
+
+        self.stepgraph.update()
 
     def disconnect(self):
         self.hook_running = False
@@ -275,6 +285,8 @@ class Application(ttk.Frame):
         memory_view.add_row("Field ID")
         memory_view.add_row("Table Index")
         memory_view.add_row("DDM")
+        memory_view.add_row("Lure Rate")
+        memory_view.add_row("Preempt Rate")
         self.memory_view = memory_view
 
         ttk.Button(self, text="Toggle Stepgraph", command=self.stepgraph.toggle).grid(row=0, column=0)

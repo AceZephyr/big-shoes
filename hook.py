@@ -1,5 +1,5 @@
 import ctypes.wintypes
-import win32api, win32con, win32process
+import win32process
 import os
 from enum import Enum
 
@@ -37,6 +37,8 @@ class Address(int, Enum):
     FIELD_ID = (5, 0x9A05C, 0x8C15D0)
     SELECTED_TABLE = (6, 0x9AC30, 0x8C0DC4)
     DANGER_DIVISOR_MULTIPLIER = (7, 0x9AC04, 0x8C0D98)
+    LURE_RATE = (8, 0x62F19, None)  # TODO: find on pc
+    PREEMPT_RATE = (9, 0x62F1B, None)
 
 
 class HookablePlatform:
@@ -131,7 +133,7 @@ EMULATOR_MAP = {
     "EmuHawk.exe": [HookablePlatform("BizHawk 2.6.1", True, "2.6.1", bizhawk_address_func),
                     HookablePlatform("BizHawk 2.5.2", True, "2.5.2", bizhawk_address_func),
                     HookablePlatform("BizHawk 2.3.2", True, "2.3.2", bizhawk_address_func)],
-    "NO$PSX.EXE": [HookablePlatform("no$psx", True, "", nocashpsx_address_func)],
+    # "NO$PSX.EXE": [HookablePlatform("no$psx", True, "", nocashpsx_address_func)],
     "retroarch.exe": [HookablePlatform("Base Address 0x30000000", True, "3", retroarch_address_func),
                       HookablePlatform("Base Address 0x40000000", True, "4", retroarch_address_func)]
 }

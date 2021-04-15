@@ -167,18 +167,20 @@ class Step:
     def plus_steps(self, other: int):
         return self.__add__(other)
 
-    def advance_steps(self, steps: int):
-        new_stepid = self.step_id + (2 * steps)
-        self.offset = OFFSET_TABLE[(INVERSE_OFFSET_TABLE[self.offset] + (new_stepid // 256)) % 256]
-        self.step_id = new_stepid % 256
+    # def advance_steps(self, steps: int):
+    #     new_stepid = self.step_id + (2 * steps)
+    #     self.offset = OFFSET_TABLE[(INVERSE_OFFSET_TABLE[self.offset] + (new_stepid // 256)) % 256]
+    #     self.step_id = new_stepid % 256
 
     def distance_to_step(self, other: "Step"):
         return (((256 * (INVERSE_OFFSET_TABLE[other.offset] - INVERSE_OFFSET_TABLE[self.offset])) + (
                 other.step_id - self.step_id)) // 2) % 32768
 
     # returns tuple: (danger threshold, is preemptive given current preempt rate, preemptive threshold)
-    def encounter_threshold(self, preempt_rate: int = 16):
-        danger_threshold = (((RNG[self.step_id] - self.offset) % 256) + 1) * 256
+    def encounter_threshold(self, lure_rate: int = 16, preempt_rate: int = 16):
+        if lure_rate == 0:
+            lure_rate = 1
+        danger_threshold = (((RNG[self.step_id] - self.offset) % 256) + 1) * (4096 // lure_rate)
         step = self - 1
         preempt_threhsold = ((RNG[(step.step_id + 1) % 256] - step.offset) % 256)
         preempt = preempt_threhsold < max(16, min(128, preempt_rate))
@@ -219,7 +221,7 @@ class State:
             total_steps = walking_steps + 1
             danger = (start_danger + walking_steps * dips_walk) + dips_run
             while True:
-                if danger > (start_step + total_steps).encounter_threshold()[0]:
+                if danger > (start_step + total_steps).encounter_threshold(self.lure_rate, self.preempt_rate)[0]:
                     out[walking_steps] = (start_step + walking_steps,
                                           start_danger + walking_steps * dips_walk), (
                                              start_step + total_steps, danger)
@@ -228,11 +230,11 @@ class State:
                 total_steps += 1
                 if danger > 65536:
                     raise OverflowError("how")
-            max_danger = (start_step + total_steps).encounter_threshold()[0] - 1
+            max_danger = (start_step + total_steps).encounter_threshold(self.lure_rate, self.preempt_rate)[0] - 1
             if max_danger < 0:
                 break  # should never happen but who knows
-            _a = max_danger - (dips_run * total_steps)
-            walking_steps = int(math.ceil((start_danger - _a) / (dips_run - dips_walk)))
+            a = max_danger - (dips_run * total_steps)
+            walking_steps = int(math.ceil((start_danger - a) / (dips_run - dips_walk)))
             if walking_steps > total_steps:
                 out[-1] = (start_step, start_danger), (start_step + total_steps, start_danger + total_steps * dips_walk)
                 return out

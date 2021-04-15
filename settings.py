@@ -8,6 +8,7 @@ class Settings:
         self.GRAPH_BACKGROUND_COLOR_2 = (16, 16, 16)
         self.BORDER_LINE_COLOR = (255, 255, 255)
         self.GRIDLINE_COLOR = (32, 32, 32)
+        self.GRIDLINE_PREEMPTIVE_COLOR = (128, 0, 128)
         self.GRAPH_LABEL_COLOR = (255, 255, 255)
         self.BATTLE_CHECK_COLOR = (0, 128, 128)
         self.BATTLE_CHECK_PREEMPTIVE_COLOR = (196, 0, 196)
@@ -24,7 +25,7 @@ class Settings:
         self.X_GRIDLINES_PER_TEXT = 2
         self.MIN_TOP_DANGER = 100
         self.MAX_TOP_DANGER = 65536
-        self.DEFAULT_TOP_DANGER = 5000
+        self.DEFAULT_TOP_DANGER = 6000
         self.Y_GRIDLINE_HEIGHT = 12
         self.SCROLL_STEPS = self.STEP_PER_GRIDLINE
         self.HOLD_SHIFT_SCROLL_MULTIPLIER = 10
@@ -32,6 +33,6 @@ class Settings:
         self.DEFAULT_TRACK_LEFT_OFFSET = 4
 
         self.DISPLAY_PREEMPTIVE_BATTLE_CHECKS_DEFAULT = True
-        self.DISPLAY_PREEMPTIVE_STEPIDS_DEFAULT = True
+        self.DISPLAY_PREEMPTIVE_STEPIDS_DEFAULT = False
         self.DISPLAY_EXTRAPOLATION_DEFAULT = True
         self.DISPLAY_BATTLE_MARKS_DEFAULT = True
