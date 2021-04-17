@@ -179,11 +179,11 @@ class Step:
     # returns tuple: (danger threshold, is preemptive given current preempt rate, preemptive threshold)
     def encounter_threshold(self, lure_rate: int = 16, preempt_rate: int = 16):
         if lure_rate == 0:
-            lure_rate = 1
+            lure_rate = 1  # should never happen if the game is running, but it means it won't crash
         danger_threshold = (((RNG[self.step_id] - self.offset) % 256) + 1) * (4096 // lure_rate)
         step = self - 1
         preempt_threhsold = ((RNG[(step.step_id + 1) % 256] - step.offset) % 256)
-        preempt = preempt_threhsold < max(16, min(128, preempt_rate))
+        preempt = preempt_threhsold < (preempt_rate % 128)
         return danger_threshold, preempt, preempt_threhsold
 
 
@@ -221,7 +221,7 @@ class State:
             total_steps = walking_steps + 1
             danger = (start_danger + walking_steps * dips_walk) + dips_run
             while True:
-                if danger > (start_step + total_steps).encounter_threshold(self.lure_rate, self.preempt_rate)[0]:
+                if danger >= (start_step + total_steps).encounter_threshold(self.lure_rate, self.preempt_rate)[0]:
                     out[walking_steps] = (start_step + walking_steps,
                                           start_danger + walking_steps * dips_walk), (
                                              start_step + total_steps, danger)
@@ -241,7 +241,7 @@ class State:
 
     def __init__(self, field_id: int, step: Step, formation_value: int = 0, step_fraction: int = 0, danger: int = 0,
                  table_index: int = 1, danger_divisor_multiplier: int = 512, lure_rate: int = 16,
-                 preempt_rate: int = 16):
+                 preempt_rate: int = 16, last_encounter_formation: int = 0):
         self.field_id = field_id
         self.step = step
         self.step_fraction = step_fraction
@@ -251,6 +251,7 @@ class State:
         self.danger_divisor_multipler = danger_divisor_multiplier
         self.lure_rate = lure_rate
         self.preempt_rate = preempt_rate
+        self.last_encounter_formation = last_encounter_formation
 
 
 FIELDS = dict()
