@@ -1,7 +1,13 @@
 class Settings:
     def __init__(self):
-        self.DEFAULT_SIZE = (1500, 400)
-        self.FONT = None
+        self.WINDOW_TITLE = "Big Shoes"
+        self.WINDOW_ICON = "icon.png"
+
+        self.CONNECTED_TO_TEXT = "Connected to "
+        self.DISCONNECTED_TEXT = "Disconnected."
+
+        self.STEPGRAPH_DEFAULT_SIZE = (1500, 400)
+        self.STEPGRAPH_FONT = None
 
         self.BACKGROUND_COLOR = (0, 0, 0)
         self.GRAPH_BACKGROUND_COLOR_1 = (0, 0, 0)

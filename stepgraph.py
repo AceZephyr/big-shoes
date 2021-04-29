@@ -8,7 +8,7 @@ import copy
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from main_window import Application
+    from main_window import MainWindow
 
 CTRL = pygame.K_LCTRL | pygame.K_RCTRL
 
@@ -80,8 +80,8 @@ class Stepgraph:
         icon = pygame.image.load("icon.png")
         pygame.display.set_icon(icon)
 
-        self.surface = pygame.display.set_mode(self.app.settings.DEFAULT_SIZE, FLAGS)
-        font = pygame.font.SysFont(self.app.settings.FONT, 16)
+        self.surface = pygame.display.set_mode(self.app.settings.STEPGRAPH_DEFAULT_SIZE, FLAGS)
+        font = pygame.font.SysFont(self.app.settings.STEPGRAPH_FONT, 16)
 
         clock = pygame.time.Clock()
 
@@ -292,7 +292,7 @@ class Stepgraph:
     def signal_update(self):
         self.update_requests += 1
 
-    def __init__(self, app: "Application"):
+    def __init__(self, app: "MainWindow"):
         self.app = app
         self.thread = threading.Thread(target=self.main)
         self.left_edge_step = Step(0, 0)

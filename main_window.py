@@ -1,33 +1,85 @@
-import formation_list
-from constants import *
-import settings
+import sys
 
-import tkinter as tk
-from tkinter import ttk, messagebox
-import stepgraph
-import hook
 import win32gui
 import win32process
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon, QAction
+from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QMenuBar, QMenu, QFrame, QApplication, QTableWidget, QLabel, \
+    QAbstractItemView, QTableWidgetItem, QMessageBox, QDialog, QComboBox, QGridLayout, QPushButton, QHeaderView
+
 import formation_extrapolator
+import formation_list
+import hook
+import settings
+import stepgraph
+from constants import *
 
 
-class DisplayTable(tk.LabelFrame):
-    def __init__(self, master):
-        tk.LabelFrame.__init__(self, master, borderwidth=1, text="Values", relief=tk.SOLID)
-        self.data = []
+class ConnectEmuDialog(QDialog):
 
-    def add_row(self, name: str):
-        namevar = tk.StringVar(value=name)
-        valvar = tk.IntVar(value=0)
-        tk.Label(self, textvariable=namevar, anchor="e", width=20).grid(row=len(self.data), column=0)
-        tk.Label(self, textvariable=valvar, anchor="w", width=8).grid(row=len(self.data), column=1)
-        self.data.append([namevar, valvar])
+    def on_emu_select(self, index):
+        self.process_select.clear()
+        self.process_select.insertItems(0, sorted(list([str(x) for x in self.pids[self.emu_select.itemText(index)]])))
+        self.version_select.clear()
+        self.version_select.insertItems(0, [x.name for x in hook.Hook.EMULATOR_MAP[self.emu_select.itemText(index)]])
 
-    def set_row_value(self, row: int, value: int):
-        self.data[row][1].set(value=value)
+    def show_window_button(self):
+        def _callback(hwnd, pid):
+            thread_id, process_id = win32process.GetWindowThreadProcessId(hwnd)
+            if process_id == pid:
+                win32gui.BringWindowToTop(hwnd)
+
+        win32gui.EnumWindows(_callback, int(self.process_select.currentText()))
+
+    def connect_button(self):
+        for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()]:
+            if platform_version.name == self.version_select.currentText():
+                self.parent_app.hook.hooked_platform = platform_version
+                self.parent_app.hook.hooked_process_id = int(self.process_select.currentText())
+                self.parent_app.hook.start()
+                self.close()
+
+    def __init__(self, pids, parent_app: "MainWindow", parent=None):
+        super(ConnectEmuDialog, self).__init__(parent)
+
+        self.pids = pids
+
+        self.parent_app = parent_app
+
+        layout = QGridLayout()
+
+        self.emu_select = QComboBox(self)
+        self.emu_select.insertItems(0, sorted(list(self.pids.keys()), key=lambda x: x.lower()))
+
+        self.process_select = QComboBox(self)
+
+        self.version_select = QComboBox(self)
+
+        self.emu_select.activated.connect(self.on_emu_select)
+
+        self.on_emu_select(0)
+
+        layout.addWidget(QLabel("Emulator Process name:"), 0, 0)
+        layout.addWidget(QLabel("Emulator Process id:"), 0, 1)
+        layout.addWidget(QLabel("Emulator version:"), 0, 2)
+        layout.addWidget(self.emu_select, 1, 0)
+        layout.addWidget(self.process_select, 1, 1)
+        layout.addWidget(self.version_select, 1, 2)
+
+        button_show_this_window = QPushButton("Show This Window")
+        button_show_this_window.clicked.connect(self.show_window_button)
+        layout.addWidget(button_show_this_window, 2, 1)
+
+        button_connect = QPushButton("Connect")
+        button_connect.clicked.connect(self.connect_button)
+        button_connect.setDefault(True)
+        layout.addWidget(button_connect, 3, 1)
+
+        self.setLayout(layout)
 
 
-class Application(tk.Frame):
+
+class MainWindow(QMainWindow):
 
     def open_formation_extrapolator(self):
         self.formation_extrapolator_windows.append(formation_extrapolator.FormationExtrapolator(self))
@@ -44,11 +96,21 @@ class Application(tk.Frame):
 
     def connect_pc(self):
         if self.hook.running:
-            messagebox.showinfo("Already Connected", "Already connected. Disconnect first.")
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Information)
+            box.setWindowTitle("Already Connected")
+            box.setText("Already connected. Disconnect first.")
+            box.setStandardButtons(QMessageBox.Ok)
+            box.exec_()
             return
         pid = hook.get_pc_process_id()
         if pid is None:
-            messagebox.showinfo("FF7 PC Not Detected", "FF7 PC was not detected.")
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Information)
+            box.setWindowTitle("FF7 PC Not Detected")
+            box.setText("FF7 PC was not detected.")
+            box.setStandardButtons(QMessageBox.Ok)
+            box.exec_()
             return
         self.hook.hooked_platform = hook.Hook.PC_PLATFORM
         self.hook.hooked_process_id = pid
@@ -56,74 +118,23 @@ class Application(tk.Frame):
 
     def connect_emulator(self):
         if self.hook.running:
-            messagebox.showinfo("Already Connected", "Already connected. Disconnect first.")
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Information)
+            box.setWindowTitle("Already Connected")
+            box.setText("Already connected. Disconnect first.")
+            box.setStandardButtons(QMessageBox.Ok)
+            box.exec_()
             return
         pids = hook.get_emu_process_ids()
         if len(pids) == 0:
-            messagebox.showinfo("No Emulators Detected", "No emulators that can be connected to were detected.")
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Information)
+            box.setWindowTitle("No Emulators Detected")
+            box.setText("No emulators that can be connected to were detected.")
+            box.setStandardButtons(QMessageBox.Ok)
+            box.exec_()
             return
-        emu_connect_window = tk.Toplevel(app)
-        emu_connect_window.grid()
-        emu_connect_window.geometry('650x250')
-
-        emu_select_out = tk.StringVar()
-        emu_select = ttk.Combobox(emu_connect_window, textvariable=emu_select_out, state="readonly", width=30)
-        process_select_out = tk.StringVar()
-        process_select = ttk.Combobox(emu_connect_window, textvariable=process_select_out, state="readonly", width=30)
-        version_select_out = tk.StringVar()
-        version_select = ttk.Combobox(emu_connect_window, textvariable=version_select_out, state="readonly", width=30)
-
-        def on_emu_select(index, value, op):
-            process_select['values'] = sorted(list(pids[emu_select_out.get()]))
-            process_select.current(0)
-            version_select['values'] = [x.name for x in hook.Hook.EMULATOR_MAP[emu_select_out.get()]]
-            version_select.current(0)
-
-        def on_process_select(index, value, op):
-            pass
-
-        tk.Label(emu_connect_window, text="Emulator process name:").grid(row=0, column=0)
-
-        emu_select_out.trace("w", on_emu_select)
-        emu_select['values'] = sorted(list(pids.keys()), key=lambda x: x.lower())
-        emu_select.grid(row=1, column=0)
-        emu_select.current(0)
-
-        tk.Label(emu_connect_window, text="Emulator process id:").grid(row=0, column=1)
-
-        process_select_out.trace("w", on_process_select)
-        process_select['values'] = sorted(list(pids[emu_select_out.get()]))
-        process_select.grid(row=1, column=1)
-        process_select.current(0)
-
-        tk.Label(emu_connect_window, text="Emulator version:").grid(row=0, column=2)
-
-        version_select['values'] = [x.name for x in hook.Hook.EMULATOR_MAP[emu_select_out.get()]]
-        version_select.grid(row=1, column=2)
-        version_select.current(0)
-
-        def show_window_button():
-            def _callback(hwnd, pid):
-                thread_id, process_id = win32process.GetWindowThreadProcessId(hwnd)
-                if process_id == pid:
-                    win32gui.BringWindowToTop(hwnd)
-
-            win32gui.EnumWindows(_callback, int(process_select_out.get()))
-
-        tk.Button(emu_connect_window, text="Show This Window", command=show_window_button).grid(row=2, column=1)
-
-        def connect_button(_app: "Application"):
-            for platform_version in hook.Hook.EMULATOR_MAP[emu_select_out.get()]:
-                if platform_version.name == version_select_out.get():
-                    _app.hook.hooked_platform = platform_version
-                    _app.hook.hooked_process_id = int(process_select_out.get())
-                    emu_connect_window.destroy()
-                    _app.hook.start()
-
-        tk.Button(emu_connect_window, text="Connect", command=lambda: connect_button(self)).grid(row=3, column=0,
-                                                                                                 columnspan=4)
-
-        emu_connect_window.mainloop()
+        ConnectEmuDialog(pids, self).exec_()
 
     def on_close(self):
         self.stepgraph.stop()
@@ -133,10 +144,11 @@ class Application(tk.Frame):
         except Exception:
             pass
 
-    def __init__(self, _settings: settings.Settings, master=None):
-        tk.Frame.__init__(self, master)
+    def __init__(self, _settings: settings.Settings, parent=None):
+        super(MainWindow, self).__init__(parent)
 
-        self.master.protocol("WM_DELETE_WINDOW", self.on_close)
+        self.formation_extrapolator_windows = []
+        self.formation_list_windows = []
 
         self.settings = _settings
 
@@ -147,58 +159,93 @@ class Application(tk.Frame):
         self.current_step_state: State = State(field_id=117, step=Step(0, 0), danger=0, step_fraction=0,
                                                formation_value=0)
 
-        self.master.title("Big Shoes")
-        self.master.iconphoto(True, tk.PhotoImage(file="icon.png"))
-        self.master.geometry('500x500')
-        self.grid()
+        self.setWindowTitle(self.settings.WINDOW_TITLE)
+        self.setWindowIcon(QIcon(self.settings.WINDOW_ICON))
 
-        menubar = tk.Menu(self)
+        menubar = QMenuBar()
 
-        menu_file = tk.Menu(menubar, tearoff=0)
-        menu_file.add_command(label="Exit", command=self.quit)
+        menu_file = QMenu("File")
 
-        menu_connect = tk.Menu(menubar, tearoff=0)
-        menu_connect.add_command(label="Connect to Emulator", command=self.connect_emulator)
-        menu_connect.add_command(label="Connect to PC", command=self.connect_pc)
-        menu_connect.add_separator()
-        menu_connect.add_command(label="Disconnect", command=self.disconnect)
+        menu_file_exit = QAction("Exit", self)
+        menu_file_exit.triggered.connect(exit)
+        menu_file.addAction(menu_file_exit)
 
-        menu_window = tk.Menu(menubar, tearoff=0)
-        menu_window.add_command(label="Toggle Stepgraph", command=self.stepgraph.toggle)
-        menu_window.add_command(label="Open Formation Extrapolator", command=self.open_formation_extrapolator)
-        menu_window.add_command(label="Open Formation List", command=self.open_formation_list)
+        menu_connect = QMenu("Connect")
 
-        menubar.add_cascade(label="File", menu=menu_file)
-        menubar.add_cascade(label="Connect", menu=menu_connect)
-        menubar.add_cascade(label="Window", menu=menu_window)
+        menu_connect_connect_emulator = QAction("Connect to Emulator", self)
+        menu_connect_connect_emulator.triggered.connect(self.connect_emulator)
+        menu_connect.addAction(menu_connect_connect_emulator)
 
-        self.master.config(menu=menubar)
+        menu_connect_connect_pc = QAction("Connect to PC", self)
+        menu_connect_connect_pc.triggered.connect(self.connect_pc)
+        menu_connect.addAction(menu_connect_connect_pc)
 
-        self.connected_text = tk.StringVar(value="Disconnected.")
-        tk.Label(textvariable=self.connected_text, anchor=tk.N, width=20).grid(row=1, column=0)
+        menu_connect.addSeparator()
 
-        memory_view = DisplayTable(self)
-        memory_view.grid(row=0, column=0)
-        memory_view.add_row("Step ID")
-        memory_view.add_row("Step Fraction")
-        memory_view.add_row("Offset")
-        memory_view.add_row("Danger")
-        memory_view.add_row("Formation Accumulator")
-        memory_view.add_row("Field ID")
-        memory_view.add_row("Table Index")
-        memory_view.add_row("Danger Divisor Multiplier")
-        memory_view.add_row("Lure Rate")
-        memory_view.add_row("Preempt Rate")
-        memory_view.add_row("Last Encounter Formation")
-        self.memory_view = memory_view
+        menu_connect_disconnect = QAction("Disconnect", self)
+        menu_connect_disconnect.triggered.connect(self.disconnect)
+        menu_connect.addAction(menu_connect_disconnect)
 
-        self.formation_extrapolator_windows = []
-        self.formation_list_windows = []
+        menu_window = QMenu("Window")
+
+        menu_window_toggle_stepgraph = QAction("Toggle Stepgraph", self)
+        menu_window_toggle_stepgraph.triggered.connect(self.stepgraph.toggle)
+        menu_window.addAction(menu_window_toggle_stepgraph)
+
+        menu_window_open_formation_window = QAction("Open Formation Window", self)
+        menu_window_open_formation_window.triggered.connect(self.open_formation_extrapolator)
+        menu_window.addAction(menu_window_open_formation_window)
+
+        menubar.addMenu(menu_file)
+        menubar.addMenu(menu_connect)
+        menubar.addMenu(menu_window)
+
+        # self.master.config(menu=menubar)
+        self.setMenuBar(menubar)
+
+        main_frame = QFrame()
+        layout = QVBoxLayout()
+
+        rows = ["Step ID", "Step Fraction", "Offset", "Danger", "Formation Accumulator", "Field ID", "Table Index",
+                "Danger Divisor Multiplier", "Lure Rate", "Preempt Rate", "Last Encounter Formation"]
+
+        self.memory_view = QTableWidget(len(rows), 2)
+        self.memory_view.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.memory_view.setFocusPolicy(Qt.NoFocus)
+        self.memory_view.setSelectionMode(QAbstractItemView.NoSelection)
+        self.memory_view.setHorizontalHeaderItem(0, QTableWidgetItem("Address"))
+        self.memory_view.setHorizontalHeaderItem(1, QTableWidgetItem("        Value        "))
+        self.memory_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.memory_view.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+        for rowNum in range(len(rows)):
+            self.memory_view.setVerticalHeaderItem(rowNum, QTableWidgetItem(""))
+            _l = QLabel(" " + rows[rowNum] + " ")
+            _l.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+            self.memory_view.setCellWidget(rowNum, 0, _l)
+            _l = QLabel("")
+            _l.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            self.memory_view.setCellWidget(rowNum, 1, _l)
+        self.memory_view.resizeColumnsToContents()
+        self.memory_view.setMinimumHeight(350)
+        self.memory_view.setMinimumWidth(300)
+        layout.addWidget(self.memory_view)
+
+        self.connected_text = QLabel(self.settings.DISCONNECTED_TEXT)
+        self.connected_text.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        layout.addWidget(self.connected_text)
+
+        main_frame.setLayout(layout)
+
+        self.setCentralWidget(main_frame)
+
+        self.setMinimumHeight(420)
 
 
 if __name__ == '__main__':
-    app = Application(settings.Settings())
-
-    app.mainloop()
-
-    app.on_close()
+    # Create the Qt Application
+    app = QApplication()
+    # Create and show the form
+    main_window = MainWindow(settings.Settings())
+    main_window.show()
+    # Run the main Qt loop
+    sys.exit(app.exec_())

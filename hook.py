@@ -1,20 +1,18 @@
 import ctypes.wintypes
+import os
 import threading
 import time
-
-import win32process
-import os
 from enum import Enum
-
 from typing import TYPE_CHECKING
 
+import win32process
 import win32security
 
 import constants
 import stepgraph
 
 if TYPE_CHECKING:
-    from main_window import Application
+    from main_window import MainWindow
 
 PROCESS_VM_OPERATION = 0x0008
 PROCESS_VM_READ = 0x0010
@@ -64,7 +62,8 @@ class HookablePlatform:
 
     def read_int(self, hook, address: Address, size_bits: int):
         a = self._address_func(hook, hook.hooked_process_handle, address, self.version)
-        return int.from_bytes(win32process.ReadProcessMemory(hook.hooked_process_handle, a, size_bits // 8), byteorder='little')
+        return int.from_bytes(win32process.ReadProcessMemory(hook.hooked_process_handle, a, size_bits // 8),
+                              byteorder='little')
 
     def read_bytes(self, hook, address: Address, size: int):
         a = self._address_func(hook, address, self.version)
@@ -138,18 +137,21 @@ def psxfin_address_func(hook, process_handle, address: Address, version: str):
     return hook.base_cache + address.psx_address
 
 
+_BIZHAWK_ADDRESS_MAP = {
+    "2.3.2": 0x11D880,
+    "2.5.2": 0x310F80,
+    "2.6.1": 0x310F80
+}
+
+
 def bizhawk_address_func(hook, process_handle, address: Address, version: str):
     if hook.base_cache is None:
         module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
         for module_handle in sorted(module_handles):
             filename = win32process.GetModuleFileNameEx(process_handle, module_handle)
             if filename.lower().endswith("octoshock.dll"):
-                if version == "2.3.2":
-                    hook.base_cache = module_handle + 0x11D880
-                elif version == "2.5.2":
-                    hook.base_cache = module_handle + 0x310F80
-                elif version == "2.6.1":
-                    hook.base_cache = module_handle + 0x310F80
+                if version in _BIZHAWK_ADDRESS_MAP:
+                    hook.base_cache = module_handle + _BIZHAWK_ADDRESS_MAP[version]
                 else:
                     raise NotImplementedError("BizHawk version not implemented: " + version)
         if hook.base_cache is None:
@@ -219,7 +221,7 @@ class Hook:
         # hook into platform
         self.hooked_process_handle = OpenProcess(0x1F0FFF, False, self.hooked_process_id)
 
-        self.app.connected_text.set("Connected to " + self.hooked_platform.name)
+        self.app.connected_text.setText(self.app.settings.CONNECTED_TO_TEXT + self.hooked_platform.name)
 
         self.app.stepgraph.display_mode = stepgraph.DisplayMode.TRACK
 
@@ -246,49 +248,49 @@ class Hook:
 
                 if force_update or new_stepid != self.app.current_step_state.step.step_id:
                     update = True
-                    self.app.memory_view.set_row_value(0, new_stepid)
+                    self.app.memory_view.cellWidget(0, 1).setText(" " + str(new_stepid))
                     self.app.current_step_state.step.step_id = new_stepid
                 if force_update or new_step_fraction != self.app.current_step_state.step_fraction:
                     # update = True  # stepgraph doesn't care about fraction
-                    self.app.memory_view.set_row_value(1, new_step_fraction)
+                    self.app.memory_view.cellWidget(1, 1).setText(" " + str(new_step_fraction))
                     self.app.current_step_state.step_fraction = new_step_fraction
                 if force_update or new_offset != self.app.current_step_state.step.offset:
                     update = True
-                    self.app.memory_view.set_row_value(2, new_offset)
+                    self.app.memory_view.cellWidget(2, 1).setText(" " + str(new_offset))
                     self.app.current_step_state.step.offset = new_offset
                 if force_update or new_danger != self.app.current_step_state.danger:
                     update = True
-                    self.app.memory_view.set_row_value(3, new_danger)
+                    self.app.memory_view.cellWidget(3, 1).setText(" " + str(new_danger))
                     self.app.current_step_state.danger = new_danger
                 if force_update or new_fmaccum != self.app.current_step_state.formation_value:
                     update = True
-                    self.app.memory_view.set_row_value(4, new_fmaccum)
+                    self.app.memory_view.cellWidget(4, 1).setText(" " + str(new_fmaccum))
                     self.app.current_step_state.formation_value = new_fmaccum
                 if force_update or new_field_id != self.app.current_step_state.field_id:
                     field_id = new_field_id
                     if field_id in constants.FIELDS:
                         update = True
-                        self.app.memory_view.set_row_value(5, new_field_id)
+                        self.app.memory_view.cellWidget(5, 1).setText(" " + str(field_id))
                         self.app.current_step_state.field_id = field_id
                 if force_update or new_selected_table != self.app.current_step_state.table_index:
                     update = True
-                    self.app.memory_view.set_row_value(6, new_selected_table)
+                    self.app.memory_view.cellWidget(6, 1).setText(" " + str(new_selected_table))
                     self.app.current_step_state.table_index = new_selected_table
                 if force_update or new_danger_divisor_multiplier != self.app.current_step_state.danger_divisor_multipler:
                     update = True
-                    self.app.memory_view.set_row_value(7, new_danger_divisor_multiplier)
+                    self.app.memory_view.cellWidget(7, 1).setText(" " + str(new_danger_divisor_multiplier))
                     self.app.current_step_state.danger_divisor_multipler = new_danger_divisor_multiplier
                 if force_update or new_lure_rate != self.app.current_step_state.lure_rate:
                     update = True
-                    self.app.memory_view.set_row_value(8, new_lure_rate)
+                    self.app.memory_view.cellWidget(8, 1).setText(" " + str(new_lure_rate))
                     self.app.current_step_state.lure_rate = new_lure_rate
                 if force_update or new_preempt_rate != self.app.current_step_state.preempt_rate:
                     update = True
-                    self.app.memory_view.set_row_value(9, new_preempt_rate)
+                    self.app.memory_view.cellWidget(9, 1).setText(" " + str(new_preempt_rate))
                     self.app.current_step_state.preempt_rate = new_preempt_rate
                 if force_update or new_last_encounter_formation != self.app.current_step_state.last_encounter_formation:
                     update = True
-                    self.app.memory_view.set_row_value(10, new_last_encounter_formation)
+                    self.app.memory_view.cellWidget(10, 1).setText(" " + str(new_last_encounter_formation))
                     self.app.current_step_state.last_encounter_formation = new_last_encounter_formation
 
                 if update:
@@ -299,23 +301,28 @@ class Hook:
             except Exception as e:
                 if e is RuntimeError:
                     self.running = False
+                    break
                 if str(type(e)) == '<class \'pywintypes.error\'>':
                     if e.args[0] == 299:  # process was closed probably
                         self.running = False
                         break
+                raise e
             time.sleep(1 / self.app.settings.UPDATES_PER_SECOND)
         CloseHandle(self.hooked_process_handle)
-        self.hooked_process_handle = None
-        self.hooked_process_id = None
-        self.hooked_platform = None
+        try:
+            self.hooked_process_handle = None
+            self.hooked_process_id = None
+            self.hooked_platform = None
 
-        self.app.stepgraph.display_mode = stepgraph.DisplayMode.DEFAULT
+            self.app.stepgraph.display_mode = stepgraph.DisplayMode.DEFAULT
 
-        self.app.connected_text.set("Disconnected.")
+            self.app.connected_text.setText(self.app.settings.DISCONNECTED_TEXT)
 
-        self.app.stepgraph.signal_update()
+            self.app.stepgraph.signal_update()
+        except RuntimeError as err:
+            print("uh oh", err)
 
-    def __init__(self, app: "Application"):
+    def __init__(self, app: "MainWindow"):
         self.app = app
         self.base_cache = None
         self.thread = threading.Thread(target=self.main)
