@@ -8,7 +8,8 @@ from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QMenuBar, QMenu, QFrame,
     QAbstractItemView, QTableWidgetItem, QMessageBox, QDialog, QComboBox, QGridLayout, QPushButton, QHeaderView
 
 import formation_extrapolator
-import formation_list
+import formation_type_list
+
 import hook
 import settings
 import stepgraph
@@ -78,17 +79,18 @@ class ConnectEmuDialog(QDialog):
         self.setLayout(layout)
 
 
-
 class MainWindow(QMainWindow):
 
     def open_formation_extrapolator(self):
         self.formation_extrapolator_windows.append(formation_extrapolator.FormationExtrapolator(self))
 
-    def open_formation_list(self):
-        self.formation_list_windows.append(formation_list.FormationList(self))
+    def open_list_formation_types(self):
+        self.list_formation_types_windows.append(formation_type_list.FormationTypeList(self))
 
     def update_formation_windows(self):
         for window in self.formation_extrapolator_windows:
+            window.update_display()
+        for window in self.list_formation_types_windows:
             window.update_display()
 
     def disconnect(self):
@@ -136,19 +138,15 @@ class MainWindow(QMainWindow):
             return
         ConnectEmuDialog(pids, self).exec_()
 
-    def on_close(self):
+    def closeEvent(self, event):
         self.stepgraph.stop()
         self.disconnect()
-        try:
-            self.master.destroy()
-        except Exception:
-            pass
 
     def __init__(self, _settings: settings.Settings, parent=None):
         super(MainWindow, self).__init__(parent)
 
         self.formation_extrapolator_windows = []
-        self.formation_list_windows = []
+        self.list_formation_types_windows = []
 
         self.settings = _settings
 
@@ -192,15 +190,20 @@ class MainWindow(QMainWindow):
         menu_window_toggle_stepgraph.triggered.connect(self.stepgraph.toggle)
         menu_window.addAction(menu_window_toggle_stepgraph)
 
-        menu_window_open_formation_window = QAction("Open Formation Window", self)
-        menu_window_open_formation_window.triggered.connect(self.open_formation_extrapolator)
-        menu_window.addAction(menu_window_open_formation_window)
+        menu_window.addSeparator()
+
+        menu_window_formation_extrapolator = QAction("Formation Extrapolator", self)
+        menu_window_formation_extrapolator.triggered.connect(self.open_formation_extrapolator)
+        menu_window.addAction(menu_window_formation_extrapolator)
+
+        menu_window_list_formation_types = QAction("List Formation Types", self)
+        menu_window_list_formation_types.triggered.connect(self.open_list_formation_types)
+        menu_window.addAction(menu_window_list_formation_types)
 
         menubar.addMenu(menu_file)
         menubar.addMenu(menu_connect)
         menubar.addMenu(menu_window)
 
-        # self.master.config(menu=menubar)
         self.setMenuBar(menubar)
 
         main_frame = QFrame()

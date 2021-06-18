@@ -95,29 +95,34 @@ class Field:
         else:
             comparison_value += tbl.special[0].rate // 2
         if fm_rng < comparison_value:
-            return tbl.special[0].formation, None, "Back Attack"
+            return tbl.special[0].formation, None, BATTLE_TYPE_NAMES[
+                FORMATION_BATTLE_TYPE_MAP[tbl.special[0].formation]]
         # back attack 2
         if preempt_rate < 128:
             comparison_value += tbl.special[1].rate
         else:
             comparison_value += tbl.special[1].rate // 2
         if fm_rng < comparison_value:
-            return tbl.special[1].formation, None, "Back Attack"
+            return tbl.special[1].formation, None, BATTLE_TYPE_NAMES[
+                FORMATION_BATTLE_TYPE_MAP[tbl.special[1].formation]]
         # side attack
         comparison_value += tbl.special[2].rate
         if fm_rng < comparison_value:
-            return tbl.special[2].formation, None, "Side Attack"
+            return tbl.special[2].formation, None, BATTLE_TYPE_NAMES[
+                FORMATION_BATTLE_TYPE_MAP[tbl.special[2].formation]]
         # pincer
         if preempt_rate < 128:
             comparison_value += tbl.special[3].rate
         else:
             comparison_value += tbl.special[3].rate // 2
         if fm_rng < comparison_value:
-            return tbl.special[3].formation, None, "Pincer Attack"
+            return tbl.special[3].formation, None, BATTLE_TYPE_NAMES[
+                FORMATION_BATTLE_TYPE_MAP[tbl.special[3].formation]]
 
         # hardcoded exception for an encounter glitch
         if tbl.standard[0].rate > 32:
-            return tbl.standard[0].formation, tbl.standard[0].formation, "Normal"
+            return tbl.standard[0].formation, tbl.standard[0].formation, BATTLE_TYPE_NAMES[
+                FORMATION_BATTLE_TYPE_MAP[tbl.standard[0].formation]]
 
         formation = (formation + 1) % 256
         fm_rng = RNG[formation] // 4
@@ -137,8 +142,10 @@ class Field:
         for i in range(5):
             comparison_value += tbl.standard[i].rate
             if fm_rng < comparison_value:
-                return encounter, tbl.standard[i].formation, "Normal"
-        return encounter, tbl.standard[5].formation, "Normal"
+                return encounter, tbl.standard[i].formation, BATTLE_TYPE_NAMES[
+                    FORMATION_BATTLE_TYPE_MAP[tbl.standard[i].formation]]
+        return encounter, tbl.standard[5].formation, BATTLE_TYPE_NAMES[
+            FORMATION_BATTLE_TYPE_MAP[tbl.standard[5].formation]]
 
 
 class Step:
@@ -217,6 +224,8 @@ class State:
         dips_run = self.danger_increase_per_step_running()
         dips_walk = self.danger_increase_per_step_walking()
         walking_steps = 0
+        if dips_run - dips_walk == 0:  # prevent div by zero later if the game isn't set up properly
+            return out
         while True:
             total_steps = walking_steps + 1
             danger = (start_danger + walking_steps * dips_walk) + dips_run
@@ -258,6 +267,8 @@ FIELDS = dict()
 NAME_ID_MAP = dict()
 FORMATION_BATTLE_TYPE_MAP = dict()
 FORMATION_PREEMPTABLE_MAP = dict()
+
+BATTLE_TYPE_NAMES = ["Normal", "Side Attack", "Back Attack", "Pincer"]
 
 with open("encdata.csv", "r") as f:
     _r = csv.reader(f)

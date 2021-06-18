@@ -1,5 +1,4 @@
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QTableWidget, QAbstractItemView, QTableWidgetItem, QLabel, \
     QHeaderView
 
@@ -21,8 +20,8 @@ class FormationExtrapolator(QDialog):
         old_fmaccum = self.app.current_step_state.formation_value
         last_formation = self.app.current_step_state.last_encounter_formation
         for i in range(10):
-            formation_data = formations.encounter_on_formation(field=field, formation=old_fmaccum,
-                                                               preempt_rate=preempt_rate, table=table)
+            formation_data = field.encounter_on_formation(formation=old_fmaccum,
+                                                          preempt_rate=preempt_rate, table=table)
             formation_type = formation_data[2]
             if formation_type == "Normal":
                 if formation_data[0] == last_formation:
@@ -49,11 +48,11 @@ class FormationExtrapolator(QDialog):
         self.table.resizeRowsToContents()
 
     def __init__(self, app: "MainWindow", parent=None):
-        super(FormationExtrapolator, self).__init__(parent)
+        super(FormationExtrapolator, self).__init__(app)
         self.app = app
 
-        self.setWindowTitle(self.app.settings.WINDOW_TITLE)
-        self.setWindowIcon(QIcon(self.app.settings.WINDOW_ICON))
+        self.setWindowTitle(self.app.windowTitle())
+        self.setWindowIcon(self.app.windowIcon())
 
         layout = QVBoxLayout()
 
