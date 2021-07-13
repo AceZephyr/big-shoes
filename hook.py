@@ -122,7 +122,7 @@ def adjust_privilege(name, attr=win32security.SE_PRIVILEGE_ENABLED):
 
 
 def psxfin_address_func(hook, process_handle, address: Address, version: str):
-    a = address.psx_address
+    address.psx_address
     if hook.base_cache is None:
         module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
         for module_handle in sorted(module_handles):
@@ -138,9 +138,10 @@ def psxfin_address_func(hook, process_handle, address: Address, version: str):
 
 
 _BIZHAWK_ADDRESS_MAP = {
-    "2.3.2": 0x11D880,
-    "2.5.2": 0x310F80,
-    "2.6.1": 0x310F80
+    "1": 0x30DF80,
+    "2": 0x310F80,
+    "3": 0x30DF90,
+    "4": 0x11D880,
 }
 
 
@@ -159,18 +160,18 @@ def bizhawk_address_func(hook, process_handle, address: Address, version: str):
     return hook.base_cache + address.psx_address
 
 
-def epsxe_address_func(hook, process_handle, address: Address, version: str):
-    if hook.base_cache is None:
-        module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
-        for module_handle in sorted(module_handles):
-            filename = win32process.GetModuleFileNameEx(process_handle, module_handle)
-            if filename.lower().endswith("epsxe.exe"):
-                hook.base_cache = module_handle + 0x6579A0
-    return hook.base_cache + address.psx_address
-
-
-def nocashpsx_address_func(hook, process_handle, address: Address, version: str):
-    raise NotImplementedError("no$psx support not implemented yet")
+# def epsxe_address_func(hook, process_handle, address: Address, version: str):
+#     if hook.base_cache is None:
+#         module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
+#         for module_handle in sorted(module_handles):
+#             filename = win32process.GetModuleFileNameEx(process_handle, module_handle)
+#             if filename.lower().endswith("epsxe.exe"):
+#                 hook.base_cache = module_handle + 0x6579A0
+#     return hook.base_cache + address.psx_address
+#
+#
+# def nocashpsx_address_func(hook, process_handle, address: Address, version: str):
+#     raise NotImplementedError("no$psx support not implemented yet")
 
 
 def retroarch_address_func(hook, process_handle, address: Address, version: str):
@@ -197,13 +198,12 @@ class Hook:
 
     EMULATOR_MAP = {
         "psxfin.exe": [HookablePlatform("PSXfin v1.13", True, "1.13", psxfin_address_func)],
-        "ePSXe.exe": [HookablePlatform("ePSXe", True, "", epsxe_address_func)],
-        "EmuHawk.exe": [HookablePlatform("BizHawk 2.6.1", True, "2.6.1", bizhawk_address_func),
-                        HookablePlatform("BizHawk 2.5.2", True, "2.5.2", bizhawk_address_func),
-                        HookablePlatform("BizHawk 2.3.2", True, "2.3.2", bizhawk_address_func)],
-        # "NO$PSX.EXE": [HookablePlatform("no$psx", True, "", nocashpsx_address_func)],
+        "EmuHawk.exe": [HookablePlatform("BizHawk 2.6.2", True, "1", bizhawk_address_func),
+                        HookablePlatform("BizHawk 2.5.2 - 2.6.1", True, "2", bizhawk_address_func),
+                        HookablePlatform("BizHawk 2.4.1 - 2.5.1", True, "3", bizhawk_address_func),
+                        HookablePlatform("BizHawk 2.3.2 - 2.4.0", True, "4", bizhawk_address_func)],
         "retroarch.exe": [HookablePlatform("Base Address 0x30000000", True, "3", retroarch_address_func),
-                          HookablePlatform("Base Address 0x40000000", True, "4", retroarch_address_func)]
+                          HookablePlatform("Base Address 0x40000000", True, "4", retroarch_address_func)],
     }
 
     PC_PLATFORM = HookablePlatform("PC", False, "", pc_address_func)
