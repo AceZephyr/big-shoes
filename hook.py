@@ -276,10 +276,10 @@ class Hook:
                     update = True
                     self.app.memory_view.cellWidget(6, 1).setText(" " + str(new_selected_table))
                     self.app.current_step_state.table_index = new_selected_table
-                if force_update or new_danger_divisor_multiplier != self.app.current_step_state.danger_divisor_multipler:
+                if force_update or new_danger_divisor_multiplier != self.app.current_step_state.danger_divisor_multiplier:
                     update = True
                     self.app.memory_view.cellWidget(7, 1).setText(" " + str(new_danger_divisor_multiplier))
-                    self.app.current_step_state.danger_divisor_multipler = new_danger_divisor_multiplier
+                    self.app.current_step_state.danger_divisor_multiplier = new_danger_divisor_multiplier
                 if force_update or new_lure_rate != self.app.current_step_state.lure_rate:
                     update = True
                     self.app.memory_view.cellWidget(8, 1).setText(" " + str(new_lure_rate))
@@ -296,6 +296,7 @@ class Hook:
                 if update:
                     self.app.stepgraph.signal_update()
                     self.app.update_formation_windows()
+                    self.app.update()
                     last_update_time = time.time()
 
             except Exception as e:

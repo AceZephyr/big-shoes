@@ -26,10 +26,10 @@ class FormationTypeList(QDialog):
                 break
             rate = enc_slot.rate
             enemy_names = [constants.ENEMY_DATA[str(en)]["name"] for en in
-                           constants.ENCOUNTER_DATA[str(formation)]["enemies"]]
-            preemptable = "Yes" if constants.FORMATION_PREEMPTABLE_MAP[formation] == 1 else "No"
+                           constants.ENCOUNTER_DATA[formation].enemies]
+            preemptable = "Yes" if constants.ENCOUNTER_DATA[formation].preemptable else "No"
             encounters.append((" " + str(formation), " " + "\n ".join(enemy_names), " " + str(rate),
-                               " " + constants.BATTLE_TYPE_NAMES[constants.FORMATION_BATTLE_TYPE_MAP[formation]],
+                               " " + constants.ENCOUNTER_DATA[formation].encounter_type.label,
                                " " + preemptable))
         for enc_slot in table.special:
             formation = enc_slot.formation
@@ -37,10 +37,10 @@ class FormationTypeList(QDialog):
                 break
             rate = enc_slot.rate
             enemy_names = [constants.ENEMY_DATA[str(en)]["name"] for en in
-                           constants.ENCOUNTER_DATA[str(formation)]["enemies"]]
+                           constants.ENCOUNTER_DATA[formation].enemies]
             preemptable = "---"
             encounters.append((" " + str(formation), " " + "\n ".join(enemy_names), " " + str(rate),
-                               " " + constants.BATTLE_TYPE_NAMES[constants.FORMATION_BATTLE_TYPE_MAP[formation]],
+                               " " + constants.ENCOUNTER_DATA[formation].encounter_type.label,
                                " " + preemptable))
         for i in range(self.table.rowCount()):
             for j in range(self.table.columnCount()):

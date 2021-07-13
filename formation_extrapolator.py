@@ -1,11 +1,10 @@
+from typing import TYPE_CHECKING
+
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QTableWidget, QAbstractItemView, QTableWidgetItem, QLabel, \
     QHeaderView
 
 import constants
-import formations
-
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from main_window import MainWindow
@@ -30,13 +29,13 @@ class FormationExtrapolator(QDialog):
                 else:
                     formation = formation_data[0]
                     new_fmaccum = old_fmaccum + 2
-                preemptable = "Yes" if constants.FORMATION_PREEMPTABLE_MAP[formation] == 1 else "No"
+                preemptable = "Yes" if constants.ENCOUNTER_DATA[formation].preemptable == 1 else "No"
             else:
                 formation = formation_data[0]
                 new_fmaccum = old_fmaccum + 1
                 preemptable = "---"
             enemy_names = [constants.ENEMY_DATA[str(en)]["name"] for en in
-                           constants.ENCOUNTER_DATA[str(formation)]["enemies"]]
+                           constants.ENCOUNTER_DATA[formation].enemies]
             self.table.cellWidget(i, 0).setText(" " + str(old_fmaccum) + " -> " + str(new_fmaccum))
             self.table.cellWidget(i, 1).setText(" " + str(formation))
             self.table.cellWidget(i, 2).setText(" " + "\n ".join(enemy_names))

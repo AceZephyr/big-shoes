@@ -103,7 +103,7 @@ class MainWindow(QMainWindow):
             box.setWindowTitle("Already Connected")
             box.setText("Already connected. Disconnect first.")
             box.setStandardButtons(QMessageBox.Ok)
-            box.exec_()
+            box.exec()
             return
         pid = hook.get_pc_process_id()
         if pid is None:
@@ -112,7 +112,7 @@ class MainWindow(QMainWindow):
             box.setWindowTitle("FF7 PC Not Detected")
             box.setText("FF7 PC was not detected.")
             box.setStandardButtons(QMessageBox.Ok)
-            box.exec_()
+            box.exec()
             return
         self.hook.hooked_platform = hook.Hook.PC_PLATFORM
         self.hook.hooked_process_id = pid
@@ -125,7 +125,7 @@ class MainWindow(QMainWindow):
             box.setWindowTitle("Already Connected")
             box.setText("Already connected. Disconnect first.")
             box.setStandardButtons(QMessageBox.Ok)
-            box.exec_()
+            box.exec()
             return
         pids = hook.get_emu_process_ids()
         if len(pids) == 0:
@@ -134,9 +134,9 @@ class MainWindow(QMainWindow):
             box.setWindowTitle("No Emulators Detected")
             box.setText("No emulators that can be connected to were detected.")
             box.setStandardButtons(QMessageBox.Ok)
-            box.exec_()
+            box.exec()
             return
-        ConnectEmuDialog(pids, self).exec_()
+        ConnectEmuDialog(pids, self).exec()
 
     def closeEvent(self, event):
         self.stepgraph.stop()
@@ -251,4 +251,4 @@ if __name__ == '__main__':
     main_window = MainWindow(settings.Settings())
     main_window.show()
     # Run the main Qt loop
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

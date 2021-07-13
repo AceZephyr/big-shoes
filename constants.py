@@ -1,4 +1,5 @@
 import csv
+import enum
 import math
 
 RNG = [177, 202, 238, 108, 90, 113, 46, 85, 214, 0, 204, 153, 144, 107, 125, 235, 79, 160, 7, 172, 223, 138, 86, 158,
@@ -27,7 +28,8 @@ OFFSET_TABLE = [0, 13, 26, 39, 52, 65, 78, 91, 104, 117, 130, 143, 156, 169, 182
                 109, 122, 135, 148, 161, 174, 187, 200, 213, 226, 239, 252, 9, 22, 35, 48, 61, 74, 87, 100, 113, 126,
                 139, 152, 165, 178, 191, 204, 217, 230, 243]
 
-# The inverse of OFFSET_TABLE. INVERSE_OFFSET_TABLE[OFFSET_TABLE[x]] = x. Effectively stores the index of each offset value in OFFSET_TABLE.
+# The inverse of OFFSET_TABLE. INVERSE_OFFSET_TABLE[OFFSET_TABLE[x]] = x. Effectively stores the index of each offset
+# value in OFFSET_TABLE.
 INVERSE_OFFSET_TABLE = [0, 197, 138, 79, 20, 217, 158, 99, 40, 237, 178, 119, 60, 1, 198, 139, 80, 21, 218, 159, 100,
                         41, 238, 179, 120, 61, 2, 199, 140, 81, 22, 219, 160, 101, 42, 239, 180, 121, 62, 3, 200, 141,
                         82, 23, 220, 161, 102, 43, 240, 181, 122, 63, 4, 201, 142, 83, 24, 221, 162, 103, 44, 241, 182,
@@ -95,34 +97,30 @@ class Field:
         else:
             comparison_value += tbl.special[0].rate // 2
         if fm_rng < comparison_value:
-            return tbl.special[0].formation, None, BATTLE_TYPE_NAMES[
-                FORMATION_BATTLE_TYPE_MAP[tbl.special[0].formation]]
+            return tbl.special[0].formation, None, ENCOUNTER_DATA[tbl.special[0].formation].encounter_type.label
         # back attack 2
         if preempt_rate < 128:
             comparison_value += tbl.special[1].rate
         else:
             comparison_value += tbl.special[1].rate // 2
         if fm_rng < comparison_value:
-            return tbl.special[1].formation, None, BATTLE_TYPE_NAMES[
-                FORMATION_BATTLE_TYPE_MAP[tbl.special[1].formation]]
+            return tbl.special[1].formation, None, ENCOUNTER_DATA[tbl.special[1].formation].encounter_type.label
         # side attack
         comparison_value += tbl.special[2].rate
         if fm_rng < comparison_value:
-            return tbl.special[2].formation, None, BATTLE_TYPE_NAMES[
-                FORMATION_BATTLE_TYPE_MAP[tbl.special[2].formation]]
+            return tbl.special[2].formation, None, ENCOUNTER_DATA[tbl.special[2].formation].encounter_type.label
         # pincer
         if preempt_rate < 128:
             comparison_value += tbl.special[3].rate
         else:
             comparison_value += tbl.special[3].rate // 2
         if fm_rng < comparison_value:
-            return tbl.special[3].formation, None, BATTLE_TYPE_NAMES[
-                FORMATION_BATTLE_TYPE_MAP[tbl.special[3].formation]]
+            return tbl.special[3].formation, None, ENCOUNTER_DATA[tbl.special[3].formation].encounter_type.label
 
         # hardcoded exception for an encounter glitch
         if tbl.standard[0].rate > 32:
-            return tbl.standard[0].formation, tbl.standard[0].formation, BATTLE_TYPE_NAMES[
-                FORMATION_BATTLE_TYPE_MAP[tbl.standard[0].formation]]
+            return tbl.standard[0].formation, tbl.standard[0].formation, ENCOUNTER_DATA[
+                tbl.standard[0].formation].encounter_type.label
 
         formation = (formation + 1) % 256
         fm_rng = RNG[formation] // 4
@@ -142,10 +140,10 @@ class Field:
         for i in range(5):
             comparison_value += tbl.standard[i].rate
             if fm_rng < comparison_value:
-                return encounter, tbl.standard[i].formation, BATTLE_TYPE_NAMES[
-                    FORMATION_BATTLE_TYPE_MAP[tbl.standard[i].formation]]
-        return encounter, tbl.standard[5].formation, BATTLE_TYPE_NAMES[
-            FORMATION_BATTLE_TYPE_MAP[tbl.standard[5].formation]]
+                return encounter, tbl.standard[i].formation, ENCOUNTER_DATA[
+                    tbl.standard[i].formation].encounter_type.label
+        return encounter, tbl.standard[5].formation, ENCOUNTER_DATA[
+                tbl.standard[5].formation].encounter_type.label
 
 
 class Step:
@@ -208,10 +206,10 @@ class State:
         return None
 
     def danger_increase_per_step_running(self):
-        return (8 * self.danger_divisor_multipler) // self.table().rate
+        return (8 * self.danger_divisor_multiplier) // self.table().rate
 
     def danger_increase_per_step_walking(self):
-        return (2 * self.danger_divisor_multipler) // self.table().rate
+        return (2 * self.danger_divisor_multiplier) // self.table().rate
 
     def next_encounter_data(self, start_step: Step = None, start_danger: int = None):
         if start_step is None:
@@ -257,7 +255,7 @@ class State:
         self.formation_value = formation_value
         self.danger = danger
         self.table_index = table_index
-        self.danger_divisor_multipler = danger_divisor_multiplier
+        self.danger_divisor_multiplier = danger_divisor_multiplier
         self.lure_rate = lure_rate
         self.preempt_rate = preempt_rate
         self.last_encounter_formation = last_encounter_formation
@@ -265,10 +263,10 @@ class State:
 
 FIELDS = dict()
 NAME_ID_MAP = dict()
-FORMATION_BATTLE_TYPE_MAP = dict()
-FORMATION_PREEMPTABLE_MAP = dict()
+# FORMATION_BATTLE_TYPE_MAP = dict()
+# FORMATION_PREEMPTABLE_MAP = dict()
 
-BATTLE_TYPE_NAMES = ["Normal", "Side Attack", "Back Attack", "Pincer"]
+# BATTLE_TYPE_NAMES = ["Normal", "Side Attack", "Back Attack", "Pincer"]
 
 with open("encdata.csv", "r") as f:
     _r = csv.reader(f)
@@ -296,15 +294,75 @@ with open("encdata.csv", "r") as f:
         FIELDS[_map_id] = Field(_map_id, _name, _table1, _table2)
         NAME_ID_MAP[_name] = _map_id
 
-with open("formation.txt", "r") as f:
-    for _line in f.readlines():
-        _a = _line.split(" | ")[0].split(": ")
-        FORMATION_BATTLE_TYPE_MAP[int(_a[0])] = int(_a[1])
 
-with open("preemptive.txt", "r") as f:
-    for _line in f.readlines():
-        _a = _line.split(": ")
-        FORMATION_PREEMPTABLE_MAP[int(_a[0])] = (int(_a[1]) == 1)
+# with open("formation.txt", "r") as f:
+#     for _line in f.readlines():
+#         _a = _line.split(" | ")[0].split(": ")
+#         FORMATION_BATTLE_TYPE_MAP[int(_a[0])] = int(_a[1])
+
+# with open("preemptive.txt", "r") as f:
+#     for _line in f.readlines():
+#         _a = _line.split(": ")
+#         FORMATION_PREEMPTABLE_MAP[int(_a[0])] = (int(_a[1]) == 1)
+
+
+class EncounterType(enum.Enum):
+
+    def __init__(self, label):
+        self.label = label
+        self._value_ = enum.auto()
+
+    NORMAL = "Normal"
+    SIDE_ATTACK = "Side Attack"
+    BACK_ATTACK = "Back Attack"
+    PINCER = "Pincer"
+    PREEMPTIVE = "Preemptive"
+
+
+class Formation:
+    SETUP_DATA_ENCOUNTER_TYPE_MAP = {
+        0: EncounterType.NORMAL,
+        1: EncounterType.PREEMPTIVE,
+        2: EncounterType.BACK_ATTACK,
+        3: EncounterType.SIDE_ATTACK,
+        4: EncounterType.PINCER,
+        5: EncounterType.SIDE_ATTACK,
+        6: EncounterType.SIDE_ATTACK,
+        7: EncounterType.SIDE_ATTACK,
+        8: EncounterType.NORMAL
+    }
+
+    def __init__(self, _fm_data: list, _setup_data: list):
+        self.fm_data = _fm_data
+        self.setup_data = _setup_data
+        self.enemies = []
+        for _f in fm_data:
+            if _f[0] == 0xFF:
+                break
+            self.enemies.append(_f[0])
+        self.encounter_type = Formation.SETUP_DATA_ENCOUNTER_TYPE_MAP[_setup_data[18]]
+        self.preemptable = _setup_data[16] & 16 != 0
+
+
+ENCOUNTER_DATA = {}
+with open("initial_setup_data_dump", "r") as a:
+    with open("formation_dump", "r") as b:
+        setup_lines = a.readlines()
+        fmd_lines = b.readlines()
+        for s in range(0, 256):
+            for f in range(0, 4):
+                setup_offset = 5 * s + 1 + f
+                fm_offset = 29 * s + 1 + 7 * f
+                setup_data = [int(x, 16) for x in setup_lines[setup_offset].split(":")[1].strip().split(" ")]
+                fm_data = [[int(x, 16) for x in fmd_lines[fm_offset].split(":")[1].strip().split(" ")]]
+                for i in range(1, 6):
+                    fm_data.append([int(x, 16) for x in fmd_lines[fm_offset + i].strip().split(" ")])
+                if setup_data[18] != 0xFF:
+                    ENCOUNTER_DATA[4 * s + f] = Formation(fm_data, setup_data)
+
+# for e in ENCOUNTER_DATA:
+#     print(ENCOUNTER_DATA[e].encounter_type.label)
+# breakpoint()
 
 ENEMY_DATA = {
     "16": {
@@ -1025,6 +1083,7 @@ ENEMY_DATA = {
     }
 }
 
+"""
 ENCOUNTER_DATA = {
     "256": {
         "battle_type": 0,
@@ -2488,6 +2547,10 @@ ENCOUNTER_DATA = {
             160
         ]
     },
+    "587": {
+        "battle_type": 3,
+
+    }
     "588": {
         "battle_type": 0,
         "enemies": [
@@ -3953,3 +4016,7 @@ ENCOUNTER_DATA = {
         ]
     }
 }
+
+
+
+"""

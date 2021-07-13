@@ -1,0 +1,1280 @@
+﻿Scene 0:   {êúô0(äñ)} , {êúô1()} , {êúô2(ñ)}
+	Formation 0:	 00 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 00 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 31 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 1:   {êúô4(ëöù)} , {êúô5(áñô)} , {êúô6(ñâ)}
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 43 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 00
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 05 00
+Scene 2:   {êúô0(äñ)} , {êúô2(ñ)} , {êúô4(ëöù)}
+	Formation 0:	 1E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 00
+	Formation 1:	 17 00 0A 00 01 00 FF FF E7 03 E7 03 E7 03 E7 03 F7 FF 00 00
+	Formation 2:	 00 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 20
+	Formation 3:	 00 00 0A 00 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 00
+Scene 3:   {êúô7(úñA)} , {êúô8(úñB)} , {êúô9(úñC)}
+	Formation 0:	 00 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 00
+	Formation 1:	 00 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 00
+	Formation 2:	 00 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 00
+	Formation 3:	 00 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 00
+Scene 4:   [EMPTY]
+	Formation 0:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 1:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 2:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 3:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+Scene 5:   {êúô0(äñ)} , {Mighty Grunt} , {Mighty Grunt}
+	Formation 0:	 3A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 01 0C
+	Formation 1:	 47 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 00 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 06 00
+	Formation 3:	 00 00 17 00 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 6:   {êúô0(äñ)} , {êúô1()} , {Adamantaimai}
+	Formation 0:	 00 00 18 00 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 00
+	Formation 1:	 00 00 19 00 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 00
+	Formation 2:	 17 00 1A 00 01 00 FF FF E7 03 E7 03 E7 03 E7 03 F7 FF 00 00
+	Formation 3:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 7:   {Grunt} , [NONE] , [NONE]
+	Formation 0:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 8:   {Devil Ride} , {Custom Sweeper} , {Kalm Fang}
+	Formation 0:	 43 00 FF FF 01 00 FF FF D8 01 DA 01 DC 01 DF 01 ED FF 00 07
+	Formation 1:	 43 00 FF FF 01 00 FF FF D9 01 DD 01 DE 01 E4 01 ED FF 00 2D
+	Formation 2:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1A
+	Formation 3:	 43 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 03
+Scene 9:   {Custom Sweeper} , {Kalm Fang} , {Prowler}
+	Formation 0:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 11
+	Formation 1:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 05 28
+	Formation 2:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0F
+Scene 10:   {Devil Ride} , {Kalm Fang} , {Prowler}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 15
+	Formation 2:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 27
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 24
+Scene 11:   {Kalm Fang} , {Prowler} , [NONE]
+	Formation 0:	 05 00 FF FF 01 00 FF FF D8 01 DA 01 DC 01 DF 01 FD FF 00 0B
+	Formation 1:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 23
+	Formation 3:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 01
+Scene 12:   {Mu} , {[No Name]} , {Levrikon}
+	Formation 0:	 02 00 FF FF 01 00 FF FF D9 01 DD 01 DE 01 E4 01 ED FF 00 07
+	Formation 1:	 02 00 FF FF 01 00 FF FF D8 01 DA 01 DC 01 DF 01 FD FF 00 01
+	Formation 2:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+	Formation 3:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 17
+Scene 13:   {Elfadunk} , {Mandragora} , {Levrikon}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 12
+	Formation 1:	 02 00 FF FF 01 00 FF FF D8 01 DA 01 DC 01 DF 01 FD FF 00 24
+	Formation 2:	 02 00 FF FF 01 00 FF FF D9 01 DD 01 DE 01 E4 01 FD FF 00 25
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+Scene 14:   {Mandragora} , {Levrikon} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 25
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 2:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0B
+	Formation 3:	 05 00 FF FF 01 00 FF FF D9 01 DD 01 DE 01 E4 01 FD FF 00 05
+Scene 15:   {Elfadunk} , {Levrikon} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 21
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 21
+	Formation 2:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 25
+	Formation 3:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 04
+Scene 16:   {Zemzelett} , {Nerosuferoth} , {Formula}
+	Formation 0:	 02 00 FF FF 01 00 FF FF 46 00 55 00 F1 01 66 00 FD FF 00 03
+	Formation 1:	 02 00 FF FF 01 00 FF FF 46 00 55 00 F1 01 66 00 ED FF 00 20
+	Formation 2:	 02 00 FF FF 01 00 FF FF 46 00 55 00 F1 01 66 00 FD FF 00 29
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 14
+Scene 17:   {Nerosuferoth} , {Hell Rider VR2} , {Formula}
+	Formation 0:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0B
+	Formation 1:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0F
+	Formation 2:	 43 00 FF FF 01 00 FF FF 00 00 00 00 00 00 00 00 ED FF 00 15
+	Formation 3:	 43 00 FF FF 01 00 FF FF 46 00 55 00 F1 01 66 00 ED FF 00 13
+Scene 18:   {Zemzelett} , {Formula} , {Capparwire}
+	Formation 0:	 43 00 FF FF 01 00 FF FF 46 00 55 00 F1 01 66 00 FD FF 00 25
+	Formation 1:	 43 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 03
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 08
+	Formation 3:	 04 00 FF FF 01 00 FF FF 46 00 55 00 F1 01 66 00 FD FF 00 21
+Scene 19:   {Capparwire} , {Chocobo} , [NONE]
+	Formation 0:	 04 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 08
+	Formation 1:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 2:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 18
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 25
+Scene 20:   {Nerosuferoth} , {Capparwire} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 19
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0D
+	Formation 2:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 25
+	Formation 3:	 05 00 FF FF 01 00 FF FF 46 00 55 00 F1 01 66 00 FD FF 00 0A
+Scene 21:   {Grangalan} , {Grangalan Jr.} , {Grangalan Jr.Jr.}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0A
+	Formation 1:	 05 00 FF FF 01 00 FF FF 00 00 00 00 00 00 00 00 ED FF 00 2E
+	Formation 2:	 21 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 16
+	Formation 3:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 02
+Scene 22:   {Needle Kiss} , {Cokatolis} , [NONE]
+	Formation 0:	 21 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 06
+	Formation 1:	 21 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 17
+	Formation 2:	 21 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 25
+	Formation 3:	 21 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 25
+Scene 23:   {Beachplug} , {Spencer} , [NONE]
+	Formation 0:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 06
+	Formation 1:	 05 00 FF FF 01 00 FF FF 46 00 55 00 F1 01 66 00 FD FF 00 0B
+	Formation 2:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 05 24
+	Formation 3:	 25 00 FF FF 01 00 FF FF 6C 00 6D 00 6E 00 88 00 FD FF 00 60
+Scene 24:   {Spencer} , {Flapbeat} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 09
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 2:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+Scene 25:   {Joker} , {Flapbeat} , {Harpy}
+	Formation 0:	 02 00 FF FF 01 00 FF FF 71 00 72 00 EC 01 EE 01 FD FF 00 0F
+	Formation 1:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 15
+	Formation 2:	 43 00 FF FF 01 00 FF FF 00 00 00 00 00 00 00 00 ED FF 00 0C
+	Formation 3:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 05 01
+Scene 26:   {Flapbeat} , {Harpy} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 12
+	Formation 2:	 06 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 25
+	Formation 3:	 06 00 FF FF 01 00 FF FF 6C 00 6D 00 6E 00 88 00 FD FF 00 0F
+Scene 27:   {Grand Horn} , {Gagighandi} , [NONE]
+	Formation 0:	 02 00 FF FF 01 00 FF FF 10 02 16 02 1A 02 73 00 FD FF 00 04
+	Formation 1:	 02 00 FF FF 01 00 FF FF 10 02 16 02 1A 02 73 00 FD FF 00 15
+	Formation 2:	 02 00 FF FF 01 00 FF FF 10 02 16 02 1A 02 73 00 FD FF 00 2B
+	Formation 3:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0F
+Scene 28:   {Gagighandi} , {Touch Me} , [NONE]
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 02
+	Formation 1:	 4F 00 FF FF 01 00 FF FF 11 02 12 02 14 02 18 02 FD FF 00 04
+	Formation 2:	 4F 00 FF FF 01 00 FF FF 11 02 12 02 14 02 18 02 FD FF 00 05
+	Formation 3:	 4F 00 FF FF 01 00 FF FF 78 00 7D 00 7E 00 81 00 FD FF 00 08
+Scene 29:   {Spencer} , {Flapbeat} , {Touch Me}
+	Formation 0:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 08
+	Formation 1:	 25 00 FF FF 01 00 FF FF 71 00 72 00 EC 01 EE 01 FD FF 00 61
+	Formation 2:	 25 00 FF FF 01 00 FF FF 71 00 72 00 EC 01 EE 01 FD FF 00 62
+	Formation 3:	 25 00 FF FF 01 00 FF FF 71 00 72 00 EC 01 EE 01 FD FF 00 63
+Scene 30:   {Griffin} , {Bagrisk} , {Desert Sahagin}
+	Formation 0:	 43 00 FF FF 01 00 FF FF 7C 00 1C 02 1F 02 29 02 FD FF 00 03
+	Formation 1:	 43 00 FF FF 01 00 FF FF 1E 02 21 02 24 02 2A 02 ED FF 00 11
+	Formation 2:	 43 00 FF FF 01 00 FF FF 1E 02 21 02 24 02 2A 02 FD FF 00 15
+	Formation 3:	 43 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0B
+Scene 31:   {Skeeskee} , {Griffin} , {Golem}
+	Formation 0:	 48 00 FF FF 01 00 FF FF 90 00 92 00 94 00 96 00 FD FF 00 07
+	Formation 1:	 48 00 FF FF 01 00 FF FF 7C 00 1C 02 1F 02 29 02 ED FF 00 04
+	Formation 2:	 48 00 FF FF 01 00 FF FF 7C 00 1C 02 1F 02 29 02 ED FF 00 15
+	Formation 3:	 48 00 FF FF 01 00 FF FF 1E 02 21 02 24 02 2A 02 FD FF 00 17
+Scene 32:   {Skeeskee} , {Desert Sahagin} , [NONE]
+	Formation 0:	 48 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 1:	 48 00 FF FF 01 00 FF FF 7C 00 1C 02 1F 02 29 02 FD FF 00 27
+	Formation 2:	 48 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 17
+	Formation 3:	 48 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 09
+Scene 33:   {Crown Lance} , {Skeeskee} , {Desert Sahagin}
+	Formation 0:	 48 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 09
+	Formation 1:	 48 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 15
+	Formation 2:	 05 00 FF FF 01 00 FF FF 1E 02 21 02 24 02 2A 02 FD FF 00 25
+	Formation 3:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 34:   {Crown Lance} , [NONE] , [NONE]
+	Formation 0:	 05 00 FF FF 01 00 FF FF 10 02 16 02 1A 02 73 00 FD FF 00 13
+	Formation 1:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 0C
+	Formation 2:	 48 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 48 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 35:   {Nibel Wolf} , {Valron} , [NONE]
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 06
+	Formation 2:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 19
+	Formation 3:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 1F
+Scene 36:   {Bahba Velamyu} , {Valron} , {Battery Cap}
+	Formation 0:	 04 00 FF FF 01 00 FF FF 39 02 46 02 4D 02 50 02 FD FF 00 02
+	Formation 1:	 04 00 FF FF 01 00 FF FF 38 02 45 02 48 02 54 02 FD FF 00 05
+	Formation 2:	 04 00 FF FF 01 00 FF FF 39 02 46 02 4D 02 50 02 FD FF 00 19
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 25
+Scene 37:   {Nibel Wolf} , {Velcher Task} , [NONE]
+	Formation 0:	 02 00 FF FF 01 00 FF FF 39 02 46 02 4D 02 50 02 FD FF 00 0B
+	Formation 1:	 02 00 FF FF 01 00 FF FF 38 02 45 02 48 02 54 02 FD FF 00 21
+	Formation 2:	 02 00 FF FF 01 00 FF FF 39 02 46 02 4D 02 50 02 FD FF 00 15
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 24
+Scene 38:   {Valron} , {Kyuvilduns} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0B
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 11
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 29
+	Formation 3:	 04 00 FF FF 01 00 FF FF 38 02 45 02 48 02 54 02 FD FF 00 13
+Scene 39:   {Velcher Task} , {Kyuvilduns} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1D
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 13
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 04 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 02
+Scene 40:   {Razor Weed} , {Tail Vault} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 06
+	Formation 2:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0B
+	Formation 3:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 10
+Scene 41:   {Edgehead} , {Tail Vault} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 11
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1E
+	Formation 2:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 3:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1F
+Scene 42:   {Thunderbird} , {Bizarre Bug} , {Tail Vault}
+	Formation 0:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 1:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 2:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 29
+	Formation 3:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+Scene 43:   {Thunderbird} , {Bizarre Bug} , {Tail Vault}
+	Formation 0:	 43 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 03
+	Formation 1:	 43 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 08
+	Formation 2:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 23
+	Formation 3:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 12
+Scene 44:   {Bizarre Bug} , {Tail Vault} , {Adamantaimai}
+	Formation 0:	 40 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 1:	 40 00 FF FF 01 00 FF FF 7C 02 80 02 85 02 8B 02 FD FF 00 0A
+	Formation 2:	 40 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 0F
+	Formation 3:	 05 00 FF FF 01 00 FF FF 81 02 82 02 87 02 8A 02 ED FF 00 0C
+Scene 45:   {Under Lizard} , {Dual Horn} , [NONE]
+	Formation 0:	 02 00 FF FF 01 00 FF FF 7C 02 80 02 85 02 8B 02 FD FF 00 03
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 02 00 FF FF 01 00 FF FF B1 00 B4 00 BB 00 BD 00 FD FF 00 1A
+	Formation 3:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 2D
+Scene 46:   {Under Lizard} , {Tonadu} , [NONE]
+	Formation 0:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 43 00 FF FF 01 00 FF FF 81 02 82 02 87 02 8A 02 FD FF 00 08
+	Formation 2:	 43 00 FF FF 01 00 FF FF 81 02 82 02 87 02 8A 02 ED FF 00 01
+	Formation 3:	 05 00 FF FF 01 00 FF FF 7C 02 80 02 85 02 8B 02 ED FF 00 2F
+Scene 47:   {Slaps} , {Kelzmelzer} , [NONE]
+	Formation 0:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 1:	 4F 00 FF FF 01 00 FF FF 7C 02 80 02 85 02 8B 02 FD FF 00 0C
+	Formation 2:	 4F 00 FF FF 01 00 FF FF 81 02 82 02 87 02 8A 02 FD FF 00 03
+	Formation 3:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 21
+Scene 48:   {Vlakorados} , {Trickplay} , {[No Name]}
+	Formation 0:	 02 00 FF FF 01 00 FF FF A0 02 B4 02 B8 02 D2 00 ED FF 00 03
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 08
+	Formation 2:	 02 00 FF FF 01 00 FF FF A0 02 B4 02 B8 02 D2 00 ED FF 00 1A
+	Formation 3:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 2E
+Scene 49:   {Vlakorados} , {Bandersnatch} , [NONE]
+	Formation 0:	 02 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 03
+	Formation 1:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1A
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 50:   {Jumping} , {Chocobo} , [NONE]
+	Formation 0:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 07 00 FF FF 01 00 FF FF A1 02 A2 02 A8 02 B6 02 FD FF 00 08
+	Formation 2:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1A
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 51:   {Jumping} , {Bandersnatch} , {Chocobo}
+	Formation 0:	 07 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 03
+	Formation 1:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 08
+	Formation 2:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1A
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 52:   {Ice Golem} , {Lessaloploth} , {Jumping}
+	Formation 0:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 07 00 FF FF 01 00 FF FF A1 02 A2 02 A8 02 B6 02 FD FF 00 08
+	Formation 2:	 07 00 FF FF 01 00 FF FF C1 02 C9 02 D7 02 DC 02 FD FF 00 1A
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 2D
+Scene 53:   {Hippogriff} , {Spiral} , {Chocobo}
+	Formation 0:	 02 00 FF FF 01 00 FF FF A1 02 A2 02 A8 02 B6 02 ED FF 00 03
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 08
+	Formation 2:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1A
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+Scene 54:   {Head Hunter} , {Chocobo} , [NONE]
+	Formation 0:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1A
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 55:   {Hippogriff} , {Spiral} , [NONE]
+	Formation 0:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 02
+	Formation 1:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 08
+	Formation 2:	 43 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1A
+	Formation 3:	 43 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 2D
+Scene 56:   {Head Hunter} , {Crysales} , {Sea Worm}
+	Formation 0:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1A
+	Formation 1:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 12
+	Formation 3:	 05 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+Scene 57:   {Under Lizard} , {Dual Horn} , {Cactuer}
+	Formation 0:	 06 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1A
+	Formation 3:	 02 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 58:   {Tonadu} , {Sea Worm} , {Goblin}
+	Formation 0:	 06 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 03
+	Formation 1:	 06 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 24
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 16
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 25
+Scene 59:   {Goblin} , [NONE] , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 04 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 08
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 12
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 27
+Scene 60:   {Goblin} , [NONE] , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1A
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 61:   {Desert Sahagin} , [NONE] , [NONE]
+	Formation 0:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 62:   {Grunt} , [NONE] , [NONE]
+	Formation 0:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 63:   {Grunt} , [NONE] , [NONE]
+	Formation 0:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 64:   {Grunt} , {Cactuar} , [NONE]
+	Formation 0:	 06 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 65:   {Beachplug} , [NONE] , [NONE]
+	Formation 0:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 66:   {Grand Horn} , [NONE] , [NONE]
+	Formation 0:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 05 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 67:   {Mystery Ninja} , {Mystery Ninja} , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 1:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 3:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+Scene 68:   {Mystery Ninja} , {Mystery Ninja} , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 1:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 3:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+Scene 69:   {Mystery Ninja} , {Mystery Ninja} , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 1:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 3:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+Scene 70:   {Ultimate Weapon} , {Ultimate Weapon} , {Ultimate Weapon}
+	Formation 0:	 59 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 38
+	Formation 1:	 50 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 5E
+	Formation 2:	 50 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 5E
+	Formation 3:	 42 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 37
+Scene 71:   {Ultimate Weapon} , {Ultimate Weapon} , {Ultimate Weapon}
+	Formation 0:	 51 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 0F
+	Formation 1:	 57 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 35
+	Formation 2:	 3E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 43
+	Formation 3:	 50 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 33
+Scene 72:   {CMD.Grand Horn} , {CMD.Grand Horn} , {CMD.Grand Horn}
+	Formation 0:	 42 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 37
+	Formation 1:	 42 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 37
+	Formation 2:	 42 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 37
+	Formation 3:	 42 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 37
+Scene 73:   {Dragon} , {Ultimate Weapon} , [NONE]
+	Formation 0:	 3A 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 00
+	Formation 1:	 3A 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 30
+	Formation 2:	 14 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 36
+	Formation 3:	 3A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 74:   {Capparwire} , {Mystery Ninja} , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 1:	 04 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 00
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 75:   {MP} , {Guard Hound} , [NONE]
+	Formation 0:	 09 00 FF FF 09 00 FF FF 2C 01 2C 01 2C 01 2C 01 F9 FF 00 5F
+	Formation 1:	 09 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 2:	 09 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 05
+	Formation 3:	 09 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 09
+Scene 76:   {MP} , {Guard Hound} , {Mono Drive}
+	Formation 0:	 09 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0F
+	Formation 1:	 0C 00 FF FF 01 00 FF FF 68 01 71 01 78 01 85 01 FD FF 00 11
+	Formation 2:	 0C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 15
+	Formation 3:	 0C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 19
+Scene 77:   {Mono Drive} , {Grunt} , {1st Ray}
+	Formation 0:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 1:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 25
+	Formation 2:	 0A 00 FF FF 01 00 FF FF 68 01 71 01 78 01 85 01 FD FF 00 29
+	Formation 3:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 78:   {Mono Drive} , {Grunt} , {1st Ray}
+	Formation 0:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 02
+	Formation 1:	 0A 00 FF FF 01 00 FF FF 68 01 71 01 78 01 85 01 FD FF 00 06
+	Formation 2:	 0A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0A
+	Formation 3:	 0A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0E
+Scene 79:   {Mono Drive} , {Grunt} , [NONE]
+	Formation 0:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 2:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0B
+	Formation 3:	 0A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0F
+Scene 80:   {Grunt} , {Sweeper} , [NONE]
+	Formation 0:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0B
+	Formation 1:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0F
+	Formation 2:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 04
+	Formation 3:	 0A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0C
+Scene 81:   {Guard Hound} , {Guard Scorpion} , {Grashtrike}
+	Formation 0:	 0B 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 4A
+	Formation 1:	 1D 00 FF FF 01 00 FF FF 68 01 71 01 78 01 85 01 FD FF 00 05
+	Formation 2:	 1D 00 FF FF 01 00 FF FF 70 01 79 01 84 01 8B 01 FD FF 00 10
+	Formation 3:	 25 00 FF FF 01 00 FF FF 70 01 79 01 84 01 8B 01 FD FF 00 60
+Scene 82:   {MP} , {Chuse Tank} , [NONE]
+	Formation 0:	 1D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2A
+	Formation 1:	 1D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0D
+	Formation 2:	 1D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 06
+	Formation 3:	 25 00 FF FF 01 00 FF FF 70 01 79 01 84 01 8B 01 FD FF 00 61
+Scene 83:   {Grashtrike} , {Rocket Launcher} , [NONE]
+	Formation 0:	 0D 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 11
+	Formation 1:	 0D 00 FF FF 02 00 FF FF 70 01 79 01 84 01 8B 01 FD FF 00 12
+	Formation 2:	 0D 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 05
+	Formation 3:	 0D 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0C
+Scene 84:   {Grashtrike} , {Chuse Tank} , [NONE]
+	Formation 0:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 09
+	Formation 1:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 02
+	Formation 2:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 3:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 03
+Scene 85:   {Rocket Launcher} , {Chuse Tank} , {Blugu}
+	Formation 0:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 1:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 03
+	Formation 2:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 04
+	Formation 3:	 1A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0A
+Scene 86:   {Special Combatant} , {Blood Taste} , {Proto Machinegun}
+	Formation 0:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 1:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0E
+	Formation 2:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 29
+	Formation 3:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 87:   {Special Combatant} , {Blood Taste} , {Proto Machinegun}
+	Formation 0:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 55 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+	Formation 2:	 55 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0B
+	Formation 3:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 0F
+Scene 88:   {Smogger} , {Special Combatant} , {Proto Machinegun}
+	Formation 0:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 13
+	Formation 1:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 17
+	Formation 2:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 3:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1F
+Scene 89:   {Smogger} , {Blood Taste} , {Proto Machinegun}
+	Formation 0:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0E
+	Formation 1:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1F
+	Formation 2:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2B
+	Formation 3:	 55 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0C
+Scene 90:   {Blugu} , {Special Combatant} , {Blood Taste}
+	Formation 0:	 25 00 FF FF 01 00 FF FF 8C 01 8E 01 8F 01 90 01 FD FF 00 61
+	Formation 1:	 55 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 08
+	Formation 2:	 55 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0C
+	Formation 3:	 55 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 10
+Scene 91:   {Special Combatant} , {Air Buster} , [NONE]
+	Formation 0:	 29 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 07 4C
+	Formation 1:	 29 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 10
+	Formation 2:	 0A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 10
+	Formation 3:	 0D 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 10
+Scene 92:   {Hedgehog Pie} , [NONE] , [NONE]
+	Formation 0:	 16 00 FF FF 01 00 FF FF 8D 01 91 01 94 01 9B 01 FD FF 00 25
+	Formation 1:	 16 00 FF FF 01 00 FF FF 8C 01 8E 01 8F 01 90 01 FD FF 00 2E
+	Formation 2:	 16 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 27
+	Formation 3:	 16 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 28
+Scene 93:   {MP} , {Guard Hound} , {Smogger}
+	Formation 0:	 16 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 07
+	Formation 1:	 16 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 08
+	Formation 2:	 16 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 3:	 16 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 0A
+Scene 94:   {Whole Eater} , {Hedgehog Pie} , {Vice}
+	Formation 0:	 18 00 FF FF 01 00 FF FF 8C 01 8E 01 8F 01 90 01 FD FF 00 25
+	Formation 1:	 18 00 FF FF 01 00 FF FF 8D 01 91 01 94 01 9B 01 FD FF 00 0F
+	Formation 2:	 18 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2C
+	Formation 3:	 18 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 0B
+Scene 95:   {Whole Eater} , {Hell House} , {Hell House}
+	Formation 0:	 18 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 04
+	Formation 1:	 18 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 09
+	Formation 2:	 18 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 03 10
+	Formation 3:	 18 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 0F
+Scene 96:   {Corneo's Lackey} , {Scotch} , {Aps}
+	Formation 0:	 53 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 11
+	Formation 1:	 53 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 15
+	Formation 2:	 1E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 1F
+	Formation 3:	 1E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 19
+Scene 97:   {Sahagin} , {Ceasar} , [NONE]
+	Formation 0:	 1E 00 FF FF 01 00 FF FF 8D 01 91 01 94 01 9B 01 FD FF 00 12
+	Formation 1:	 1E 00 FF FF 01 00 FF FF 8C 01 8E 01 8F 01 90 01 FD FF 00 16
+	Formation 2:	 1E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1A
+	Formation 3:	 1E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1E
+Scene 98:   {Guard Hound} , {Mono Drive} , {Sweeper}
+	Formation 0:	 31 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 1:	 31 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 31 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 05
+	Formation 3:	 31 00 FF FF 01 00 FF FF 8D 01 91 01 94 01 9B 01 ED FF 00 0B
+Scene 99:   {Ghost} , {Cripshay} , {Deenglow}
+	Formation 0:	 31 00 FF FF 01 00 FF FF AB 01 B4 01 BC 01 C1 01 FD FF 00 01
+	Formation 1:	 31 00 FF FF 01 00 FF FF A9 01 AC 01 B6 01 BD 01 FD FF 00 09
+	Formation 2:	 31 00 FF FF 01 00 FF FF AB 01 B4 01 BC 01 C1 01 ED FF 00 05
+	Formation 3:	 31 00 FF FF 01 00 FF FF AB 01 B4 01 BC 01 C1 01 ED FF 00 0D
+Scene 100:   {Eligor} , {Ghost} , {Deenglow}
+	Formation 0:	 31 00 FF FF 01 00 FF FF AB 01 B4 01 BC 01 C1 01 ED FF 00 04
+	Formation 1:	 31 00 FF FF 01 00 FF FF A9 01 AC 01 B6 01 BD 01 FD FF 00 08
+	Formation 2:	 31 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 0C
+	Formation 3:	 31 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 0F
+Scene 101:   {Aero Combatant} , {Aero Combatant} , [NONE]
+	Formation 0:	 1B 00 FF FF 01 00 FF FF A9 01 AC 01 B6 01 BD 01 ED FF 00 17
+	Formation 1:	 1B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 13
+	Formation 2:	 1B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0D
+	Formation 3:	 1B 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 1C
+Scene 102:   {Eligor} , {Aero Combatant} , {Aero Combatant}
+	Formation 0:	 1B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 1F
+	Formation 1:	 1B 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 17
+	Formation 2:	 1B 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 1B
+	Formation 3:	 25 00 FF FF 01 00 FF FF A9 01 AC 01 B6 01 BD 01 ED FF 00 04
+Scene 103:   {Turks:Reno} , {Pyramid} , {Grenade Combatant}
+	Formation 0:	 1C 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 42
+	Formation 1:	 1C 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 42
+	Formation 2:	 1C 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 42
+	Formation 3:	 0F 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 66
+Scene 104:   {Mighty Grunt} , {Mighty Grunt} , {Grenade Combatant}
+	Formation 0:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 12
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 01
+	Formation 3:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 18
+Scene 105:   {Mighty Grunt} , {Mighty Grunt} , [NONE]
+	Formation 0:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0C
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 11
+	Formation 2:	 0F 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 15
+	Formation 3:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 21
+Scene 106:   {Hammer Blaster} , {[No Name]} , {Sword Dance}
+	Formation 0:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 24
+	Formation 1:	 0F 00 FF FF 01 00 FF FF 21 00 30 00 36 00 3B 00 ED FF 00 15
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0B
+	Formation 3:	 0F 00 FF FF 01 00 FF FF 20 00 2C 00 31 00 35 00 ED FF 00 17
+Scene 107:   {Hammer Blaster} , {[No Name]} , {Sword Dance}
+	Formation 0:	 0F 00 FF FF 01 00 FF FF 21 00 30 00 36 00 3B 00 ED FF 00 08
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 23
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 108:   {Warning Board} , {Machine Gun} , {Laser Cannon}
+	Formation 0:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 06
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 2:	 0F 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 00
+	Formation 3:	 0F 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 00
+Scene 109:   {SOLDIER:3rd} , {Moth Slasher} , [NONE]
+	Formation 0:	 0F 00 FF FF 01 00 FF FF 20 00 2C 00 31 00 35 00 FD FF 00 14
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 0F 00 FF FF 01 00 FF FF 21 00 30 00 36 00 3B 00 FD FF 00 0A
+	Formation 3:	 0F 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 15
+Scene 110:   {SOLDIER:3rd} , {Moth Slasher} , [NONE]
+	Formation 0:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 21
+	Formation 1:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 05
+	Formation 3:	 0F 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0A
+Scene 111:   {Brain Pod} , {Vargid Police} , [NONE]
+	Formation 0:	 56 00 FF FF 01 00 FF FF 20 00 2C 00 31 00 35 00 FD FF 00 21
+	Formation 1:	 56 00 FF FF 01 00 FF FF 21 00 30 00 36 00 3B 00 FD FF 00 66
+	Formation 2:	 56 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 3:	 56 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 14
+Scene 112:   {Brain Pod} , {Vargid Police} , {Zenene}
+	Formation 0:	 56 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 1:	 56 00 FF FF 01 00 FF FF 20 00 2C 00 31 00 35 00 FD FF 00 25
+	Formation 2:	 56 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 11
+	Formation 3:	 56 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 04
+Scene 113:   {Vargid Police} , {Zenene} , [NONE]
+	Formation 0:	 56 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 12
+	Formation 1:	 56 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 06
+	Formation 2:	 56 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 03
+	Formation 3:	 56 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 08
+Scene 114:   {Sample:H0512} , {Sample:H0512-opt} , [NONE]
+	Formation 0:	 11 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 2B
+	Formation 1:	 11 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 11 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 11 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 115:   {Hundred Gunner} , {Heli Gunner} , [NONE]
+	Formation 0:	 12 00 CD 01 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 40
+	Formation 1:	 12 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 41
+	Formation 2:	 34 00 CF 01 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 41
+	Formation 3:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 41
+Scene 116:   {Rufus} , {Dark Nation} , {[No Name]}
+	Formation 0:	 13 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 41
+	Formation 1:	 13 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 41
+	Formation 2:	 13 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 13 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 117:   {Motor Ball} , {Midgar Zolom} , {Ark Dragon}
+	Formation 0:	 14 00 FF FF 0A 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 02 43
+	Formation 1:	 08 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 13
+	Formation 2:	 0F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 1F 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 01
+Scene 118:   {Madouge} , {Crawler} , {Castanets}
+	Formation 0:	 1F 00 FF FF 01 00 FF FF 40 00 42 00 4B 00 5D 00 ED FF 00 11
+	Formation 1:	 1F 00 FF FF 01 00 FF FF 41 00 47 00 48 00 53 00 ED FF 00 17
+	Formation 2:	 1F 00 FF FF 01 00 FF FF 40 00 42 00 4B 00 5D 00 FD FF 00 08
+	Formation 3:	 1F 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0F
+Scene 119:   {Crawler} , {Ark Dragon} , {Castanets}
+	Formation 0:	 1F 00 FF FF 02 00 FF FF 40 00 42 00 4B 00 5D 00 ED FF 00 0E
+	Formation 1:	 1F 00 FF FF 02 00 FF FF 41 00 47 00 48 00 53 00 FD FF 00 07
+	Formation 2:	 1F 00 FF FF 02 00 FF FF 41 00 47 00 48 00 53 00 ED FF 00 01
+	Formation 3:	 1F 00 FF FF 02 00 FF FF 40 00 42 00 4B 00 5D 00 FD FF 00 1A
+Scene 120:   {Bottomswell} , {Waterpolo} , [NONE]
+	Formation 0:	 22 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 02
+	Formation 1:	 22 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 22 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 22 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 121:   {Scrutin Eye} , {Marine} , [NONE]
+	Formation 0:	 23 00 FF FF 01 00 FF FF 41 00 47 00 48 00 53 00 FD FF 00 02
+	Formation 1:	 23 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 17
+	Formation 2:	 23 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 05
+	Formation 3:	 23 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0A
+Scene 122:   {Jenova▪BIRTH} , [NONE] , [NONE]
+	Formation 0:	 23 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 00
+	Formation 1:	 23 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 03
+	Formation 2:	 23 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 03
+	Formation 3:	 23 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 03
+Scene 123:   {Search Crown} , {Needle Kiss} , {Bagnadrana}
+	Formation 0:	 21 00 FF FF 01 00 FF FF 11 02 12 02 14 02 18 02 FD FF 00 02
+	Formation 1:	 21 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0D
+	Formation 2:	 21 00 FF FF 01 00 FF FF 11 02 12 02 14 02 18 02 ED FF 00 0C
+	Formation 3:	 21 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+Scene 124:   {Bloatfloat} , {Bagnadrana} , [NONE]
+	Formation 0:	 51 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1C
+	Formation 1:	 51 00 FF FF 01 00 FF FF 00 00 00 00 00 00 00 00 ED FF 00 03
+	Formation 2:	 51 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0B
+	Formation 3:	 51 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0F
+Scene 125:   {Bloatfloat} , {Cokatolis} , {Bomb}
+	Formation 0:	 3D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 3D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 3D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 3:	 3D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 06
+Scene 126:   {Needle Kiss} , {Cokatolis} , [NONE]
+	Formation 0:	 3F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 02
+	Formation 1:	 3F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0A
+	Formation 2:	 3F 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0D
+	Formation 3:	 3F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 30
+Scene 127:   {Search Crown} , {Needle Kiss} , {Bagnadrana}
+	Formation 0:	 3D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 14
+	Formation 1:	 3D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 06
+	Formation 2:	 3D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 09
+	Formation 3:	 3D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 00
+Scene 128:   {Bagnadrana} , {Cokatolis} , {Bomb}
+	Formation 0:	 21 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 17
+	Formation 1:	 40 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 30
+	Formation 2:	 40 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 20
+	Formation 3:	 40 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 2F
+Scene 129:   {2-Faced} , {Bandit} , [NONE]
+	Formation 0:	 24 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 1:	 24 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 06
+	Formation 2:	 24 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0D
+	Formation 3:	 24 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 10
+Scene 130:   {Death Claw} , {2-Faced} , {Bullmotor}
+	Formation 0:	 24 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 11
+	Formation 1:	 24 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 16
+	Formation 2:	 24 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 3:	 24 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 20
+Scene 131:   {Bullmotor} , {Land Worm} , {Dyne}
+	Formation 0:	 06 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 30
+	Formation 1:	 25 00 FF FF 01 00 FF FF 6C 00 6D 00 6E 00 88 00 FD FF 00 61
+	Formation 2:	 25 00 FF FF 01 00 FF FF 6C 00 6D 00 6E 00 88 00 FD FF 00 61
+	Formation 3:	 58 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 2D
+Scene 132:   {Touch Me} , {Kimara Bug} , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF 78 00 7D 00 7E 00 81 00 ED FF 00 04
+	Formation 1:	 04 00 FF FF 01 00 FF FF 79 00 7A 00 7F 00 86 00 FD FF 00 07
+	Formation 2:	 04 00 FF FF 01 00 FF FF 79 00 7A 00 7F 00 86 00 ED FF 00 0A
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 05
+Scene 133:   {Flower Prong} , {Flower Prong} , {Flower Prong}
+	Formation 0:	 04 00 FF FF 01 00 FF FF 79 00 7A 00 7F 00 86 00 ED FF 00 16
+	Formation 1:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 03 27
+	Formation 2:	 25 00 FF FF 01 00 FF FF 78 00 7D 00 7E 00 81 00 ED FF 00 61
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 134:   {Heavy Tank} , {Turks:Reno} , {Turks:Rude}
+	Formation 0:	 2F 00 FF FF 02 00 FF FF 79 00 7A 00 7F 00 86 00 ED FF 00 04
+	Formation 1:	 2F 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 11
+	Formation 2:	 25 00 FF FF 02 00 FF FF 78 00 7D 00 7E 00 81 00 ED FF 00 61
+	Formation 3:	 04 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 23
+Scene 135:   {Sneaky Step} , {Heg} , [NONE]
+	Formation 0:	 49 00 FF FF 01 00 FF FF 90 00 92 00 94 00 96 00 FD FF 00 17
+	Formation 1:	 49 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0C
+	Formation 2:	 49 00 FF FF 01 00 FF FF 91 00 95 00 9B 00 90 00 FD FF 00 12
+	Formation 3:	 49 00 FF FF 01 00 FF FF 90 00 92 00 94 00 96 00 FD FF 00 14
+Scene 136:   {Gi Spector} , {Sneaky Step} , {Heg}
+	Formation 0:	 49 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 05
+	Formation 1:	 49 00 FF FF 01 00 FF FF 91 00 95 00 9B 00 90 00 FD FF 00 06
+	Formation 2:	 49 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 24
+	Formation 3:	 49 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 21
+Scene 137:   {Sneaky Step} , {Heg} , {Stinger}
+	Formation 0:	 49 00 FF FF 01 00 FF FF 91 00 95 00 9B 00 90 00 FD FF 00 09
+	Formation 1:	 49 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 26
+	Formation 2:	 49 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 26
+	Formation 3:	 49 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 10
+Scene 138:   {Gi Spector} , {Soul Fire} , {Gi Nattak}
+	Formation 0:	 49 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 06
+	Formation 1:	 49 00 FF FF 09 00 FF FF 90 00 92 00 94 00 96 00 F9 FF 00 03
+	Formation 2:	 49 00 FF FF 09 00 FF FF 91 00 95 00 9B 00 90 00 F9 FF 00 07
+	Formation 3:	 49 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 0F
+Scene 139:   {Dorky Face} , {Ghirofelgo} , {Chain}
+	Formation 0:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 15
+	Formation 2:	 2B 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 07
+	Formation 3:	 2B 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 02 06
+Scene 140:   {Mirage} , {Dorky Face} , {Jersey}
+	Formation 0:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 1:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 07
+	Formation 2:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 07
+	Formation 3:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 04 0F
+Scene 141:   {Mirage} , {Dorky Face} , {Black Bat}
+	Formation 0:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0B
+	Formation 1:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 03
+	Formation 2:	 2B 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+	Formation 3:	 4A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+Scene 142:   {Black Bat} , [NONE] , [NONE]
+	Formation 0:	 4A 00 FF FF 01 00 FF FF 2E 02 3D 02 4F 02 57 02 FD FF 00 03
+	Formation 1:	 4A 00 FF FF 01 00 FF FF 2E 02 3D 02 4F 02 57 02 FD FF 00 04
+	Formation 2:	 4A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+	Formation 3:	 4A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 19
+Scene 143:   {Ying} , {Yang} , {Ying/Yang}
+	Formation 0:	 4A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 05
+	Formation 1:	 4A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 08
+	Formation 2:	 4A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 02 07
+	Formation 3:	 4A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 00
+Scene 144:   {Lost Number} , {Lost Number} , {Lost Number}
+	Formation 0:	 2B 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 1F
+	Formation 1:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 2B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 145:   {Sonic Speed} , {Kyuvilduns} , [NONE]
+	Formation 0:	 03 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 1:	 03 00 FF FF 01 00 FF FF 2E 02 3D 02 4F 02 57 02 FD FF 00 11
+	Formation 2:	 03 00 FF FF 01 00 FF FF 2E 02 3D 02 4F 02 57 02 ED FF 00 06
+	Formation 3:	 03 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1A
+Scene 146:   {Sonic Speed} , {Zuu} , [NONE]
+	Formation 0:	 40 00 FF FF 01 00 FF FF 2E 02 3D 02 4F 02 57 02 ED FF 00 4E
+	Formation 1:	 40 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 2:	 40 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 4F
+	Formation 3:	 40 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 06
+Scene 147:   {Sonic Speed} , {Twin Brain} , {Zuu}
+	Formation 0:	 03 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 05
+	Formation 1:	 03 00 FF FF 01 00 FF FF 2E 02 3D 02 4F 02 57 02 FD FF 00 11
+	Formation 2:	 03 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 25
+	Formation 3:	 03 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+Scene 148:   {Twin Brain} , {Screamer} , {Materia Keeper}
+	Formation 0:	 03 00 FF FF 01 00 FF FF 2E 02 3D 02 4F 02 57 02 ED FF 00 0A
+	Formation 1:	 03 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 23
+	Formation 2:	 03 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 18
+	Formation 3:	 0E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 0F
+Scene 149:   {Dragon} , {Twin Brain} , {Kyuvilduns}
+	Formation 0:	 0E 00 FF FF 01 00 FF FF 2E 02 3D 02 4F 02 57 02 FD FF 00 12
+	Formation 1:	 0E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 17
+	Formation 2:	 0E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+	Formation 3:	 0E 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0A
+Scene 150:   {Palmer} , {[No Name]} , {[No Name]}
+	Formation 0:	 27 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 25
+	Formation 1:	 27 00 5A 02 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 25
+	Formation 2:	 27 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 25
+	Formation 3:	 27 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 151:   {Razor Weed} , {Bizarre Bug} , {Jayjujayme}
+	Formation 0:	 41 00 FF FF 01 00 FF FF B3 00 B9 00 BA 00 BE 00 FD FF 00 04
+	Formation 1:	 41 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 41 00 FF FF 01 00 FF FF B3 00 B9 00 BA 00 BE 00 FD FF 00 05
+	Formation 3:	 41 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 02
+Scene 152:   {Bizarre Bug} , {Foulander} , [NONE]
+	Formation 0:	 41 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 05
+	Formation 1:	 41 00 FF FF 01 00 FF FF B3 00 B9 00 BA 00 BE 00 FD FF 00 18
+	Formation 2:	 41 00 FF FF 01 00 FF FF B3 00 B9 00 BA 00 BE 00 FD FF 00 13
+	Formation 3:	 41 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 11
+Scene 153:   {Garuda} , {Jayjujayme} , [NONE]
+	Formation 0:	 41 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 19
+	Formation 1:	 41 00 FF FF 01 00 FF FF B1 00 B4 00 BB 00 BD 00 FD FF 00 18
+	Formation 2:	 41 00 FF FF 01 00 FF FF B1 00 B4 00 BB 00 BD 00 FD FF 00 11
+	Formation 3:	 41 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 13
+Scene 154:   {Foulander} , {Garuda} , {Rapps}
+	Formation 0:	 41 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 41 00 FF FF 01 00 FF FF B1 00 B4 00 BB 00 BD 00 FD FF 00 02
+	Formation 2:	 41 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 17
+	Formation 3:	 26 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 55
+Scene 155:   {Attack Squad} , {Gorkii} , [NONE]
+	Formation 0:	 43 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 06
+	Formation 1:	 02 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 19
+	Formation 2:	 15 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 2B
+	Formation 3:	 15 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 08 56
+Scene 156:   {Shake} , {Chekhov} , {Staniv}
+	Formation 0:	 15 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 08 56
+	Formation 1:	 15 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 08 56
+	Formation 2:	 15 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 08 56
+	Formation 3:	 15 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 157:   {Godo} , [NONE] , [NONE]
+	Formation 0:	 15 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 08 56
+	Formation 1:	 15 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 15 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 15 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+Scene 158:   {Under Lizard} , {Kelzmelzer} , {Toxic Frog}
+	Formation 0:	 2A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 15
+	Formation 1:	 2A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2F
+	Formation 2:	 2A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0F
+	Formation 3:	 2A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 13
+Scene 159:   {Kelzmelzer} , {Toxic Frog} , {Doorbull}
+	Formation 0:	 2A 00 FF FF 01 00 FF FF 95 02 C9 00 D1 00 D4 00 ED FF 00 2E
+	Formation 1:	 2A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 01
+	Formation 2:	 2A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 1A
+	Formation 3:	 2A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 03 07
+Scene 160:   {Doorbull} , {Ancient Dragon} , [NONE]
+	Formation 0:	 4C 00 FF FF 01 00 FF FF 95 02 C9 00 D1 00 D4 00 EF FF 00 02
+	Formation 1:	 4C 00 FF FF 01 00 FF FF C0 00 C2 00 90 02 9C 02 ED FF 00 1A
+	Formation 2:	 4C 00 FF FF 01 00 FF FF C0 00 C2 00 90 02 9C 02 ED FF 00 15
+	Formation 3:	 4C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 2B
+Scene 161:   {Toxic Frog} , {Jemnezmy} , {Demons Gate}
+	Formation 0:	 4B 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 57
+	Formation 1:	 4D 00 FF FF 09 00 FF FF 95 02 C9 00 D1 00 D4 00 E9 FF 00 11
+	Formation 2:	 4D 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 07
+	Formation 3:	 25 00 FF FF 09 00 FF FF C0 00 C2 00 90 02 9C 02 E9 FF 00 61
+Scene 162:   {Ancient Dragon} , {8 eye} , [NONE]
+	Formation 0:	 4D 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 04 04
+	Formation 1:	 4D 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 01
+	Formation 2:	 4D 00 FF FF 09 00 FF FF C0 00 C2 00 90 02 9C 02 E9 FF 00 05
+	Formation 3:	 4D 00 FF FF 09 00 FF FF 95 02 C9 00 D1 00 D4 00 E9 FF 00 09
+Scene 163:   {SOLDIER:3rd} , {Red Dragon} , [NONE]
+	Formation 0:	 4C 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 0F
+	Formation 1:	 4C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 2:	 4C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 00
+	Formation 3:	 4C 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 00
+Scene 164:   {Boundfat} , {Malldancer} , {Hungry}
+	Formation 0:	 17 00 FF FF 01 00 FF FF A0 02 B4 02 B8 02 D2 00 FD FF 00 06
+	Formation 1:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 2:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 66
+	Formation 3:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 13
+Scene 165:   {Trickplay} , {[No Name]} , {Boundfat}
+	Formation 0:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 16
+	Formation 1:	 17 00 FF FF 01 00 FF FF A1 02 A2 02 A8 02 B6 02 ED FF 00 66
+	Formation 2:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 06
+	Formation 3:	 17 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 13
+Scene 166:   {Boundfat} , {Grimguard} , {Hungry}
+	Formation 0:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 03
+	Formation 1:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 2:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 17
+	Formation 3:	 17 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 15
+Scene 167:   {Jenova▪LIFE} , {Hungry} , {Acrophies}
+	Formation 0:	 17 00 FF FF 01 00 FF FF A0 02 B4 02 B8 02 D2 00 ED FF 00 66
+	Formation 1:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 15
+	Formation 2:	 17 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 66
+	Formation 3:	 35 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 57
+Scene 168:   {Shred} , {Frozen Nail} , {Bandersnatch}
+	Formation 0:	 07 00 FF FF 01 00 FF FF C1 02 C9 02 D7 02 DC 02 FD FF 00 2D
+	Formation 1:	 07 00 FF FF 01 00 FF FF BC 02 C2 02 C7 02 C8 02 FD FF 00 0B
+	Formation 2:	 07 00 FF FF 01 00 FF FF BC 02 C2 02 C7 02 C8 02 FD FF 00 16
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+Scene 169:   {Frozen Nail} , {Snow} , {Bandersnatch}
+	Formation 0:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 07 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0B
+	Formation 2:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 16
+	Formation 3:	 07 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 03
+Scene 170:   {Hungry} , {Lessaloploth} , {Bandersnatch}
+	Formation 0:	 32 00 FF FF 02 00 FF FF BC 02 C2 02 C7 02 C8 02 ED FF 00 2D
+	Formation 1:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0B
+	Formation 2:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 16
+	Formation 3:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 03
+Scene 171:   {Ice Golem} , {Snow} , {Bandersnatch}
+	Formation 0:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0B
+	Formation 2:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 16
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+Scene 172:   {Ice Golem} , {Snow} , {Bandersnatch}
+	Formation 0:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 07 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0A
+	Formation 2:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 05 16
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 03
+Scene 173:   {Lessaloploth} , {Snow} , {Bandersnatch}
+	Formation 0:	 07 00 FF FF 01 00 FF FF C1 02 C9 02 D7 02 DC 02 ED FF 00 2D
+	Formation 1:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0B
+	Formation 2:	 07 00 FF FF 02 00 FF FF BC 02 C2 02 C7 02 C8 02 ED FF 00 09
+	Formation 3:	 07 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 03
+Scene 174:   {Magnade} , {[No Name]} , {[No Name]}
+	Formation 0:	 07 00 FF FF 02 00 FF FF C1 02 C9 02 D7 02 DC 02 ED FF 00 2D
+	Formation 1:	 07 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 2:	 07 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 07
+	Formation 3:	 07 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 01
+Scene 175:   {Malboro} , {Headbomber} , {Zolokalter}
+	Formation 0:	 07 00 FF FF 01 00 FF FF D4 02 DA 02 DD 02 BC 03 FD FF 00 2D
+	Formation 1:	 07 00 FF FF 02 00 FF FF 24 03 E3 00 1B 03 FD 02 ED FF 00 1B
+	Formation 2:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 07 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 176:   {Headbomber} , {Stilva} , {Zolokalter}
+	Formation 0:	 07 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 2D
+	Formation 1:	 32 00 FF FF 01 00 FF FF BD 02 CA 02 D1 02 DB 02 ED FF 00 1B
+	Formation 2:	 32 00 FF FF 01 00 FF FF D4 02 DA 02 DD 02 BC 03 FD FF 00 07
+	Formation 3:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 177:   {Stilva} , {Evilhead} , [NONE]
+	Formation 0:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 32 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 1B
+	Formation 2:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 07
+	Formation 3:	 32 00 FF FF 01 00 FF FF D4 02 DA 02 DD 02 BC 03 FD FF 00 01
+Scene 178:   {Blue Dragon} , {Headbomber} , {Cuahl}
+	Formation 0:	 32 00 FF FF 01 00 FF FF D4 02 DA 02 DD 02 BC 03 FD FF 00 2D
+	Formation 1:	 32 00 FF FF 01 00 FF FF BD 02 CA 02 D1 02 DB 02 FD FF 00 1B
+	Formation 2:	 32 00 FF FF 01 00 FF FF 24 03 E3 00 1B 03 FD 02 ED FF 00 07
+	Formation 3:	 32 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 01
+Scene 179:   {Icicle} , {Evilhead} , [NONE]
+	Formation 0:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 32 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 180:   {Gigas} , {Grenade} , [NONE]
+	Formation 0:	 3E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 3E 00 FF FF 01 00 FF FF 24 03 E3 00 1B 03 FD 02 ED FF 00 1B
+	Formation 2:	 3E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 3E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 05 01
+Scene 181:   {Gremlin} , {Ironite} , {Sculpture}
+	Formation 0:	 2D 00 FF FF 01 00 FF FF 24 03 E3 00 1B 03 FD 02 FD FF 00 2D
+	Formation 1:	 2D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 2:	 2D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 3:	 2D 00 FF FF 01 00 FF FF BD 02 CA 02 D1 02 DB 02 ED FF 00 01
+Scene 182:   {Gremlin} , {Wind Wing} , {Dragon Rider}
+	Formation 0:	 2D 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 29
+	Formation 1:	 2D 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 2D 00 FF FF 01 00 FF FF 24 03 E3 00 1B 03 FD 02 FD FF 00 07
+	Formation 3:	 2D 00 FF FF 01 00 FF FF 24 03 E3 00 1B 03 FD 02 ED FF 00 01
+Scene 183:   {Ironite} , {Wind Wing} , [NONE]
+	Formation 0:	 2D 00 FF FF 01 00 FF FF BD 02 CA 02 D1 02 DB 02 ED FF 00 2D
+	Formation 1:	 2D 00 FF FF 01 00 FF FF 24 03 E3 00 1B 03 FD 02 ED FF 00 1B
+	Formation 2:	 2D 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+	Formation 3:	 2D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 01
+Scene 184:   {Gremlin} , {Killbin} , {Tonberry}
+	Formation 0:	 2D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 2D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 2:	 2D 00 FF FF 03 00 FF FF 24 03 E3 00 1B 03 FD 02 ED FF 00 07
+	Formation 3:	 2D 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+Scene 185:   {Schizo(Right)} , {Schizo(Left)} , {Jenova▪DEATH}
+	Formation 0:	 32 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 EB FF 00 2F
+	Formation 1:	 2D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 1B
+	Formation 2:	 2D 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 07
+	Formation 3:	 2D 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 10
+Scene 186:   {Roulette Cannon} , {Pedestal} , {SOLDIER:2nd}
+	Formation 0:	 2C 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2F
+	Formation 1:	 2C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 2C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 3:	 2C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 01
+Scene 187:   {Death Machine} , {Slalom} , [NONE]
+	Formation 0:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 3:	 19 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 01
+Scene 188:   {SOLDIER:2nd} , {Death Machine} , {Slalom}
+	Formation 0:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 05 2D
+	Formation 1:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 2:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 3:	 19 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 01
+Scene 189:   {Guard System} , {Quick Machine Gun} , {Rocket Launcher}
+	Formation 0:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 2:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 3:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+Scene 190:   {SOLDIER:2nd} , {Submarine Crew} , [NONE]
+	Formation 0:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 2D
+	Formation 1:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 19 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 01
+Scene 191:   {Ghost Ship} , {Corvette} , {Diver Nest}
+	Formation 0:	 3B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 40
+	Formation 1:	 3B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 65
+	Formation 2:	 3B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 3:	 3B 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 01
+Scene 192:   {Submarine Crew} , {Underwater MP} , [NONE]
+	Formation 0:	 2E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 2D
+	Formation 1:	 2E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 1B
+	Formation 2:	 2E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 04 07
+	Formation 3:	 2E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 01
+Scene 193:   {Senior Grunt} , {Hard Attacker} , {Gun Carrier}
+	Formation 0:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 2E 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 01
+Scene 194:   {Guardian} , {Guardian(Right)} , {Guardian(Left)}
+	Formation 0:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 2D
+	Formation 1:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 1B
+	Formation 2:	 2E 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 02 07
+	Formation 3:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 04 01
+Scene 195:   {Carry Armor} , {Right Arm} , {Left Arm}
+	Formation 0:	 2E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 EB FF 00 2D
+	Formation 1:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 1B
+	Formation 2:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 07
+	Formation 3:	 2E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 01
+Scene 196:   {Submarine Crew} , {Captain} , [NONE]
+	Formation 0:	 19 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 2D
+	Formation 1:	 19 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 04 1B
+	Formation 2:	 19 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 07
+	Formation 3:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 197:   {Rilfsak} , {Diablo} , {Epiolnis}
+	Formation 0:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 21
+	Formation 1:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 13
+	Formation 2:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 3:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 03
+Scene 198:   {Rilfsak} , {Ho-chu} , [NONE]
+	Formation 0:	 4F 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 11
+	Formation 1:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 13
+	Formation 2:	 4F 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 03
+	Formation 3:	 4F 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 01
+Scene 199:   {Poodler} , {Bad Rap} , [NONE]
+	Formation 0:	 30 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 30 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 30 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 30 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 01
+Scene 200:   {Unknown} , {Unknown 3} , {Unknown 2}
+	Formation 0:	 30 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 30 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1A
+	Formation 2:	 30 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 06
+	Formation 3:	 30 00 FF FF 04 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 01
+Scene 201:   {Serpent} , {Turks:Reno} , {Turks:Rude}
+	Formation 0:	 30 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 30 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 30 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 30 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 01
+Scene 202:   {Gas Ducter} , {Wolfmeister} , {Eagle Gun}
+	Formation 0:	 47 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 40
+	Formation 1:	 47 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 40
+	Formation 2:	 47 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 40
+	Formation 3:	 47 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 40
+Scene 203:   {Attack Squad} , [NONE] , [NONE]
+	Formation 0:	 47 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 40
+	Formation 1:	 51 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 4C
+	Formation 2:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 204:   {Attack Squad} , {Senior Grunt} , {Turks:Rude}
+	Formation 0:	 27 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 15
+	Formation 1:	 27 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 66
+	Formation 2:	 27 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 05
+	Formation 3:	 19 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 01
+Scene 205:   {Cromwell} , {Manhole} , {Manhole(Lid)}
+	Formation 0:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 1:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 09
+	Formation 2:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 3:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+Scene 206:   {Behemoth} , {Cromwell} , {Crazy Saw}
+	Formation 0:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 3:	 1A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 0E
+Scene 207:   {Cromwell} , {Crazy Saw} , {Shadow Maker}
+	Formation 0:	 1A 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+	Formation 1:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 09
+	Formation 2:	 10 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 10 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 208:   {Crazy Saw} , {Shadow Maker} , [NONE]
+	Formation 0:	 10 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 1:	 10 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 2:	 10 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+	Formation 3:	 10 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 01
+Scene 209:   {Grosspanzer▪Big} , {Grosspanzer▪Small} , {Grosspanzer▪Mobile}
+	Formation 0:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 40
+	Formation 2:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 3:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 40
+Scene 210:   {Turks:Elena} , {Turks:Reno} , {Turks:Rude}
+	Formation 0:	 10 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 57
+	Formation 1:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 1A 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 211:   {Proud Clod} , {Jamar Armor} , [NONE]
+	Formation 0:	 34 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 FB FF 00 2D
+	Formation 1:	 25 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 1B
+	Formation 2:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 1B
+	Formation 3:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FF FF 00 1B
+Scene 212:   {SOLDIER:1st} , {XCannon} , [NONE]
+	Formation 0:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 03
+	Formation 2:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 33 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 01
+Scene 213:   {Eagle Gun} , {SOLDIER:1st} , {Maximum Kimaira}
+	Formation 0:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0F
+	Formation 1:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 0D
+	Formation 2:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 17
+	Formation 3:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 214:   {Hojo} , {Bad Rap Sample} , {Poodler Sample}
+	Formation 0:	 33 00 5C 03 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 30
+	Formation 1:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 215:   {Helletic Hojo} , {Right Arm} , {Left Arm}
+	Formation 0:	 33 00 60 03 09 00 FF FF E7 03 E7 03 E7 03 E7 03 FB FF 00 2D
+	Formation 1:	 33 00 5A 03 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 33 00 5B 03 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 33 00 5C 03 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 216:   {Lifeform-Hojo N} , [NONE] , [NONE]
+	Formation 0:	 33 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 1B
+	Formation 1:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 33 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+Scene 217:   {Gargoyle} , {Gargoyle} , {Dark Dragon}
+	Formation 0:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 2:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 3:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 218:   {Master Tonberry} , {Parasite} , [NONE]
+	Formation 0:	 36 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 1:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 36 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 01
+Scene 219:   {Pollensalta} , {Parasite} , {Death Dealer}
+	Formation 0:	 37 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 37 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 2:	 37 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 37 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 220:   {Malboro} , {Dragon Zombie} , {Death Dealer}
+	Formation 0:	 37 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 1:	 37 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 19
+	Formation 2:	 37 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 07
+	Formation 3:	 37 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 07
+Scene 221:   {Magic Pot} , {Christopher} , {Gighee}
+	Formation 0:	 38 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 38 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 38 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 09
+	Formation 3:	 38 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 03 07
+Scene 222:   {Allemagne} , {Master Tonberry} , {Mover}
+	Formation 0:	 38 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 29
+	Formation 1:	 38 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 2:	 38 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 2D
+	Formation 3:	 38 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+Scene 223:   {King Behemoth} , {Allemagne} , {Armored Golem}
+	Formation 0:	 20 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 66
+	Formation 1:	 20 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 0B
+	Formation 2:	 20 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 3:	 20 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 01
+Scene 224:   {Gargoyle} , {Gargoyle} , {Master Tonberry}
+	Formation 0:	 20 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 1:	 20 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 2:	 20 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 20 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+Scene 225:   {Allemagne} , {Dragon Zombie} , {Iron Man}
+	Formation 0:	 28 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 28 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 1B
+	Formation 2:	 28 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 3:	 28 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+Scene 226:   {Christopher} , {Gighee} , {Death Dealer}
+	Formation 0:	 28 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 28 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 28 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 28 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+Scene 227:   {Jenova▪SYNTHESIS} , [NONE] , [NONE]
+	Formation 0:	 46 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 EB FF 00 57
+	Formation 1:	 46 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 46 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 46 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 228:   {Bizarro▪Sephiroth} , [NONE] , [NONE]
+	Formation 0:	 01 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F3 FF 00 64
+	Formation 1:	 01 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 2D
+	Formation 2:	 01 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 2D
+	Formation 3:	 01 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 2D
+Scene 229:   {Bizarro▪Sephiroth} , [NONE] , [NONE]
+	Formation 0:	 44 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F3 FF 00 64
+	Formation 1:	 44 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 07
+	Formation 2:	 44 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 07
+	Formation 3:	 44 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 07
+Scene 230:   {Bizarro▪Sephiroth} , [NONE] , [NONE]
+	Formation 0:	 45 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F3 FF 00 64
+	Formation 1:	 45 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 1B
+	Formation 2:	 45 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 1B
+	Formation 3:	 45 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 1B
+Scene 231:   {Safer▪Sephiroth} , {Sephiroth} , [NONE]
+	Formation 0:	 39 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 59
+	Formation 1:	 4E 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 08 58
+	Formation 2:	 39 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 59
+	Formation 3:	 00 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 58
+Scene 232:   {Bizarro▪Sephiroth} , [NONE] , [NONE]
+	Formation 0:	 45 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F3 FF 00 64
+	Formation 1:	 45 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+	Formation 2:	 45 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+	Formation 3:	 45 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+Scene 233:   {Bizarro▪Sephiroth} , [NONE] , [NONE]
+	Formation 0:	 01 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F3 FF 00 64
+	Formation 1:	 01 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+	Formation 2:	 01 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+	Formation 3:	 01 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+Scene 234:   {Bizarro▪Sephiroth} , [NONE] , [NONE]
+	Formation 0:	 44 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F3 FF 00 64
+	Formation 1:	 44 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+	Formation 2:	 44 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+	Formation 3:	 44 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F1 FF 00 00
+Scene 235:   {Roulette Cannon} , {Pedestal} , {SOLDIER:2nd}
+	Formation 0:	 2C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 1:	 2C 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 66
+	Formation 2:	 2C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 3:	 2C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 01
+Scene 236:   {Attack Squad} , {SOLDIER:2nd} , [NONE]
+	Formation 0:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 05
+	Formation 1:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 04 01
+	Formation 3:	 19 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 237:   {Scissors} , {Scissors(Upper)} , {Scissors(Lower)}
+	Formation 0:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 1:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 07
+	Formation 2:	 36 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 02 1A
+	Formation 3:	 36 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 04 01
+Scene 238:   {êúô0(äñ)} , [NONE] , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 1:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+Scene 239:   {êúô0(äñ)} , {Tonberry} , [NONE]
+	Formation 0:	 25 00 FF FF 03 00 FF FF 24 03 E3 00 1B 03 FD 02 ED FF 00 07
+	Formation 1:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 240:   {Ho-chu} , {Unknown 3} , {Sea Worm}
+	Formation 0:	 25 00 C1 03 02 00 FF FF C1 03 C1 03 C1 03 C1 03 ED FF 00 2D
+	Formation 1:	 25 00 C2 03 09 00 FF FF C2 03 C2 03 C2 03 C2 03 E9 FF 00 01
+	Formation 2:	 25 00 C4 03 03 00 FF FF C4 03 C4 03 C4 03 C4 03 ED FF 00 1A
+	Formation 3:	 25 00 C4 03 03 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+Scene 241:   {Wolfmeister} , {Serpent} , [NONE]
+	Formation 0:	 25 00 C5 03 03 00 FF FF C5 03 C5 03 C5 03 C5 03 ED FF 00 2D
+	Formation 1:	 25 00 C8 03 09 00 FF FF C8 03 C8 03 C8 03 C8 03 F9 FF 00 40
+	Formation 2:	 04 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 F9 FF 00 40
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 242:   {Behemoth} , [NONE] , [NONE]
+	Formation 0:	 25 00 CC 03 01 00 FF FF CC 03 CC 03 CC 03 CC 03 ED FF 00 2D
+	Formation 1:	 25 00 C8 03 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 2:	 25 00 C8 03 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+	Formation 3:	 25 00 C8 03 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 2D
+Scene 243:   {Proud Clod} , {Jamar Armor} , {Maximum Kimaira}
+	Formation 0:	 25 00 CD 03 01 00 FF FF CD 03 CD 03 CD 03 CD 03 ED FF 00 0F
+	Formation 1:	 25 00 FF FF 09 00 FF FF 00 00 00 00 00 00 00 00 FB FF 00 2D
+	Formation 2:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 3:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+Scene 244:   {Rilfsak} , {Diablo} , {Epiolnis}
+	Formation 0:	 0E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 1:	 0E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 03
+	Formation 2:	 0E 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 01
+	Formation 3:	 0E 00 FF FF 02 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 02 02
+Scene 245:   {Diamond Weapon} , {Ruby Weapon} , {Ruby's Tentacle}
+	Formation 0:	 43 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E3 FF 00 40
+	Formation 1:	 43 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E3 FF 00 57
+	Formation 2:	 06 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 04 40
+	Formation 3:	 06 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 04 57
+Scene 246:   {Emerald Weapon} , {Leg} , {Eye}
+	Formation 0:	 54 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 40
+	Formation 1:	 54 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 57
+	Formation 2:	 54 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 40
+	Formation 3:	 54 00 FF FF 03 00 FF FF E7 03 E7 03 E7 03 E7 03 EF FF 00 57
+Scene 247:   {êúô2(ñ)} , {Ultimate Weapon} , [NONE]
+	Formation 0:	 3C 00 FF FF 09 00 FF FF E7 03 E7 03 E7 03 E7 03 E9 FF 00 34
+	Formation 1:	 3C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 2:	 3C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 3C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+Scene 248:   {Bloatfloat} , {Bagnadrana} , [NONE]
+	Formation 0:	 3C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 01
+	Formation 1:	 3C 00 FF FF 01 00 FF FF 00 00 00 00 00 00 00 00 ED FF 00 06
+	Formation 2:	 3C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 08
+	Formation 3:	 3C 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 ED FF 00 03
+Scene 249:   {êúô0(äñ)} , {êúô2(ñ)} , [NONE]
+	Formation 0:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 2D
+	Formation 1:	 04 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 1B
+	Formation 2:	 34 00 FF FF 01 00 FF FF E7 03 E7 03 E7 03 E7 03 FD FF 00 07
+	Formation 3:	 00 00 FF FF 01 00 FF FF 00 00 00 00 00 00 00 00 FF FF 00 01
+Scene 250:   [EMPTY]
+	Formation 0:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 1:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 2:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 3:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+Scene 251:   [EMPTY]
+	Formation 0:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 1:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 2:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 3:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+Scene 252:   [EMPTY]
+	Formation 0:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 1:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 2:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 3:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+Scene 253:   [EMPTY]
+	Formation 0:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 1:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 2:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 3:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+Scene 254:   [EMPTY]
+	Formation 0:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 1:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 2:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 3:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+Scene 255:   [EMPTY]
+	Formation 0:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 1:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 2:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+	Formation 3:	 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
