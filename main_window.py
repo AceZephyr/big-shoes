@@ -142,6 +142,11 @@ class MainWindow(QMainWindow):
         self.stepgraph.stop()
         self.disconnect()
 
+    def _exit(self):
+        self.stepgraph.stop()
+        self.disconnect()
+        exit()
+
     def __init__(self, _settings: settings.Settings, parent=None):
         super(MainWindow, self).__init__(parent)
 
@@ -165,7 +170,7 @@ class MainWindow(QMainWindow):
         menu_file = QMenu("File")
 
         menu_file_exit = QAction("Exit", self)
-        menu_file_exit.triggered.connect(exit)
+        menu_file_exit.triggered.connect(self._exit)
         menu_file.addAction(menu_file_exit)
 
         menu_connect = QMenu("Connect")

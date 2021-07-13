@@ -187,9 +187,9 @@ class Step:
             lure_rate = 1  # should never happen if the game is running, but it means it won't crash
         danger_threshold = (((RNG[self.step_id] - self.offset) % 256) + 1) * (4096 // lure_rate)
         step = self - 1
-        preempt_threhsold = ((RNG[(step.step_id + 1) % 256] - step.offset) % 256)
-        preempt = preempt_threhsold < (preempt_rate % 128)
-        return danger_threshold, preempt, preempt_threhsold
+        preempt_threshold = ((RNG[(step.step_id + 1) % 256] - step.offset) % 256)
+        preempt = preempt_threshold < (preempt_rate % 128)
+        return danger_threshold, preempt, preempt_threshold
 
 
 class State:
