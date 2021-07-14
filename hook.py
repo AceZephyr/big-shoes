@@ -122,7 +122,6 @@ def adjust_privilege(name, attr=win32security.SE_PRIVILEGE_ENABLED):
 
 
 def psxfin_address_func(hook, process_handle, address: Address, version: str):
-    address.psx_address
     if hook.base_cache is None:
         module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
         for module_handle in sorted(module_handles):
