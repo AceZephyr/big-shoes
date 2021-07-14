@@ -25,3 +25,5 @@ Big Shoes is compatible with:
 ## To Do
 
 Currently implementing Duckstation support.
+
+Considering Linux support.
