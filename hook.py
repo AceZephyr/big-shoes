@@ -11,6 +11,8 @@ import win32security
 import constants
 import stepgraph
 
+import re
+
 if TYPE_CHECKING:
     from main_window import MainWindow
 
@@ -83,11 +85,12 @@ def get_emu_process_ids():
             if GetProcessImageFileName(hProcess, ImageFileName, MAX_PATH) > 0:
                 filename_bytes = os.path.basename(ImageFileName.value)
                 filename = filename_bytes.decode("ascii")
-                if filename in Hook.EMULATOR_MAP.keys():
-                    if filename in pids:
-                        pids[filename].append(process_id)
-                    else:
-                        pids[filename] = [process_id]
+                for emu_name in Hook.EMULATOR_MAP.keys():
+                    if re.search(Hook.EMULATOR_MAP[emu_name][0], filename):
+                        if emu_name in pids:
+                            pids[emu_name].append(process_id)
+                        else:
+                            pids[emu_name] = [process_id]
             CloseHandle(hProcess)
     return pids
 
@@ -159,25 +162,16 @@ def bizhawk_address_func(hook, process_handle, address: Address, version: str):
     return hook.base_cache + address.psx_address
 
 
-# def epsxe_address_func(hook, process_handle, address: Address, version: str):
-#     if hook.base_cache is None:
-#         module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
-#         for module_handle in sorted(module_handles):
-#             filename = win32process.GetModuleFileNameEx(process_handle, module_handle)
-#             if filename.lower().endswith("epsxe.exe"):
-#                 hook.base_cache = module_handle + 0x6579A0
-#     return hook.base_cache + address.psx_address
-#
-#
-# def nocashpsx_address_func(hook, process_handle, address: Address, version: str):
-#     raise NotImplementedError("no$psx support not implemented yet")
-
-
 def retroarch_address_func(hook, process_handle, address: Address, version: str):
     if version == "3":
         return 0x30000000 + address.psx_address
     elif version == "4":
         return 0x40000000 + address.psx_address
+
+
+def duckstation_address_func(hook, process_handle, address: Address, version: str):
+    if version == "8":
+        return 0x80000000 + address.psx_address
 
 
 def pc_address_func(hook, process_handle, address: Address, version: str):
@@ -196,13 +190,34 @@ class Hook:
         return self.hooked_platform.read_int(self, address, size)
 
     EMULATOR_MAP = {
-        "psxfin.exe": [HookablePlatform("PSXfin v1.13", True, "1.13", psxfin_address_func)],
-        "EmuHawk.exe": [HookablePlatform("BizHawk 2.6.2", True, "1", bizhawk_address_func),
-                        HookablePlatform("BizHawk 2.5.2 - 2.6.1", True, "2", bizhawk_address_func),
-                        HookablePlatform("BizHawk 2.4.1 - 2.5.1", True, "3", bizhawk_address_func),
-                        HookablePlatform("BizHawk 2.3.2 - 2.4.0", True, "4", bizhawk_address_func)],
-        "retroarch.exe": [HookablePlatform("Base Address 0x30000000", True, "3", retroarch_address_func),
-                          HookablePlatform("Base Address 0x40000000", True, "4", retroarch_address_func)],
+        "PSXFin": (
+            "[Pp][Ss][Xx][Ff][Ii][Nn]",
+            [
+                HookablePlatform("PSXfin v1.13", True, "1.13", psxfin_address_func)
+            ]
+        ),
+        "BizHawk": (
+            "[Ee]mu[Hh]awk",
+            [
+                HookablePlatform("BizHawk 2.6.2", True, "1", bizhawk_address_func),
+                HookablePlatform("BizHawk 2.5.2 - 2.6.1", True, "2", bizhawk_address_func),
+                HookablePlatform("BizHawk 2.4.1 - 2.5.1", True, "3", bizhawk_address_func),
+                HookablePlatform("BizHawk 2.3.2 - 2.4.0", True, "4", bizhawk_address_func)
+            ]
+        ),
+        "Retroarch": (
+            "[Rr]etro[Aa]rch",
+            [
+                HookablePlatform("0x30000000", True, "3", retroarch_address_func),
+                HookablePlatform("0x40000000", True, "4", retroarch_address_func)
+            ]
+        ),
+        "Duckstation": (
+            "[Dd]uck[Ss]tation",
+            [
+                HookablePlatform("0x80000000", True, "8", duckstation_address_func)
+            ]
+        )
     }
 
     PC_PLATFORM = HookablePlatform("PC", False, "", pc_address_func)

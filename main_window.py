@@ -22,7 +22,7 @@ class ConnectEmuDialog(QDialog):
         self.process_select.clear()
         self.process_select.insertItems(0, sorted(list([str(x) for x in self.pids[self.emu_select.itemText(index)]])))
         self.version_select.clear()
-        self.version_select.insertItems(0, [x.name for x in hook.Hook.EMULATOR_MAP[self.emu_select.itemText(index)]])
+        self.version_select.insertItems(0, [x.name for x in hook.Hook.EMULATOR_MAP[self.emu_select.itemText(index)][1]])
 
     def show_window_button(self):
         def _callback(hwnd, pid):
@@ -34,7 +34,7 @@ class ConnectEmuDialog(QDialog):
 
     def connect_button(self):
         for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()]:
-            if platform_version.name == self.version_select.currentText():
+            if platform_version[1].name == self.version_select.currentText():
                 self.parent_app.hook.hooked_platform = platform_version
                 self.parent_app.hook.hooked_process_id = int(self.process_select.currentText())
                 self.parent_app.hook.start()
@@ -60,9 +60,9 @@ class ConnectEmuDialog(QDialog):
 
         self.on_emu_select(0)
 
-        layout.addWidget(QLabel("Emulator Process name:"), 0, 0)
-        layout.addWidget(QLabel("Emulator Process id:"), 0, 1)
-        layout.addWidget(QLabel("Emulator version:"), 0, 2)
+        layout.addWidget(QLabel("Emulator Name:"), 0, 0)
+        layout.addWidget(QLabel("Emulator Process ID:"), 0, 1)
+        layout.addWidget(QLabel("Emulator Version:"), 0, 2)
         layout.addWidget(self.emu_select, 1, 0)
         layout.addWidget(self.process_select, 1, 1)
         layout.addWidget(self.version_select, 1, 2)
