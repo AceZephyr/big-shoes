@@ -33,8 +33,8 @@ class ConnectEmuDialog(QDialog):
         win32gui.EnumWindows(_callback, int(self.process_select.currentText()))
 
     def connect_button(self):
-        for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()]:
-            if platform_version[1].name == self.version_select.currentText():
+        for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()][1]:
+            if platform_version.name == self.version_select.currentText():
                 self.parent_app.hook.hooked_platform = platform_version
                 self.parent_app.hook.hooked_process_id = int(self.process_select.currentText())
                 self.parent_app.hook.start()
