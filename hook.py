@@ -216,13 +216,13 @@ class Hook:
         "Retroarch": (
             "[Rr]etro[Aa]rch",
             [
-                HookablePlatform("0x30000000", True, "3", retroarch_address_func),
-                HookablePlatform("0x40000000", True, "4", retroarch_address_func)
-                HookablePlatform("0x50000000", True, "5", retroarch_address_func)
-                HookablePlatform("0x60000000", True, "6", retroarch_address_func)
-                HookablePlatform("0x70000000", True, "7", retroarch_address_func)
-                HookablePlatform("0x80000000", True, "8", retroarch_address_func)
-                HookablePlatform("0x90000000", True, "9", retroarch_address_func)
+                HookablePlatform("Retroarch 0x30000000", True, "3", retroarch_address_func),
+                HookablePlatform("Retroarch 0x40000000", True, "4", retroarch_address_func),
+                HookablePlatform("Retroarch 0x50000000", True, "5", retroarch_address_func),
+                HookablePlatform("Retroarch 0x60000000", True, "6", retroarch_address_func),
+                HookablePlatform("Retroarch 0x70000000", True, "7", retroarch_address_func),
+                HookablePlatform("Retroarch 0x80000000", True, "8", retroarch_address_func),
+                HookablePlatform("Retroarch 0x90000000", True, "9", retroarch_address_func)
             ]
         ),
         # "Duckstation": (
