@@ -5,4 +5,4 @@ if %ERRORLEVEL% NEQ 0 (
     pause
     exit
 )
-python ./main_window.py
+python main_window.py
