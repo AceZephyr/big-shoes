@@ -1,11 +1,13 @@
 import sys
+import re
 
 import win32gui
 import win32process
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon, QAction
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QMenuBar, QMenu, QFrame, QApplication, QTableWidget, QLabel, \
-    QAbstractItemView, QTableWidgetItem, QMessageBox, QDialog, QComboBox, QGridLayout, QPushButton, QHeaderView
+    QAbstractItemView, QTableWidgetItem, QMessageBox, QDialog, QComboBox, QGridLayout, QPushButton, QHeaderView, \
+    QLineEdit
 
 import formation_extrapolator
 import formation_type_list
@@ -35,10 +37,48 @@ class ConnectEmuDialog(QDialog):
     def connect_button(self):
         for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()][1]:
             if platform_version.name == self.version_select.currentText():
+
+                if platform_version.version == "__MANUAL__":
+                    if re.fullmatch("[0-9a-fA-F]+", self.manual_address_textbox.text()):
+                        self.parent_app.hook.manual_address = int(self.manual_address_textbox.text(), 16)
+                    else:
+                        self.parent_app.hook.manual_address = None
+                        box = QMessageBox()
+                        box.setIcon(QMessageBox.Information)
+                        box.setWindowTitle("Invalid manual offset")
+                        box.setText("Must input a valid address for a manual offset in Manual mode.")
+                        box.setStandardButtons(QMessageBox.Ok)
+                        box.exec()
+                        return
+
                 self.parent_app.hook.hooked_platform = platform_version
                 self.parent_app.hook.hooked_process_id = int(self.process_select.currentText())
                 self.parent_app.hook.start()
                 self.close()
+
+    def manual_calculate_button(self):
+        for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()][1]:
+            if platform_version.name == self.version_select.currentText():
+                if platform_version.version != "__MANUAL__":
+                    box = QMessageBox()
+                    box.setIcon(QMessageBox.Information)
+                    box.setWindowTitle("Must be using Manual Addressing")
+                    box.setText("Must be on manual addressing to calculate an offset.")
+                    box.setStandardButtons(QMessageBox.Ok)
+                    box.exec()
+                    return
+
+                addr = hook.retroarch_search(int(self.process_select.currentText()))
+                if addr is not None:
+                    self.manual_address_textbox.setText(hex(addr)[2:].upper())
+                else:
+                    box = QMessageBox()
+                    box.setIcon(QMessageBox.Information)
+                    box.setWindowTitle("Could not find memory")
+                    box.setText("Could not find the memory offset.")
+                    box.setStandardButtons(QMessageBox.Ok)
+                    box.exec()
+                    return
 
     def __init__(self, pids, parent_app: "MainWindow", parent=None):
         super(ConnectEmuDialog, self).__init__(parent)
@@ -56,6 +96,8 @@ class ConnectEmuDialog(QDialog):
 
         self.version_select = QComboBox(self)
 
+        self.manual_address_textbox = QLineEdit(self)
+
         self.emu_select.activated.connect(self.on_emu_select)
 
         self.on_emu_select(0)
@@ -63,9 +105,11 @@ class ConnectEmuDialog(QDialog):
         layout.addWidget(QLabel("Emulator Name:"), 0, 0)
         layout.addWidget(QLabel("Emulator Process ID:"), 0, 1)
         layout.addWidget(QLabel("Emulator Version:"), 0, 2)
+        layout.addWidget(QLabel("Manual Address:"), 0, 3)
         layout.addWidget(self.emu_select, 1, 0)
         layout.addWidget(self.process_select, 1, 1)
         layout.addWidget(self.version_select, 1, 2)
+        layout.addWidget(self.manual_address_textbox, 1, 3)
 
         button_show_this_window = QPushButton("Show This Window")
         button_show_this_window.clicked.connect(self.show_window_button)
@@ -74,7 +118,12 @@ class ConnectEmuDialog(QDialog):
         button_connect = QPushButton("Connect")
         button_connect.clicked.connect(self.connect_button)
         button_connect.setDefault(True)
-        layout.addWidget(button_connect, 3, 1)
+        layout.addWidget(button_connect, 2, 2)
+
+        button_manual_calculate = QPushButton("Address Search")
+        button_manual_calculate.clicked.connect(self.manual_calculate_button)
+        button_manual_calculate.setDefault(True)
+        layout.addWidget(button_manual_calculate, 2, 3)
 
         self.setLayout(layout)
 

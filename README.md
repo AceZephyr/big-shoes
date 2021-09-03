@@ -6,7 +6,7 @@ Big Shoes is a standalone Final Fantasy 7 stepgraph viewer written in Python.
 
 Download or pull this repository.
 
-If you don't have Python installed, the easiest way to get it is from the Microsoft Store. Get the latest (non-beta) version.
+If you don't have Python installed, the easiest way to get it is from the [Microsoft Store](https://www.microsoft.com/en-us/p/python-39/9p7qfqmjrfp7).
 
 Double click _setup_python.bat to install necessary packages.
 
@@ -35,6 +35,8 @@ Keys:
 - Ctrl+P: Toggle preemptive battle checks
 - X: Toggle extrapolation lines
 - M: Toggle encounter marks
+- R: Reset Step Position
+- D: Reset Danger Scaling
 
 ### Formation Extrapolator
 
@@ -58,8 +60,6 @@ Big Shoes is compatible with:
 - PSXFin v1.13
 
 ## To Do
-
-Currently implementing Duckstation support.
 
 Considering Linux support.
 

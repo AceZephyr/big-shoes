@@ -162,24 +162,23 @@ def bizhawk_address_func(hook, process_handle, address: Address, version: str):
     return hook.base_cache + address.psx_address
 
 
-_RETROARCH_ADDRESS_MAP = {
-    "3": 0x30000000,
-    "4": 0x40000000,
-    "5": 0x50000000,
-    "6": 0x60000000,
-    "7": 0x70000000,
-    "8": 0x80000000,
-    "9": 0x90000000
-}
+def retroduck_address_func(hook, process_handle, address: Address, version: str):
+    if hook.base_cache is None:
+        module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
+        for module_handle in sorted(module_handles):
+            filename = win32process.GetModuleFileNameEx(process_handle, module_handle)
+            if filename.lower().endswith("duckstation_libretro.dll"):
+                base1 = module_handle + 0x40E078
+                hook.base_cache = int.from_bytes(win32process.ReadProcessMemory(process_handle, base1, 8),
+                                                 byteorder='little')
+                break
+    return hook.base_cache + address.psx_address
 
 
-def retroarch_address_func(hook, process_handle, address: Address, version: str):
-    return _RETROARCH_ADDRESS_MAP[version] + address.psx_address
-
-
-def duckstation_address_func(hook, process_handle, address: Address, version: str):
-    if version == "8":
-        return 0x80000000 + address.psx_address
+def manual_address_func(hook, process_handle, address: Address, version: str):
+    if hook.manual_address is None:
+        raise Exception("No manual address")
+    return hook.manual_address + address.psx_address
 
 
 def pc_address_func(hook, process_handle, address: Address, version: str):
@@ -190,6 +189,42 @@ def pc_address_func(hook, process_handle, address: Address, version: str):
             if filename.lower().endswith("ff7_en.exe"):
                 hook.base_cache = module_handle
     return hook.base_cache + address.pc_address
+
+
+_RETROARCH_KNOWN_ADDRESSES = [
+    0x30000000,
+    0x7FFF0000,
+    0x80000000
+]
+
+
+def retroarch_try(process_handle, addr: int):
+    for x in range(0, len(constants.RNG)):
+        try:
+            if (int.from_bytes(win32process.ReadProcessMemory(process_handle, 0xE0638 + addr + x, 1),
+                               byteorder='little') !=
+                    constants.RNG[x]):
+                return False
+        except Exception as e:  # memory probably wasn't mapped so it errored
+            return False
+    return True
+
+
+def retroarch_search(process_id):
+    adjust_privilege(win32security.SE_DEBUG_NAME)
+    hooked_process_handle = OpenProcess(0x1F0FFF, False, process_id)
+    # try known addresses first
+    for addr in _RETROARCH_KNOWN_ADDRESSES:
+        if retroarch_try(hooked_process_handle, addr):
+            CloseHandle(hooked_process_handle)
+            return addr
+    # attempt to search for it anyway
+    for addr in range(0, 0xFFFFFFFF, 0x1000):
+        if retroarch_try(hooked_process_handle, addr):
+            CloseHandle(hooked_process_handle)
+            return addr
+    CloseHandle(hooked_process_handle)
+    return None
 
 
 class Hook:
@@ -216,21 +251,10 @@ class Hook:
         "Retroarch": (
             "[Rr]etro[Aa]rch",
             [
-                HookablePlatform("Retroarch 0x30000000", True, "3", retroarch_address_func),
-                HookablePlatform("Retroarch 0x40000000", True, "4", retroarch_address_func),
-                HookablePlatform("Retroarch 0x50000000", True, "5", retroarch_address_func),
-                HookablePlatform("Retroarch 0x60000000", True, "6", retroarch_address_func),
-                HookablePlatform("Retroarch 0x70000000", True, "7", retroarch_address_func),
-                HookablePlatform("Retroarch 0x80000000", True, "8", retroarch_address_func),
-                HookablePlatform("Retroarch 0x90000000", True, "9", retroarch_address_func)
+                HookablePlatform("Retroarch Duckstation", True, "Duck", retroduck_address_func),
+                HookablePlatform("Retroarch (Manual)", True, "__MANUAL__", manual_address_func),
             ]
-        ),
-        # "Duckstation": (
-        #     "[Dd]uck[Ss]tation",
-        #     [
-        #         HookablePlatform("0x80000000", True, "8", duckstation_address_func)
-        #     ]
-        # )
+        )
     }
 
     PC_PLATFORM = HookablePlatform("PC", False, "", pc_address_func)
@@ -353,6 +377,7 @@ class Hook:
     def __init__(self, app: "MainWindow"):
         self.app = app
         self.base_cache = None
+        self.manual_address = None
         self.thread = threading.Thread(target=self.main)
         self.running = False
 

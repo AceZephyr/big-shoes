@@ -15,6 +15,7 @@ RNG = [177, 202, 238, 108, 90, 113, 46, 85, 214, 0, 204, 153, 144, 107, 125, 235
        226, 155, 166, 66, 82, 87, 95, 229, 171, 176, 12]
 
 # All offset values in order
+# OFFSET_TABLE[x] = 13*x mod 256
 OFFSET_TABLE = [0, 13, 26, 39, 52, 65, 78, 91, 104, 117, 130, 143, 156, 169, 182, 195, 208, 221, 234, 247, 4, 17, 30,
                 43, 56, 69, 82, 95, 108, 121, 134, 147, 160, 173, 186, 199, 212, 225, 238, 251, 8, 21, 34, 47, 60, 73,
                 86, 99, 112, 125, 138, 151, 164, 177, 190, 203, 216, 229, 242, 255, 12, 25, 38, 51, 64, 77, 90, 103,
@@ -30,6 +31,7 @@ OFFSET_TABLE = [0, 13, 26, 39, 52, 65, 78, 91, 104, 117, 130, 143, 156, 169, 182
 
 # The inverse of OFFSET_TABLE. INVERSE_OFFSET_TABLE[OFFSET_TABLE[x]] = x. Effectively stores the index of each offset
 # value in OFFSET_TABLE.
+# 197 is the modular multiplicative inverse of 13 mod 256, so INVERSE_OFFSET_TABLE[x] = 197*x mod 256
 INVERSE_OFFSET_TABLE = [0, 197, 138, 79, 20, 217, 158, 99, 40, 237, 178, 119, 60, 1, 198, 139, 80, 21, 218, 159, 100,
                         41, 238, 179, 120, 61, 2, 199, 140, 81, 22, 219, 160, 101, 42, 239, 180, 121, 62, 3, 200, 141,
                         82, 23, 220, 161, 102, 43, 240, 181, 122, 63, 4, 201, 142, 83, 24, 221, 162, 103, 44, 241, 182,
@@ -184,7 +186,7 @@ class Step:
     # returns tuple: (danger threshold, is preemptive given current preempt rate, preemptive threshold)
     def encounter_threshold(self, lure_rate: int = 16, preempt_rate: int = 16):
         if lure_rate == 0:
-            lure_rate = 1  # should never happen if the game is running, but it means it won't crash
+            lure_rate = 1  # prevents div by 0 if memory isn't set up right
         danger_threshold = (((RNG[self.step_id] - self.offset) % 256) + 1) * (4096 // lure_rate)
         step = self - 1
         preempt_threshold = ((RNG[(step.step_id + 1) % 256] - step.offset) % 256)
@@ -360,9 +362,6 @@ with open("initial_setup_data_dump", "r") as a:
                 if setup_data[18] != 0xFF:
                     ENCOUNTER_DATA[4 * s + f] = Formation(fm_data, setup_data)
 
-# for e in ENCOUNTER_DATA:
-#     print(ENCOUNTER_DATA[e].encounter_type.label)
-# breakpoint()
 
 ENEMY_DATA = {
     "16": {

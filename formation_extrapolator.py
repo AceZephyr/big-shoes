@@ -50,7 +50,7 @@ class FormationExtrapolator(QDialog):
         super(FormationExtrapolator, self).__init__(app)
         self.app = app
 
-        self.setWindowTitle(self.app.windowTitle())
+        self.setWindowTitle("Formation Extrapolator")
         self.setWindowIcon(self.app.windowIcon())
 
         layout = QVBoxLayout()
