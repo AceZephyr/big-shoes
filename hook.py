@@ -158,6 +158,7 @@ def bizhawk_address_func(hook, process_handle, address: Address, version: str):
                 else:
                     raise NotImplementedError("BizHawk version not implemented: " + version)
         if hook.base_cache is None:
+            hook.stop()
             raise Exception("asdf")
     return hook.base_cache + address.psx_address
 
@@ -297,6 +298,8 @@ class Hook:
                 update = False
                 force_update = time.time() - last_update_time > 1
 
+                self.app.setUpdatesEnabled(False)
+
                 if force_update or new_stepid != self.app.current_step_state.step.step_id:
                     update = True
                     self.app.memory_view.cellWidget(0, 1).setText(" " + str(new_stepid))
@@ -344,10 +347,12 @@ class Hook:
                     self.app.memory_view.cellWidget(10, 1).setText(" " + str(new_last_encounter_formation))
                     self.app.current_step_state.last_encounter_formation = new_last_encounter_formation
 
+                self.app.setUpdatesEnabled(True)
+
                 if update:
+                    self.app.memory_view.update()
                     self.app.stepgraph.signal_update()
                     self.app.update_formation_windows()
-                    self.app.update()
                     last_update_time = time.time()
 
             except Exception as e:

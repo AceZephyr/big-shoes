@@ -35,7 +35,7 @@ class Settings:
         self.Y_GRIDLINE_HEIGHT = 12
         self.SCROLL_STEPS = self.STEP_PER_GRIDLINE
         self.HOLD_SHIFT_SCROLL_MULTIPLIER = 10
-        self.UPDATES_PER_SECOND = 20
+        self.UPDATES_PER_SECOND = 30
         self.DEFAULT_TRACK_LEFT_OFFSET = 4
 
         self.DISPLAY_PREEMPTIVE_BATTLE_CHECKS_DEFAULT = True
