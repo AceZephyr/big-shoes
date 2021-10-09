@@ -34,6 +34,8 @@ class ConnectEmuDialog(QDialog):
 
         win32gui.EnumWindows(_callback, int(self.process_select.currentText()))
 
+    # def guess_version_button(self):
+
     def connect_button(self):
         for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()][1]:
             if platform_version.name == self.version_select.currentText():
@@ -111,14 +113,17 @@ class ConnectEmuDialog(QDialog):
         layout.addWidget(self.version_select, 1, 2)
         layout.addWidget(self.manual_address_textbox, 1, 3)
 
-        button_show_this_window = QPushButton("Show This Window")
-        button_show_this_window.clicked.connect(self.show_window_button)
-        layout.addWidget(button_show_this_window, 2, 1)
-
         button_connect = QPushButton("Connect")
         button_connect.clicked.connect(self.connect_button)
         button_connect.setDefault(True)
         layout.addWidget(button_connect, 2, 2)
+
+        button_show_this_window = QPushButton("Show This Window")
+        button_show_this_window.clicked.connect(self.show_window_button)
+        layout.addWidget(button_show_this_window, 2, 1)
+
+        # button_guess_version = QPushButton("Guess Version")
+        # button_guess_version.clicked.connect(self.)
 
         button_manual_calculate = QPushButton("Address Search")
         button_manual_calculate.clicked.connect(self.manual_calculate_button)

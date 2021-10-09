@@ -203,8 +203,7 @@ def retroarch_try(process_handle, addr: int):
     for x in range(0, len(constants.RNG)):
         try:
             if (int.from_bytes(win32process.ReadProcessMemory(process_handle, 0xE0638 + addr + x, 1),
-                               byteorder='little') !=
-                    constants.RNG[x]):
+                               byteorder='little') != constants.RNG[x]):
                 return False
         except Exception as e:  # memory probably wasn't mapped so it errored
             return False
@@ -298,7 +297,7 @@ class Hook:
                 update = False
                 force_update = time.time() - last_update_time > 1
 
-                self.app.setUpdatesEnabled(False)
+                # self.app.memory_view.setUpdatesEnabled(False)
 
                 if force_update or new_stepid != self.app.current_step_state.step.step_id:
                     update = True
@@ -347,13 +346,14 @@ class Hook:
                     self.app.memory_view.cellWidget(10, 1).setText(" " + str(new_last_encounter_formation))
                     self.app.current_step_state.last_encounter_formation = new_last_encounter_formation
 
-                self.app.setUpdatesEnabled(True)
+                # self.app.memory_view.setUpdatesEnabled(True)
 
                 if update:
-                    self.app.memory_view.update()
                     self.app.stepgraph.signal_update()
                     self.app.update_formation_windows()
                     last_update_time = time.time()
+
+                # self.app.memory_view.update()
 
             except Exception as e:
                 if e is RuntimeError:
