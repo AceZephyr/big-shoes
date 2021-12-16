@@ -1,12 +1,12 @@
 import threading
 import time
-from copy import copy
 from enum import Enum, auto
 
 from dearpygui import dearpygui as dpg
 
 import constants
 import hook
+from main_window import center, show_error
 
 WIDTH = 150
 WIDTH_DIVISION = 4
@@ -19,6 +19,31 @@ MIN_TOP_DANGER = 500
 class DisplayMode(Enum):
     DEFAULT = auto(),
     TRACK = auto()
+
+
+class SpecificStepDialog:
+    def go(self):
+        stepid = dpg.get_value(self.input_stepid)
+        offset = dpg.get_value(self.input_offset)
+        if not stepid.isnumeric() or not offset.isnumeric() or int(stepid) % 2 == 1:
+            show_error("Invalid Input", "Not a valid step.")
+            return
+        destination_step = constants.Step(step_id=int(stepid), offset=int(offset))
+        self.callback(destination_step)
+        dpg.delete_item(self.modal_id)
+
+    def __init__(self, callback):
+        self.callback = callback
+
+        with dpg.mutex():
+            with dpg.window(label="Go To Specific Step", modal=True, no_collapse=True, no_resize=True) as modal_id:
+                self.modal_id = modal_id
+                with dpg.group(width=200):
+                    self.input_stepid = dpg.add_input_text(label="Step ID")
+                    self.input_offset = dpg.add_input_text(label="Offset")
+                    dpg.add_separator()
+                    self.button_go = dpg.add_button(label="Go", callback=self.go)
+        center(modal_id)
 
 
 class Stepgraph:
@@ -68,6 +93,15 @@ class Stepgraph:
         # TODO: where tf do these numbers 16 and 36 come from and how can i calculate these based on the current layout?
         dpg.set_item_width(self.plot_id, dpg.get_item_width(self.window_id) - 16)
         dpg.set_item_height(self.plot_id, dpg.get_item_height(self.window_id) - 54)
+
+    def goto_current_position(self):
+        self.track_mode_left_offset = self.parent_app.settings.DEFAULT_TRACK_LEFT_OFFSET
+
+    def specific_step_callback(self, step):
+        self.track_mode_left_offset = self.step_state.step - step
+
+    def click_goto_specific_step(self):
+        SpecificStepDialog(callback=self.specific_step_callback)
 
     def main(self):
         def _read(_orig_val, k, _u):
@@ -288,6 +322,17 @@ class Stepgraph:
                     self.menu_preempt_encounter_thresholds = dpg.add_menu_item(
                         label="Preemptive Encounter Thresholds", check=True, default_value=True)
                     self.stored_preemt_encounter_thresholds = dpg.get_value(self.menu_preempt_encounter_thresholds)
+
+                with dpg.menu(label="Go To") as goto_menu:
+                    self.goto_menu_id = goto_menu
+
+                    self.menu_current_position = dpg.add_menu_item(
+                        label="Current Position", callback=self.goto_current_position
+                    )
+
+                    self.menu_goto_step = dpg.add_menu_item(
+                        label="Specific Step", callback=self.click_goto_specific_step
+                    )
 
         dpg.set_axis_ticks(self.x_axis, tuple([("", x) for x in range(MAX_WIDTH + 1000)]))
 
