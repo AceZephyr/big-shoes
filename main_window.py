@@ -1,313 +1,258 @@
-import sys
 import re
+import sys
+import threading
+import time
 
-import win32gui
-import win32process
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QIcon, QAction
-from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QMenuBar, QMenu, QFrame, QApplication, QTableWidget, QLabel, \
-    QAbstractItemView, QTableWidgetItem, QMessageBox, QDialog, QComboBox, QGridLayout, QPushButton, QHeaderView, \
-    QLineEdit
-
-import formation_extrapolator
-import formation_type_list
+from dearpygui import dearpygui as dpg
 
 import hook
 import settings
-import stepgraph
-from constants import *
+import stepgraph_new
 
 
-class ConnectEmuDialog(QDialog):
+def center(modal_id):
+    viewport_width = dpg.get_viewport_client_width()
+    viewport_height = dpg.get_viewport_client_height()
 
-    def on_emu_select(self, index):
-        self.process_select.clear()
-        self.process_select.insertItems(0, sorted(list([str(x) for x in self.pids[self.emu_select.itemText(index)]])))
-        self.version_select.clear()
-        self.version_select.insertItems(0, [x.name for x in hook.Hook.EMULATOR_MAP[self.emu_select.itemText(index)][1]])
+    dpg.split_frame()
+    width = dpg.get_item_width(modal_id)
+    height = dpg.get_item_height(modal_id)
+    dpg.set_item_pos(modal_id, [viewport_width // 2 - width // 2, viewport_height // 2 - height // 2])
 
-    def show_window_button(self):
-        def _callback(hwnd, pid):
-            thread_id, process_id = win32process.GetWindowThreadProcessId(hwnd)
-            if process_id == pid:
-                win32gui.BringWindowToTop(hwnd)
 
-        win32gui.EnumWindows(_callback, int(self.process_select.currentText()))
+def show_error(title, message, selection_callback=None):
+    def _callback(sender, unused, user_data):
+        dpg.delete_item(user_data[0])
+        if selection_callback is not None:
+            selection_callback(user_data)
 
-    # def guess_version_button(self):
+    with dpg.mutex():
+        with dpg.window(label=title, modal=True, no_close=True) as modal_id:
+            dpg.add_text(message)
+            dpg.add_button(label="Ok", width=75, user_data=(modal_id, True), callback=_callback)
 
-    def connect_button(self):
-        for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()][1]:
-            if platform_version.name == self.version_select.currentText():
+    center(modal_id)
+
+
+class ConnectEmulatorDialog:
+    def on_emulator_select(self):
+        selected_emu = dpg.get_value(self.input_emu_name)
+        pids = self.pids[selected_emu]
+        dpg.configure_item(self.input_emu_pid, items=pids, default_value=pids[0])
+        versions = [x.name for x in hook.Hook.EMULATOR_MAP[selected_emu][1]]
+        dpg.configure_item(self.input_emu_ver, items=versions, default_value=versions[0])
+
+    def click_connect(self):
+        selected_emu = dpg.get_value(self.input_emu_name)
+        selected_pid = dpg.get_value(self.input_emu_pid)
+        selected_version = dpg.get_value(self.input_emu_ver)
+        manual_address = dpg.get_value(self.input_manual_addr)
+
+        for platform_version in hook.Hook.EMULATOR_MAP[selected_emu][1]:
+            if platform_version.name == selected_version:
 
                 if platform_version.version == "__MANUAL__":
-                    if re.fullmatch("[0-9a-fA-F]+", self.manual_address_textbox.text()):
-                        self.parent_app.hook.manual_address = int(self.manual_address_textbox.text(), 16)
+                    if re.fullmatch("[0-9a-fA-F]+", manual_address):
+                        self.parent_app.hook.manual_address = int(manual_address, 16)
                     else:
                         self.parent_app.hook.manual_address = None
-                        box = QMessageBox()
-                        box.setIcon(QMessageBox.Information)
-                        box.setWindowTitle("Invalid manual offset")
-                        box.setText("Must input a valid address for a manual offset in Manual mode.")
-                        box.setStandardButtons(QMessageBox.Ok)
-                        box.exec()
+                        show_error("Invalid manual offset",
+                                   "Must input a valid address for a manual offset in Manual mode.")
                         return
 
                 self.parent_app.hook.hooked_platform = platform_version
-                self.parent_app.hook.hooked_process_id = int(self.process_select.currentText())
+                self.parent_app.hook.hooked_process_id = int(selected_pid)
                 self.parent_app.hook.start()
-                self.close()
+                dpg.delete_item(self.modal_id)
 
-    def manual_calculate_button(self):
-        for platform_version in hook.Hook.EMULATOR_MAP[self.emu_select.currentText()][1]:
-            if platform_version.name == self.version_select.currentText():
-                if platform_version.version != "__MANUAL__":
-                    box = QMessageBox()
-                    box.setIcon(QMessageBox.Information)
-                    box.setWindowTitle("Must be using Manual Addressing")
-                    box.setText("Must be on manual addressing to calculate an offset.")
-                    box.setStandardButtons(QMessageBox.Ok)
-                    box.exec()
-                    return
-
-                addr = hook.retroarch_search(int(self.process_select.currentText()))
-                if addr is not None:
-                    self.manual_address_textbox.setText(hex(addr)[2:].upper())
-                else:
-                    box = QMessageBox()
-                    box.setIcon(QMessageBox.Information)
-                    box.setWindowTitle("Could not find memory")
-                    box.setText("Could not find the memory offset.")
-                    box.setStandardButtons(QMessageBox.Ok)
-                    box.exec()
-                    return
-
-    def __init__(self, pids, parent_app: "MainWindow", parent=None):
-        super(ConnectEmuDialog, self).__init__(parent)
-
+    def __init__(self, app, pids):
+        self.parent_app = app
         self.pids = pids
+        self.pid_names = sorted(list(self.pids.keys()), key=lambda x: x.lower())
 
-        self.parent_app = parent_app
-
-        layout = QGridLayout()
-
-        self.emu_select = QComboBox(self)
-        self.emu_select.insertItems(0, sorted(list(self.pids.keys()), key=lambda x: x.lower()))
-
-        self.process_select = QComboBox(self)
-
-        self.version_select = QComboBox(self)
-
-        self.manual_address_textbox = QLineEdit(self)
-
-        self.emu_select.activated.connect(self.on_emu_select)
-
-        self.on_emu_select(0)
-
-        layout.addWidget(QLabel("Emulator Name:"), 0, 0)
-        layout.addWidget(QLabel("Emulator Process ID:"), 0, 1)
-        layout.addWidget(QLabel("Emulator Version:"), 0, 2)
-        layout.addWidget(QLabel("Manual Address:"), 0, 3)
-        layout.addWidget(self.emu_select, 1, 0)
-        layout.addWidget(self.process_select, 1, 1)
-        layout.addWidget(self.version_select, 1, 2)
-        layout.addWidget(self.manual_address_textbox, 1, 3)
-
-        button_connect = QPushButton("Connect")
-        button_connect.clicked.connect(self.connect_button)
-        button_connect.setDefault(True)
-        layout.addWidget(button_connect, 2, 2)
-
-        button_show_this_window = QPushButton("Show This Window")
-        button_show_this_window.clicked.connect(self.show_window_button)
-        layout.addWidget(button_show_this_window, 2, 1)
-
-        # button_guess_version = QPushButton("Guess Version")
-        # button_guess_version.clicked.connect(self.)
-
-        button_manual_calculate = QPushButton("Address Search")
-        button_manual_calculate.clicked.connect(self.manual_calculate_button)
-        button_manual_calculate.setDefault(True)
-        layout.addWidget(button_manual_calculate, 2, 3)
-
-        self.setLayout(layout)
+        with dpg.mutex():
+            with dpg.window(label="Connect to Emulator", modal=True, no_collapse=True, no_resize=True) as modal_id:
+                self.modal_id = modal_id
+                with dpg.group(width=200):
+                    self.input_emu_name = dpg.add_combo(
+                        label="Emulator Name", items=self.pid_names, default_value=self.pid_names[0],
+                        callback=self.on_emulator_select)
+                    self.input_emu_pid = dpg.add_combo(label="Emulator Process ID")
+                    self.input_emu_ver = dpg.add_combo(label="Emulator Version")
+                    self.input_manual_addr = dpg.add_input_text(label="Manual Address")
+                    dpg.add_separator()
+                    self.button_connect = dpg.add_button(user_data=(modal_id, 0), label="Connect",
+                                                         callback=self.click_connect)
+                    self.button_show_window = dpg.add_button(user_data=(modal_id, 1), label="Show this Window")
+                    self.button_address_search = dpg.add_button(user_data=(modal_id, 2), label="Address Search")
+        center(modal_id)
+        self.on_emulator_select()
 
 
-class MainWindow(QMainWindow):
+class WatchWindow:
+    ADDRESSES = [
+        (hook.Address(0x9C540, 0x8C165C, 8, "Step ID"), str),
+        (hook.Address(0x9AD2C, 0x8C1660, 8, "Offset"), str),
+        (hook.Address(0x9C6D8, 0x8C1664, 8, "Step Fraction"), lambda x: str(x >> 5)),
+        (hook.Address(0x7173C, 0x8C1668, 16, "Danger"), str),
+        (hook.Address(0x71C20, 0x8C1650, 8, "Formation Accumulator"), str),
+        (hook.Address(0x9A05C, 0x8C15D0, 16, "Field ID"), str),
+        (hook.Address(0x9AC30, 0x8C0DC4, 8, "Selected Table"), str),
+        (hook.Address(0x9AC04, 0x8C0D98, 16, "Danger Divisor Multiplier"), str),
+        (hook.Address(0x62F19, 0x9BCAD9, 8, "Lure Rate"), str),
+        (hook.Address(0x62F1B, 0x9BCADB, 8, "Preempt Rate"), str),
+        (hook.Address(0x7E774, 0x8C1654, 16, "Last Encounter Formation"), str)
+    ]
 
-    def open_formation_extrapolator(self):
-        self.formation_extrapolator_windows.append(formation_extrapolator.FormationExtrapolator(self))
+    def main(self):
+        while self.parent_app.running:
+            for i in range(len(self.address_keys)):
+                self.address_values[i] = self.parent_app.hook.read_key(self.address_keys[i])
+            with dpg.mutex():
+                for i in range(len(self.table_ids)):
+                    dpg.set_value(self.table_ids[i], self.watch_functions[i](self.address_values[i]))
+            time.sleep(1 / 30)
 
-    def open_list_formation_types(self):
-        self.list_formation_types_windows.append(formation_type_list.FormationTypeList(self))
+    def run(self):
+        self.thread.start()
 
-    def update_formation_windows(self):
-        for window in self.formation_extrapolator_windows:
-            window.update_display()
-        for window in self.list_formation_types_windows:
-            window.update_display()
+    def __init__(self, app):
+        self.parent_app = app
+        self.thread = threading.Thread(target=self.main)
+        with dpg.window(label="Watches", width=400, show=False) as window_id:
+            self.window_id = window_id
+            with dpg.table(header_row=True):
+                dpg.add_table_column(label="Address", width_fixed=True)
+                self.table_ids = []
+                self.address_keys = []
+                self.address_values = []
+                self.watch_functions = []
+                for addr, func in WatchWindow.ADDRESSES:
+                    with dpg.table_row():
+                        dpg.add_text(addr.name)
+                        k, v = app.hook.register_address(addr, 0)
+                        self.address_keys.append(k)
+                        self.address_values.append(v)
+                        self.watch_functions.append(func)
+                        self.table_ids.append(dpg.add_text(""))
+                dpg.add_table_column(label="Value")
 
-    def disconnect(self):
-        self.hook.stop()
 
-    def connect_pc(self):
-        if self.hook.running:
-            box = QMessageBox()
-            box.setIcon(QMessageBox.Information)
-            box.setWindowTitle("Already Connected")
-            box.setText("Already connected. Disconnect first.")
-            box.setStandardButtons(QMessageBox.Ok)
-            box.exec()
-            return
-        pid = hook.get_pc_process_id()
-        if pid is None:
-            box = QMessageBox()
-            box.setIcon(QMessageBox.Information)
-            box.setWindowTitle("FF7 PC Not Detected")
-            box.setText("FF7 PC was not detected.")
-            box.setStandardButtons(QMessageBox.Ok)
-            box.exec()
-            return
-        self.hook.hooked_platform = hook.Hook.PC_PLATFORM
-        self.hook.hooked_process_id = pid
-        self.hook.start()
+class MainWindow:
 
-    def connect_emulator(self):
-        if self.hook.running:
-            box = QMessageBox()
-            box.setIcon(QMessageBox.Information)
-            box.setWindowTitle("Already Connected")
-            box.setText("Already connected. Disconnect first.")
-            box.setStandardButtons(QMessageBox.Ok)
-            box.exec()
+    def click_exit(self):
+        self.hook.running = False
+        self.running = False
+        dpg.stop_dearpygui()
+
+    def update_title(self, new_title):
+        dpg.set_viewport_title(f"Big Shoes ({new_title})")
+
+    def click_connect_to_emulator(self):
+        if self.hook.is_running():
+            show_error("Already Connected", "Already connected. Disconnect first.")
             return
         pids = hook.get_emu_process_ids()
-        if len(pids) == 0:
-            box = QMessageBox()
-            box.setIcon(QMessageBox.Information)
-            box.setWindowTitle("No Emulators Detected")
-            box.setText("No emulators that can be connected to were detected.")
-            box.setStandardButtons(QMessageBox.Ok)
-            box.exec()
+        if len(pids) > 0:
+            ConnectEmulatorDialog(self, pids)
+        else:
+            show_error("No Emulators Detected", "No emulators that can be connected to were detected.")
+
+    def click_connect_to_pc(self):
+        if self.hook.is_running():
+            show_error("Already Connected", "Already connected. Disconnect first.")
             return
-        ConnectEmuDialog(pids, self).exec()
+        pid = hook.get_pc_process_id()
+        if pid is not None:
+            ConnectEmulatorDialog(self, pid)
+        else:
+            show_error("FF7 PC Not Detected", "FF7 PC was not detected.")
 
-    def closeEvent(self, event):
-        self.stepgraph.stop()
-        self.disconnect()
+    def click_disconnect(self):
+        self.hook.stop()
 
-    def _exit(self):
-        self.stepgraph.stop()
-        self.disconnect()
-        exit()
+    def click_watch_window(self):
+        if dpg.is_item_shown(self.watch_window.window_id):
+            dpg.hide_item(self.watch_window.window_id)
+        else:
+            dpg.show_item(self.watch_window.window_id)
 
-    def __init__(self, _settings: settings.Settings, parent=None):
-        super(MainWindow, self).__init__(parent)
+    def click_stepgraph(self):
+        if dpg.is_item_shown(self.stepgraph.window_id):
+            dpg.hide_item(self.stepgraph.window_id)
+        else:
+            dpg.show_item(self.stepgraph.window_id)
 
-        self.formation_extrapolator_windows = []
-        self.list_formation_types_windows = []
+    def run(self):
+        dpg.set_exit_callback(self.click_exit)
 
-        self.settings = _settings
+        dpg.create_viewport(title="Big Shoes", width=1200, height=800)
 
-        self.stepgraph = stepgraph.Stepgraph(self)
+        dpg.setup_dearpygui()
+        dpg.show_viewport()
+        dpg.set_primary_window(self.primary_window, True)
+        self.running = True
+
+        self.watch_window.run()
+        self.stepgraph.run()
+
+        self.update_title(self.settings.DISCONNECTED_TEXT)
+
+        dpg.start_dearpygui()
+
+        dpg.destroy_context()
+
+    def __init__(self):
+        self.running = False
+
+        dpg.create_context()
+
+        self.settings = settings.Settings()
 
         self.hook = hook.Hook(self)
 
-        self.current_step_state: State = State(field_id=117, step=Step(0, 0), danger=0, step_fraction=0,
-                                               formation_value=0)
+        self.watch_window = WatchWindow(self)
 
-        self.setWindowTitle(self.settings.WINDOW_TITLE)
-        self.setWindowIcon(QIcon(self.settings.WINDOW_ICON))
+        self.stepgraph = stepgraph_new.Stepgraph(self)
 
-        menubar = QMenuBar()
+        with dpg.viewport_menu_bar() as menu_bar:
+            self.menu_bar = menu_bar
+            with dpg.menu(label="File") as file_menu:
+                self.file_menu = file_menu
+                dpg.add_menu_item(label="Exit", callback=self.click_exit)
+            with dpg.menu(label="Connect") as connect_menu:
+                self.connect_menu = connect_menu
+                dpg.add_menu_item(label="Connect to Emulator", callback=self.click_connect_to_emulator)
+                dpg.add_menu_item(label="Connect to PC", callback=self.click_connect_to_pc)
+                dpg.add_separator()
+                dpg.add_menu_item(label="Disconnect", callback=self.click_disconnect)
+            with dpg.menu(label="Window") as window_menu:
+                self.window_menu = window_menu
+                dpg.add_menu_item(label="Watches", callback=self.click_watch_window)
+                dpg.add_separator()
+                dpg.add_menu_item(label="Stepgraph", callback=self.click_stepgraph)
+                dpg.add_separator()
+                dpg.add_menu_item(label="Formation Extrapolator")
+            with dpg.menu(label="Debug") as debug_menu:
+                self.debug_menu = debug_menu
+                dpg.add_menu_item(label="About", callback=dpg.show_about)
+                dpg.add_menu_item(label="Debug", callback=dpg.show_debug)
+                dpg.add_menu_item(label="Documentation", callback=dpg.show_documentation)
+                dpg.add_menu_item(label="Font Manager", callback=dpg.show_font_manager)
+                dpg.add_menu_item(label="Item Registry", callback=dpg.show_item_registry)
+                dpg.add_menu_item(label="Metrics", callback=dpg.show_metrics)
+                dpg.add_menu_item(label="Style Editor", callback=dpg.show_style_editor)
 
-        menu_file = QMenu("File")
+        self.primary_window = dpg.add_window()
 
-        menu_file_exit = QAction("Exit", self)
-        menu_file_exit.triggered.connect(self._exit)
-        menu_file.addAction(menu_file_exit)
-
-        menu_connect = QMenu("Connect")
-
-        menu_connect_connect_emulator = QAction("Connect to Emulator", self)
-        menu_connect_connect_emulator.triggered.connect(self.connect_emulator)
-        menu_connect.addAction(menu_connect_connect_emulator)
-
-        menu_connect_connect_pc = QAction("Connect to PC", self)
-        menu_connect_connect_pc.triggered.connect(self.connect_pc)
-        menu_connect.addAction(menu_connect_connect_pc)
-
-        menu_connect.addSeparator()
-
-        menu_connect_disconnect = QAction("Disconnect", self)
-        menu_connect_disconnect.triggered.connect(self.disconnect)
-        menu_connect.addAction(menu_connect_disconnect)
-
-        menu_window = QMenu("Window")
-
-        menu_window_toggle_stepgraph = QAction("Toggle Stepgraph", self)
-        menu_window_toggle_stepgraph.triggered.connect(self.stepgraph.toggle)
-        menu_window.addAction(menu_window_toggle_stepgraph)
-
-        menu_window.addSeparator()
-
-        menu_window_formation_extrapolator = QAction("Formation Extrapolator", self)
-        menu_window_formation_extrapolator.triggered.connect(self.open_formation_extrapolator)
-        menu_window.addAction(menu_window_formation_extrapolator)
-
-        menu_window_list_formation_types = QAction("List Formation Types", self)
-        menu_window_list_formation_types.triggered.connect(self.open_list_formation_types)
-        menu_window.addAction(menu_window_list_formation_types)
-
-        menubar.addMenu(menu_file)
-        menubar.addMenu(menu_connect)
-        menubar.addMenu(menu_window)
-
-        self.setMenuBar(menubar)
-
-        main_frame = QFrame()
-        layout = QVBoxLayout()
-
-        rows = ["Step ID", "Step Fraction", "Offset", "Danger", "Formation Accumulator", "Field ID", "Table Index",
-                "Danger Divisor Multiplier", "Lure Rate", "Preempt Rate", "Last Encounter Formation"]
-
-        self.memory_view = QTableWidget(len(rows), 2)
-        self.memory_view.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.memory_view.setFocusPolicy(Qt.NoFocus)
-        self.memory_view.setSelectionMode(QAbstractItemView.NoSelection)
-        self.memory_view.setHorizontalHeaderItem(0, QTableWidgetItem("Address"))
-        self.memory_view.setHorizontalHeaderItem(1, QTableWidgetItem("        Value        "))
-        self.memory_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.memory_view.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
-        for rowNum in range(len(rows)):
-            self.memory_view.setVerticalHeaderItem(rowNum, QTableWidgetItem(""))
-            _l = QLabel(" " + rows[rowNum] + " ")
-            _l.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-            self.memory_view.setCellWidget(rowNum, 0, _l)
-            _l = QLabel("")
-            _l.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-            self.memory_view.setCellWidget(rowNum, 1, _l)
-        self.memory_view.resizeColumnsToContents()
-        self.memory_view.setMinimumHeight(350)
-        self.memory_view.setMinimumWidth(300)
-        layout.addWidget(self.memory_view)
-
-        self.connected_text = QLabel(self.settings.DISCONNECTED_TEXT)
-        self.connected_text.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        layout.addWidget(self.connected_text)
-
-        main_frame.setLayout(layout)
-
-        self.setCentralWidget(main_frame)
-
-        self.setMinimumHeight(420)
+        dpg.configure_app(docking=True)
 
 
 if __name__ == '__main__':
-    # Create the Qt Application
-    app = QApplication()
-    # Create and show the form
-    main_window = MainWindow(settings.Settings())
-    main_window.show()
-    # Run the main Qt loop
-    sys.exit(app.exec())
+    APP = MainWindow()
+    try:
+        sys.exit(APP.run())
+    except KeyboardInterrupt as inter:
+        print("stopping due to keyboard interrupt")
+        APP.running = False
+        sys.exit(-1)

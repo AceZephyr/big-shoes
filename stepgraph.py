@@ -331,9 +331,6 @@ class Stepgraph:
         else:
             self.stop()
 
-    def signal_update(self):
-        self.update_requests += 1
-
     def __init__(self, app: "MainWindow"):
         self.app = app
         self.thread = threading.Thread(target=self.main)
@@ -346,7 +343,6 @@ class Stepgraph:
         self.running = False
         self.surface = None
         self.local_update_count = 0
-        self.update_requests = 0
         self.track_mode_left_offset = -self.app.settings.DEFAULT_TRACK_LEFT_OFFSET
         self.text = ""
         self.text_timeout = 0

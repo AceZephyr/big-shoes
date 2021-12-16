@@ -47,6 +47,10 @@ INVERSE_OFFSET_TABLE = [0, 197, 138, 79, 20, 217, 158, 99, 40, 237, 178, 119, 60
                         39, 236, 177, 118, 59]
 
 
+class BadHookException(RuntimeError):
+    pass
+
+
 class EncounterSlot:
     def __init__(self, formation: int, rate: int):
         self.formation = formation
@@ -145,7 +149,7 @@ class Field:
                 return encounter, tbl.standard[i].formation, ENCOUNTER_DATA[
                     tbl.standard[i].formation].encounter_type.label
         return encounter, tbl.standard[5].formation, ENCOUNTER_DATA[
-                tbl.standard[5].formation].encounter_type.label
+            tbl.standard[5].formation].encounter_type.label
 
 
 class Step:
@@ -204,7 +208,7 @@ class State:
     def table(self):
         field = self.field()
         if field is not None:
-            return field.table1 if self.table_index == 1 or field.table2 is None else field.table2
+            return field.table1 if self.table_index == 0 or field.table2 is None else field.table2
         return None
 
     def danger_increase_per_step_running(self):
@@ -231,9 +235,8 @@ class State:
             danger = (start_danger + walking_steps * dips_walk) + dips_run
             while True:
                 if danger >= (start_step + total_steps).encounter_threshold(self.lure_rate, self.preempt_rate)[0]:
-                    out[walking_steps] = (start_step + walking_steps,
-                                          start_danger + walking_steps * dips_walk), (
-                                             start_step + total_steps, danger)
+                    out[walking_steps] = (start_step + walking_steps, start_danger + walking_steps * dips_walk), (
+                        start_step + total_steps, danger)
                     break
                 danger += dips_run
                 total_steps += 1
@@ -361,7 +364,6 @@ with open("initial_setup_data_dump", "r") as a:
                     fm_data.append([int(x, 16) for x in fmd_lines[fm_offset + i].strip().split(" ")])
                 if setup_data[18] != 0xFF:
                     ENCOUNTER_DATA[4 * s + f] = Formation(fm_data, setup_data)
-
 
 ENEMY_DATA = {
     "16": {

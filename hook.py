@@ -2,19 +2,15 @@ import ctypes.wintypes
 import os
 import threading
 import time
-from enum import Enum
-from typing import TYPE_CHECKING
+from typing import Callable
 
 import win32process
 import win32security
 
 import constants
-import stepgraph
+# import stepgraph
 
 import re
-
-if TYPE_CHECKING:
-    from main_window import MainWindow
 
 PROCESS_VM_OPERATION = 0x0008
 PROCESS_VM_READ = 0x0010
@@ -34,25 +30,13 @@ CloseHandle = Kernel32.CloseHandle
 _BASE_ADDRESS_CACHE = None
 
 
-class Address(int, Enum):
-    def __new__(cls, value, psx_address, pc_address):
-        obj = int.__new__(cls, value)
-        obj._value_ = value
-        obj.psx_address = psx_address
-        obj.pc_address = pc_address
-        return obj
+class Address:
 
-    STEP_ID = (0, 0x9C540, 0x8C165C)
-    OFFSET = (1, 0x9AD2C, 0x8C1660)
-    STEP_FRACTION = (2, 0x9C6D8, 0x8C1664)
-    DANGER = (3, 0x7173C, 0x8C1668)
-    FORMATION_ACCUMULATOR = (4, 0x71C20, 0x8C1650)
-    FIELD_ID = (5, 0x9A05C, 0x8C15D0)
-    SELECTED_TABLE = (6, 0x9AC30, 0x8C0DC4)
-    DANGER_DIVISOR_MULTIPLIER = (7, 0x9AC04, 0x8C0D98)
-    LURE_RATE = (8, 0x62F19, 0x9BCAD9)
-    PREEMPT_RATE = (9, 0x62F1B, 0x9BCADB)
-    LAST_ENCOUNTER_FORMATION = (10, 0x7E774, 0x8C1654)
+    def __init__(self, psx_address: int, pc_address: int, size: int, name: str):
+        self.psx_address = psx_address
+        self.pc_address = pc_address
+        self.size = size
+        self.name = name
 
 
 class HookablePlatform:
@@ -62,9 +46,9 @@ class HookablePlatform:
         self.version = version
         self._address_func = address_func
 
-    def read_int(self, hook, address: Address, size_bits: int):
+    def read_int(self, hook, address: Address):
         a = self._address_func(hook, hook.hooked_process_handle, address, self.version)
-        return int.from_bytes(win32process.ReadProcessMemory(hook.hooked_process_handle, a, size_bits // 8),
+        return int.from_bytes(win32process.ReadProcessMemory(hook.hooked_process_handle, a, address.size // 8),
                               byteorder='little')
 
     def read_bytes(self, hook, address: Address, size: int):
@@ -159,7 +143,7 @@ def bizhawk_address_func(hook, process_handle, address: Address, version: str):
                     raise NotImplementedError("BizHawk version not implemented: " + version)
         if hook.base_cache is None:
             hook.stop()
-            raise Exception("asdf")
+            raise constants.BadHookException()
     return hook.base_cache + address.psx_address
 
 
@@ -202,8 +186,8 @@ _RETROARCH_KNOWN_ADDRESSES = [
 def retroarch_try(process_handle, addr: int):
     for x in range(0, len(constants.RNG)):
         try:
-            if (int.from_bytes(win32process.ReadProcessMemory(process_handle, 0xE0638 + addr + x, 1),
-                               byteorder='little') != constants.RNG[x]):
+            if int.from_bytes(win32process.ReadProcessMemory(process_handle, 0xE0638 + addr + x, 1),
+                              byteorder='little') != constants.RNG[x]:
                 return False
         except Exception as e:  # memory probably wasn't mapped so it errored
             return False
@@ -229,8 +213,8 @@ def retroarch_search(process_id):
 
 class Hook:
 
-    def read(self, size: int, address: Address):
-        return self.hooked_platform.read_int(self, address, size)
+    def read(self, address: Address):
+        return self.hooked_platform.read_int(self, address)
 
     EMULATOR_MAP = {
         "PSXFin": (
@@ -264,7 +248,35 @@ class Hook:
         self.thread.start()
 
     def stop(self):
-        self.running = False
+        with self.running_lock:
+            self.running = False
+
+    def is_running(self):
+        with self.running_lock:
+            return self.running
+
+    def read_key(self, key):
+        with self.address_state_lock:
+            if key not in self.state or key not in self.addresses:
+                raise ValueError("Key not present")
+            return self.state[key]
+
+    def register_address(self, address, default_value=None):
+        with self.address_state_lock:
+            new_key = self.next_key
+            self.next_key += 1
+
+            self.addresses[new_key] = address
+            self.state[new_key] = default_value
+
+            return new_key, self.state[new_key]
+
+    def deregister_address(self, key):
+        with self.address_state_lock:
+            if key in self.addresses:
+                del self.addresses[key]
+            if key in self.state:
+                del self.state[key]
 
     def main(self):
         self.base_cache = None
@@ -272,90 +284,23 @@ class Hook:
         # hook into platform
         self.hooked_process_handle = OpenProcess(0x1F0FFF, False, self.hooked_process_id)
 
-        self.app.connected_text.setText(self.app.settings.CONNECTED_TO_TEXT + self.hooked_platform.name)
+        self.parent_app.update_title(self.parent_app.settings.CONNECTED_TO_TEXT + self.hooked_platform.name)
 
-        self.app.stepgraph.display_mode = stepgraph.DisplayMode.TRACK
+        with self.running_lock:
+            self.running = True
 
-        self.running = True
-
-        last_update_time = time.time() - 1
-        while self.running:
+        # last_update_time = time.time() - 1
+        while self.is_running():
             try:
-                # update display
-                new_stepid = self.read(8, Address.STEP_ID)
-                new_step_fraction = self.read(8, Address.STEP_FRACTION) // 32
-                new_offset = self.read(8, Address.OFFSET)
-                new_danger = self.read(16, Address.DANGER)
-                new_fmaccum = self.read(8, Address.FORMATION_ACCUMULATOR)
-                new_field_id = self.read(16, Address.FIELD_ID)
-                new_selected_table = self.read(8, Address.SELECTED_TABLE) + 1
-                new_danger_divisor_multiplier = self.read(16, Address.DANGER_DIVISOR_MULTIPLIER)
-                new_lure_rate = self.read(8, Address.LURE_RATE)
-                new_preempt_rate = self.read(8, Address.PREEMPT_RATE)
-                new_last_encounter_formation = self.read(16, Address.LAST_ENCOUNTER_FORMATION)
-
-                update = False
-                force_update = time.time() - last_update_time > 1
-
-                # self.app.memory_view.setUpdatesEnabled(False)
-
-                if force_update or new_stepid != self.app.current_step_state.step.step_id:
-                    update = True
-                    self.app.memory_view.cellWidget(0, 1).setText(" " + str(new_stepid))
-                    self.app.current_step_state.step.step_id = new_stepid
-                if force_update or new_step_fraction != self.app.current_step_state.step_fraction:
-                    # update = True  # stepgraph doesn't care about fraction
-                    self.app.memory_view.cellWidget(1, 1).setText(" " + str(new_step_fraction))
-                    self.app.current_step_state.step_fraction = new_step_fraction
-                if force_update or new_offset != self.app.current_step_state.step.offset:
-                    update = True
-                    self.app.memory_view.cellWidget(2, 1).setText(" " + str(new_offset))
-                    self.app.current_step_state.step.offset = new_offset
-                if force_update or new_danger != self.app.current_step_state.danger:
-                    update = True
-                    self.app.memory_view.cellWidget(3, 1).setText(" " + str(new_danger))
-                    self.app.current_step_state.danger = new_danger
-                if force_update or new_fmaccum != self.app.current_step_state.formation_value:
-                    update = True
-                    self.app.memory_view.cellWidget(4, 1).setText(" " + str(new_fmaccum))
-                    self.app.current_step_state.formation_value = new_fmaccum
-                if force_update or new_field_id != self.app.current_step_state.field_id:
-                    field_id = new_field_id
-                    if field_id in constants.FIELDS:
-                        update = True
-                        self.app.memory_view.cellWidget(5, 1).setText(" " + str(field_id))
-                        self.app.current_step_state.field_id = field_id
-                if force_update or new_selected_table != self.app.current_step_state.table_index:
-                    update = True
-                    self.app.memory_view.cellWidget(6, 1).setText(" " + str(new_selected_table))
-                    self.app.current_step_state.table_index = new_selected_table
-                if force_update or new_danger_divisor_multiplier != self.app.current_step_state.danger_divisor_multiplier:
-                    update = True
-                    self.app.memory_view.cellWidget(7, 1).setText(" " + str(new_danger_divisor_multiplier))
-                    self.app.current_step_state.danger_divisor_multiplier = new_danger_divisor_multiplier
-                if force_update or new_lure_rate != self.app.current_step_state.lure_rate:
-                    update = True
-                    self.app.memory_view.cellWidget(8, 1).setText(" " + str(new_lure_rate))
-                    self.app.current_step_state.lure_rate = new_lure_rate
-                if force_update or new_preempt_rate != self.app.current_step_state.preempt_rate:
-                    update = True
-                    self.app.memory_view.cellWidget(9, 1).setText(" " + str(new_preempt_rate))
-                    self.app.current_step_state.preempt_rate = new_preempt_rate
-                if force_update or new_last_encounter_formation != self.app.current_step_state.last_encounter_formation:
-                    update = True
-                    self.app.memory_view.cellWidget(10, 1).setText(" " + str(new_last_encounter_formation))
-                    self.app.current_step_state.last_encounter_formation = new_last_encounter_formation
-
-                # self.app.memory_view.setUpdatesEnabled(True)
-
-                if update:
-                    self.app.stepgraph.signal_update()
-                    self.app.update_formation_windows()
-                    last_update_time = time.time()
-
-                # self.app.memory_view.update()
+                with self.address_state_lock:
+                    for key in self.addresses:
+                        self.state[key] = self.read(self.addresses[key])
 
             except Exception as e:
+                if isinstance(e, constants.BadHookException):
+                    self.parent_app.show_message("Bad Hook", "Bad Hook")
+                    self.running = False
+                    break
                 if e is RuntimeError:
                     self.running = False
                     break
@@ -364,27 +309,30 @@ class Hook:
                         self.running = False
                         break
                 raise e
-            time.sleep(1 / self.app.settings.UPDATES_PER_SECOND)
+            time.sleep(1 / self.parent_app.settings.UPDATES_PER_SECOND)
         CloseHandle(self.hooked_process_handle)
         try:
             self.hooked_process_handle = None
             self.hooked_process_id = None
             self.hooked_platform = None
 
-            self.app.stepgraph.display_mode = stepgraph.DisplayMode.DEFAULT
+            self.parent_app.update_title(self.parent_app.settings.DISCONNECTED_TEXT)
 
-            self.app.connected_text.setText(self.app.settings.DISCONNECTED_TEXT)
-
-            self.app.stepgraph.signal_update()
         except RuntimeError as err:
             print("uh oh", err)
 
-    def __init__(self, app: "MainWindow"):
-        self.app = app
+    def __init__(self, parent_app):
+        self.parent_app = parent_app
         self.base_cache = None
         self.manual_address = None
         self.thread = threading.Thread(target=self.main)
         self.running = False
+        self.running_lock = threading.Lock()
+
+        self.addresses = {}
+        self.state = {}
+        self.next_key = 0
+        self.address_state_lock = threading.Lock()
 
         self.hooked_platform = None
         self.hooked_process_id = None
