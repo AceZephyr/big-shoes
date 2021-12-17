@@ -200,7 +200,8 @@ class MainWindow:
 
         dpg.start_dearpygui()
 
-        dpg.destroy_context()
+        self.click_exit()
+
 
     def __init__(self):
         self.running = False

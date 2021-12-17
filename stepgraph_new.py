@@ -90,7 +90,7 @@ class Stepgraph:
                     self.width = MAX_WIDTH
 
     def _window_resize_handler(self):
-        # TODO: where tf do these numbers 16 and 36 come from and how can i calculate these based on the current layout?
+        # TODO: where tf do these numbers 16 and 54 come from and how can i calculate these based on the current layout?
         dpg.set_item_width(self.plot_id, dpg.get_item_width(self.window_id) - 16)
         dpg.set_item_height(self.plot_id, dpg.get_item_height(self.window_id) - 54)
 
