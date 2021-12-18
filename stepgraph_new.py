@@ -104,12 +104,19 @@ class Stepgraph:
         SpecificStepDialog(callback=self.specific_step_callback)
 
     def main(self):
-        def _read(_orig_val, k, _u):
+        def _r(_orig_val, k):
             new_value = self.parent_app.hook.read_key(k)
-            return new_value, _u or new_value != _orig_val
+            self.update = self.update or new_value != _orig_val
+            return new_value
 
-        def _(_orig_val, _new_val, _u):
-            return _new_val, _u or _new_val != _orig_val
+        def _v(_orig_val, k):
+            new_value = dpg.get_value(k)
+            self.update = self.update or new_value != _orig_val
+            return new_value
+
+        def _(_orig_val, _new_val):
+            self.update = self.update or _new_val != _orig_val
+            return _new_val
 
         while self.parent_app.running:
 
@@ -118,54 +125,40 @@ class Stepgraph:
             if not dpg.is_item_shown(self.window_id):
                 continue
 
-            update = False
+            self.update = False
 
-            self.step_state.step.step_id, update = _read(self.step_state.step.step_id, self.stepid_key, update)
-            self.step_state.step.offset, update = _read(self.step_state.step.offset, self.offset_key, update)
-            self.step_state.step_fraction, update = _read(self.step_state.step_fraction, self.frac_key, update)
-            self.step_state.danger, update = _read(self.step_state.danger, self.danger_key, update)
-            self.step_state.formation_value, update = _read(self.step_state.formation_value, self.fmaccum_key, update)
-            new_field_id, update = _read(self.step_state.field_id, self.fieldid_key, update)
+            self.step_state.step.step_id = _r(self.step_state.step.step_id, self.stepid_key)
+            self.step_state.step.offset = _r(self.step_state.step.offset, self.offset_key)
+            self.step_state.step_fraction = _r(self.step_state.step_fraction, self.frac_key)
+            self.step_state.danger = _r(self.step_state.danger, self.danger_key)
+            self.step_state.formation_value = _r(self.step_state.formation_value, self.fmaccum_key)
+            new_field_id = _r(self.step_state.field_id, self.fieldid_key)
             if new_field_id in constants.FIELDS:
                 self.step_state.field_id = new_field_id
-            self.step_state.table_index, update = _read(self.step_state.table_index, self.seltable_key, update)
-            self.step_state.danger_divisor_multiplier, update = _read(self.step_state.danger_divisor_multiplier,
-                                                                      self.ddm_key, update)
-            self.step_state.lure_rate, update = _read(self.step_state.lure_rate, self.lure_key, update)
-            self.step_state.preempt_rate, update = _read(self.step_state.preempt_rate, self.preempt_key, update)
-            self.step_state.last_encounter_formation, update = _read(self.step_state.last_encounter_formation,
-                                                                     self.lastenc_key, update)
+            self.step_state.table_index = _r(self.step_state.table_index, self.seltable_key)
+            self.step_state.danger_divisor_multiplier = _r(self.step_state.danger_divisor_multiplier, self.ddm_key)
+            self.step_state.lure_rate = _r(self.step_state.lure_rate, self.lure_key)
+            self.step_state.preempt_rate = _r(self.step_state.preempt_rate, self.preempt_key)
+            self.step_state.last_encounter_formation = _r(self.step_state.last_encounter_formation, self.lastenc_key)
 
-            self.left_edge_step, update = _(self.left_edge_step, self.step_state.step - self.track_mode_left_offset,
-                                            update)
+            self.left_edge_step = _(self.left_edge_step, self.step_state.step - self.track_mode_left_offset)
 
-            self.stored_width, update = _(self.stored_width, self.width, update)
-            self.stored_top_danger, update = _(self.stored_top_danger, self.top_danger, update)
+            self.stored_width = _(self.stored_width, self.width)
+            self.stored_top_danger = _(self.stored_top_danger, self.top_danger)
 
-            self.stored_encounter_thresholds, update = _(
-                self.stored_encounter_thresholds, dpg.get_value(self.menu_encounter_thresholds), update
-            )
+            self.stored_encounter_thresholds = _v(self.stored_encounter_thresholds, self.menu_encounter_thresholds)
 
-            self.stored_encounter_marks, update = _(
-                self.stored_encounter_marks, dpg.get_value(self.menu_encounter_marks), update
-            )
+            self.stored_encounter_marks = _v(self.stored_encounter_marks, self.menu_encounter_marks)
 
-            self.stored_underwalk_labels, update = _(
-                self.stored_underwalk_labels, dpg.get_value(self.menu_underwalk_labels), update
-            )
+            self.stored_underwalk_labels = _v(self.stored_underwalk_labels, self.menu_underwalk_labels)
 
-            self.stored_offset_labels, update = _(
-                self.stored_offset_labels, dpg.get_value(self.menu_offset_labels), update
-            )
+            self.stored_offset_labels = _v(self.stored_offset_labels, self.menu_offset_labels)
 
-            self.stored_preempt_gridlines, update = _(
-                self.stored_preempt_gridlines, dpg.get_value(self.menu_preempt_gridlines), update
-            )
-            self.stored_preemt_encounter_thresholds, update = _(
-                self.stored_preemt_encounter_thresholds, dpg.get_value(self.menu_preempt_encounter_thresholds), update
-            )
+            self.stored_preempt_gridlines = _v(self.stored_preempt_gridlines, self.menu_preempt_gridlines)
+            self.stored_preemt_encounter_thresholds = _v(self.stored_preemt_encounter_thresholds,
+                                                         self.menu_preempt_encounter_thresholds)
 
-            if not update:
+            if not self.update:
                 continue
 
             self.update_axes()
@@ -351,4 +344,5 @@ class Stepgraph:
         self.lastenc_key, self.step_state.last_encounter_formation = app.hook.register_address(Stepgraph.ADDR_LASTENC,
                                                                                                0)
 
+        self.update = False
         self.thread = threading.Thread(target=self.main)

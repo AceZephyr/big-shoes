@@ -1,13 +1,13 @@
 import re
 import sys
-import threading
-import time
 
 from dearpygui import dearpygui as dpg
 
+import formation_extrapolator_new
 import hook
 import settings
 import stepgraph_new
+from watch_window import WatchWindow
 
 
 def center(modal_id):
@@ -89,55 +89,6 @@ class ConnectEmulatorDialog:
         self.on_emulator_select()
 
 
-class WatchWindow:
-    ADDRESSES = [
-        (hook.Address(0x9C540, 0x8C165C, 8, "Step ID"), str),
-        (hook.Address(0x9AD2C, 0x8C1660, 8, "Offset"), str),
-        (hook.Address(0x9C6D8, 0x8C1664, 8, "Step Fraction"), lambda x: str(x >> 5)),
-        (hook.Address(0x7173C, 0x8C1668, 16, "Danger"), str),
-        (hook.Address(0x71C20, 0x8C1650, 8, "Formation Accumulator"), str),
-        (hook.Address(0x9A05C, 0x8C15D0, 16, "Field ID"), str),
-        (hook.Address(0x9AC30, 0x8C0DC4, 8, "Selected Table"), str),
-        (hook.Address(0x9AC04, 0x8C0D98, 16, "Danger Divisor Multiplier"), str),
-        (hook.Address(0x62F19, 0x9BCAD9, 8, "Lure Rate"), str),
-        (hook.Address(0x62F1B, 0x9BCADB, 8, "Preempt Rate"), str),
-        (hook.Address(0x7E774, 0x8C1654, 16, "Last Encounter Formation"), str)
-    ]
-
-    def main(self):
-        while self.parent_app.running:
-            for i in range(len(self.address_keys)):
-                self.address_values[i] = self.parent_app.hook.read_key(self.address_keys[i])
-            with dpg.mutex():
-                for i in range(len(self.table_ids)):
-                    dpg.set_value(self.table_ids[i], self.watch_functions[i](self.address_values[i]))
-            time.sleep(1 / 30)
-
-    def run(self):
-        self.thread.start()
-
-    def __init__(self, app):
-        self.parent_app = app
-        self.thread = threading.Thread(target=self.main)
-        with dpg.window(label="Watches", width=400, show=False) as window_id:
-            self.window_id = window_id
-            with dpg.table(header_row=True):
-                dpg.add_table_column(label="Address", width_fixed=True)
-                self.table_ids = []
-                self.address_keys = []
-                self.address_values = []
-                self.watch_functions = []
-                for addr, func in WatchWindow.ADDRESSES:
-                    with dpg.table_row():
-                        dpg.add_text(addr.name)
-                        k, v = app.hook.register_address(addr, 0)
-                        self.address_keys.append(k)
-                        self.address_values.append(v)
-                        self.watch_functions.append(func)
-                        self.table_ids.append(dpg.add_text(""))
-                dpg.add_table_column(label="Value")
-
-
 class MainWindow:
 
     def click_exit(self):
@@ -183,6 +134,12 @@ class MainWindow:
         else:
             dpg.show_item(self.stepgraph.window_id)
 
+    def click_fmext(self):
+        if dpg.is_item_shown(self.formation_extrapolator.window_id):
+            dpg.hide_item(self.formation_extrapolator.window_id)
+        else:
+            dpg.show_item(self.formation_extrapolator.window_id)
+
     def run(self):
         dpg.set_exit_callback(self.click_exit)
 
@@ -195,13 +152,13 @@ class MainWindow:
 
         self.watch_window.run()
         self.stepgraph.run()
+        self.formation_extrapolator.run()
 
         self.update_title(self.settings.DISCONNECTED_TEXT)
 
         dpg.start_dearpygui()
 
         self.click_exit()
-
 
     def __init__(self):
         self.running = False
@@ -215,6 +172,8 @@ class MainWindow:
         self.watch_window = WatchWindow(self)
 
         self.stepgraph = stepgraph_new.Stepgraph(self)
+
+        self.formation_extrapolator = formation_extrapolator_new.FormationExtrapolatorWindow(self)
 
         with dpg.viewport_menu_bar() as menu_bar:
             self.menu_bar = menu_bar
@@ -233,7 +192,7 @@ class MainWindow:
                 dpg.add_separator()
                 dpg.add_menu_item(label="Stepgraph", callback=self.click_stepgraph)
                 dpg.add_separator()
-                dpg.add_menu_item(label="Formation Extrapolator")
+                dpg.add_menu_item(label="Formation Extrapolator", callback=self.click_fmext)
             with dpg.menu(label="Debug") as debug_menu:
                 self.debug_menu = debug_menu
                 dpg.add_menu_item(label="About", callback=dpg.show_about)
