@@ -116,7 +116,9 @@ class MainWindow:
             return
         pid = hook.get_pc_process_id()
         if pid is not None:
-            ConnectEmulatorDialog(self, pid)
+            self.hook.hooked_platform = hook.Hook.PC_PLATFORM
+            self.hook.hooked_process_id = pid
+            self.hook.start()
         else:
             show_error("FF7 PC Not Detected", "FF7 PC was not detected.")
 
