@@ -4,6 +4,7 @@ import sys
 from dearpygui import dearpygui as dpg
 
 import formation_extrapolator_new
+import formation_list_new
 import hook
 import settings
 import stepgraph_new
@@ -140,6 +141,12 @@ class MainWindow:
         else:
             dpg.show_item(self.formation_extrapolator.window_id)
 
+    def click_fmlist(self):
+        if dpg.is_item_shown(self.formation_list.window_id):
+            dpg.hide_item(self.formation_list.window_id)
+        else:
+            dpg.show_item(self.formation_list.window_id)
+
     def run(self):
         dpg.set_exit_callback(self.click_exit)
 
@@ -153,6 +160,7 @@ class MainWindow:
         self.watch_window.run()
         self.stepgraph.run()
         self.formation_extrapolator.run()
+        self.formation_list.run()
 
         self.update_title(self.settings.DISCONNECTED_TEXT)
 
@@ -170,10 +178,9 @@ class MainWindow:
         self.hook = hook.Hook(self)
 
         self.watch_window = WatchWindow(self)
-
         self.stepgraph = stepgraph_new.Stepgraph(self)
-
         self.formation_extrapolator = formation_extrapolator_new.FormationExtrapolatorWindow(self)
+        self.formation_list = formation_list_new.FormationListWindow(self)
 
         with dpg.viewport_menu_bar() as menu_bar:
             self.menu_bar = menu_bar
@@ -193,6 +200,7 @@ class MainWindow:
                 dpg.add_menu_item(label="Stepgraph", callback=self.click_stepgraph)
                 dpg.add_separator()
                 dpg.add_menu_item(label="Formation Extrapolator", callback=self.click_fmext)
+                dpg.add_menu_item(label="Formation List", callback=self.click_fmlist)
             with dpg.menu(label="Debug") as debug_menu:
                 self.debug_menu = debug_menu
                 dpg.add_menu_item(label="About", callback=dpg.show_about)

@@ -48,7 +48,7 @@ class FormationExtrapolatorWindow:
                     formation = formation_data[0]
                     new_fmaccum = old_fmaccum + 1
                     preemptable = "---"
-                enemy_names = [constants.ENEMY_DATA[str(en)]["name"] for en in
+                enemy_names = [constants.ENEMY_DATA[en]["name"] for en in
                                constants.ENCOUNTER_DATA[formation].enemies]
 
                 dpg.set_value(self.cell_ids[i][0], str(old_fmaccum) + " -> " + str(new_fmaccum))
@@ -88,5 +88,3 @@ class FormationExtrapolatorWindow:
         self.table_key = app.hook.register_address(FormationExtrapolatorWindow.ADDR_SELTABLE, 0)[0]
         self.fmaccum_key = app.hook.register_address(FormationExtrapolatorWindow.ADDR_FMACCUM, 0)[0]
         self.lastenc_key = app.hook.register_address(FormationExtrapolatorWindow.ADDR_LASTENC, 0)[0]
-
-        self.update = False

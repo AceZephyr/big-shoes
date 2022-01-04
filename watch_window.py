@@ -23,12 +23,12 @@ class WatchWindow:
 
     def main(self):
         while self.parent_app.running:
+            time.sleep(1 / 30)
             for i in range(len(self.address_keys)):
                 self.address_values[i] = self.parent_app.hook.read_key(self.address_keys[i])
             with dpg.mutex():
                 for i in range(len(self.table_ids)):
                     dpg.set_value(self.table_ids[i], self.watch_functions[i](self.address_values[i]))
-            time.sleep(1 / 30)
 
     def run(self):
         self.thread.start()
@@ -38,8 +38,8 @@ class WatchWindow:
         self.thread = threading.Thread(target=self.main)
         with dpg.window(label="Watches", width=400, show=False) as window_id:
             self.window_id = window_id
-            with dpg.table(header_row=True):
-                dpg.add_table_column(label="Address", width_fixed=False)
+            with dpg.table(header_row=True, resizable=True):
+                dpg.add_table_column(label="Address")
                 self.table_ids = []
                 self.address_keys = []
                 self.address_values = []
