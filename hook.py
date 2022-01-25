@@ -283,14 +283,18 @@ class Hook:
 
     def main(self):
         self.base_cache = None
-        adjust_privilege(win32security.SE_DEBUG_NAME)
+        # adjust_privilege(win32security.SE_DEBUG_NAME)
         # hook into platform
         self.hooked_process_handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ, True,
                                                  self.hooked_process_id)
-        if self.hooked_process_handle is None:
+        # self.hooked_process_handle = OpenProcess(0, True,
+        #                                          self.hooked_process_id)
+        if self.hooked_process_handle is None or self.hooked_process_handle == 0:
             err = win32api.GetLastError()
             print(f"Hooked process handle error: {err}")
             # show_error("Bad Hook", f"Hooked process handle error: {err}")
+
+        print(f"Hooked process handle: {self.hooked_process_handle}")
 
         self.parent_app.update_title(self.parent_app.settings.CONNECTED_TO_TEXT + self.hooked_platform.name)
 
