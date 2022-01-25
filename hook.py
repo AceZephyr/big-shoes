@@ -98,7 +98,7 @@ def get_pc_process_id():
     processes = win32process.EnumProcesses()
 
     for process_id in processes:
-        hProcess = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE, False, process_id)
+        hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, process_id)
         if hProcess:
             ImageFileName = (ctypes.c_char * MAX_PATH)()
             if GetProcessImageFileName(hProcess, ImageFileName, MAX_PATH) > 0:
