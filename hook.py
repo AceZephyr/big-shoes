@@ -56,7 +56,19 @@ class HookablePlatform:
         return win32process.ReadProcessMemory(hook.hooked_process_handle, a, size)
 
 
+def adjust_privilege(name, attr=win32security.SE_PRIVILEGE_ENABLED):
+    if isinstance(name, str):
+        state = (win32security.LookupPrivilegeValue(None, name), attr)
+    else:
+        state = name
+    hToken = win32security.OpenProcessToken(win32process.GetCurrentProcess(),
+                                            win32security.TOKEN_ALL_ACCESS)
+    return win32security.AdjustTokenPrivileges(hToken, False, [state])
+
+
 def get_emu_process_ids():
+    adjust_privilege(win32security.SE_DEBUG_NAME)
+
     MAX_PATH = 260
 
     processes = win32process.EnumProcesses()
@@ -80,6 +92,7 @@ def get_emu_process_ids():
 
 
 def get_pc_process_id():
+    adjust_privilege(win32security.SE_DEBUG_NAME)
     MAX_PATH = 260
 
     processes = win32process.EnumProcesses()
@@ -96,16 +109,6 @@ def get_pc_process_id():
                     return process_id
             CloseHandle(hProcess)
     return None
-
-
-def adjust_privilege(name, attr=win32security.SE_PRIVILEGE_ENABLED):
-    if isinstance(name, str):
-        state = (win32security.LookupPrivilegeValue(None, name), attr)
-    else:
-        state = name
-    hToken = win32security.OpenProcessToken(win32process.GetCurrentProcess(),
-                                            win32security.TOKEN_ALL_ACCESS)
-    return win32security.AdjustTokenPrivileges(hToken, False, [state])
 
 
 def psxfin_address_func(hook, process_handle, address: Address, version: str):
