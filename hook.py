@@ -1,16 +1,14 @@
 import ctypes.wintypes
 import os
+import re
 import threading
 import time
-from typing import Callable
 
+import win32api
 import win32process
 import win32security
 
 import constants
-# import stepgraph
-
-import re
 
 PROCESS_VM_OPERATION = 0x0008
 PROCESS_VM_READ = 0x0010
@@ -75,7 +73,7 @@ def get_emu_process_ids():
 
     pids = {}
     for process_id in processes:
-        hProcess = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_VM_READ, False, process_id)
+        hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, process_id)
         if hProcess:
             ImageFileName = (ctypes.c_char * MAX_PATH)()
             if GetProcessImageFileName(hProcess, ImageFileName, MAX_PATH) > 0:
@@ -93,6 +91,7 @@ def get_emu_process_ids():
 
 def get_pc_process_id():
     adjust_privilege(win32security.SE_DEBUG_NAME)
+
     MAX_PATH = 260
 
     processes = win32process.EnumProcesses()
@@ -285,14 +284,17 @@ class Hook:
         self.base_cache = None
         adjust_privilege(win32security.SE_DEBUG_NAME)
         # hook into platform
-        self.hooked_process_handle = OpenProcess(0x1F0FFF, False, self.hooked_process_id)
+        self.hooked_process_handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ, True,
+                                                 self.hooked_process_id)
+        if self.hooked_process_handle is None:
+            err = win32api.GetLastError()
+            print(f"Hooked process handle error: {err}")
 
         self.parent_app.update_title(self.parent_app.settings.CONNECTED_TO_TEXT + self.hooked_platform.name)
 
         with self.running_lock:
             self.running = True
 
-        # last_update_time = time.time() - 1
         while self.is_running():
             try:
                 with self.address_state_lock:
