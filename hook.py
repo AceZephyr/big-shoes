@@ -289,6 +289,7 @@ class Hook:
         if self.hooked_process_handle is None:
             err = win32api.GetLastError()
             print(f"Hooked process handle error: {err}")
+            self.parent_app.show_message("Bad Hook", f"Hooked process handle error: {err}")
 
         self.parent_app.update_title(self.parent_app.settings.CONNECTED_TO_TEXT + self.hooked_platform.name)
 
