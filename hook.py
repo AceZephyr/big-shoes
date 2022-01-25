@@ -285,9 +285,8 @@ class Hook:
         self.base_cache = None
         adj_priv_return = adjust_privilege(win32security.SE_DEBUG_NAME)
         print(f"adj priv return: {adj_priv_return}")
-        if adj_priv_return:
-            err = win32api.GetLastError()
-            print(f"adj priv error: {err}")
+        err = win32api.GetLastError()
+        print(f"adj priv error (if any): {err}")
 
         # hook into platform
         self.hooked_process_handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ, True,
