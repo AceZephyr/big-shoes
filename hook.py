@@ -9,6 +9,7 @@ import win32process
 import win32security
 
 import constants
+# from main_window import show_error
 
 PROCESS_VM_OPERATION = 0x0008
 PROCESS_VM_READ = 0x0010
@@ -289,7 +290,7 @@ class Hook:
         if self.hooked_process_handle is None:
             err = win32api.GetLastError()
             print(f"Hooked process handle error: {err}")
-            self.parent_app.show_message("Bad Hook", f"Hooked process handle error: {err}")
+            # show_error("Bad Hook", f"Hooked process handle error: {err}")
 
         self.parent_app.update_title(self.parent_app.settings.CONNECTED_TO_TEXT + self.hooked_platform.name)
 
@@ -304,7 +305,7 @@ class Hook:
 
             except Exception as e:
                 if isinstance(e, constants.BadHookException):
-                    self.parent_app.show_message("Bad Hook", "Bad Hook")
+                    # show_error("Bad Hook", "Bad Hook")
                     self.running = False
                     break
                 if e is RuntimeError:
