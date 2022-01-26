@@ -222,11 +222,11 @@ class MainWindow:
 
 
 if __name__ == '__main__':
-    # if sys.argv[-1] == "try_admin":
-    #     script = os.path.abspath(sys.argv[0])
-    #     params = ' '.join([script] + sys.argv[1:-1])
-    #     shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
-    #     sys.exit(0)
+    if sys.argv[-1] == "try_admin":
+        script = os.path.abspath(sys.argv[0])
+        params = ' '.join([script] + sys.argv[1:-1])
+        shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
+        sys.exit(0)
     APP = MainWindow()
     try:
         sys.exit(APP.run())
