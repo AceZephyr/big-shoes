@@ -1,14 +1,18 @@
+import copy
 import ctypes.wintypes
 import os
 import re
 import threading
 import time
 
+import ntsecuritycon
 import win32api
+import win32con
 import win32process
 import win32security
 
 import constants
+
 # from main_window import show_error
 
 PROCESS_VM_OPERATION = 0x0008
@@ -24,9 +28,24 @@ Kernel32 = ctypes.WinDLL('kernel32.dll')
 OpenProcess = Kernel32.OpenProcess
 OpenProcess.restype = ctypes.wintypes.HANDLE
 
+CreateToolhelp32Snapshot = ctypes.windll.kernel32.CreateToolhelp32Snapshot
+Process32First = ctypes.windll.kernel32.Process32First
+Process32Next = ctypes.windll.kernel32.Process32Next
+
 CloseHandle = Kernel32.CloseHandle
 
-_BASE_ADDRESS_CACHE = None
+
+class PROCESSENTRY32(ctypes.Structure):
+    _fields_ = [('dwSize', ctypes.wintypes.DWORD),
+                ('cntUsage', ctypes.wintypes.DWORD),
+                ('th32ProcessID', ctypes.wintypes.DWORD),
+                ('th32DefaultHeapID', ctypes.POINTER(ctypes.wintypes.ULONG)),
+                ('th32ModuleID', ctypes.wintypes.DWORD),
+                ('cntThreads', ctypes.wintypes.DWORD),
+                ('th32ParentProcessID', ctypes.wintypes.DWORD),
+                ('pcPriClassBase', ctypes.wintypes.LONG),
+                ('dwFlags', ctypes.wintypes.DWORD),
+                ('szExeFile', ctypes.c_char * 260)]
 
 
 class Address:
@@ -65,6 +84,41 @@ def adjust_privilege(name, attr=win32security.SE_PRIVILEGE_ENABLED):
     return win32security.AdjustTokenPrivileges(hToken, False, [state])
 
 
+def get_process_list():
+    hProcessSnap = CreateToolhelp32Snapshot(0x00000002, 0)
+
+    pEntry = PROCESSENTRY32()
+    pEntry.dwSize = ctypes.sizeof(PROCESSENTRY32)
+
+    process_list_out = []
+
+    if Process32First(hProcessSnap, ctypes.byref(pEntry)):
+        while True:
+            yield pEntry
+            if not Process32Next(hProcessSnap, ctypes.byref(pEntry)):
+                break
+    CloseHandle(hProcessSnap)
+    return process_list_out
+
+
+# def find_process_with_name(names: set):
+#     hProcessSnap = CreateToolhelp32Snapshot(0x00000002, 0)
+#
+#     pEntry = PROCESSENTRY32()
+#     pEntry.dwSize = ctypes.sizeof(PROCESSENTRY32)
+#
+#     if Process32First(hProcessSnap, ctypes.byref(pEntry)):
+#         while True:
+#             exe_name_str = pEntry.szExeFile.decode("ascii")
+#             if exe_name_str in names:
+#                 CloseHandle(hProcessSnap)
+#                 return pEntry.th32ProcessID
+#             if not Process32Next(hProcessSnap, ctypes.byref(pEntry)):
+#                 break
+#     CloseHandle(hProcessSnap)
+#     return None
+
+
 def get_emu_process_ids():
     adjust_privilege(win32security.SE_DEBUG_NAME)
 
@@ -91,23 +145,20 @@ def get_emu_process_ids():
 
 
 def get_pc_process_id():
-    adjust_privilege(win32security.SE_DEBUG_NAME)
+    hProcessSnap = CreateToolhelp32Snapshot(0x00000002, 0)
 
-    MAX_PATH = 260
+    pEntry = PROCESSENTRY32()
+    pEntry.dwSize = ctypes.sizeof(PROCESSENTRY32)
 
-    processes = win32process.EnumProcesses()
-
-    for process_id in processes:
-        hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, process_id)
-        if hProcess:
-            ImageFileName = (ctypes.c_char * MAX_PATH)()
-            if GetProcessImageFileName(hProcess, ImageFileName, MAX_PATH) > 0:
-                filename_bytes = os.path.basename(ImageFileName.value)
-                filename = filename_bytes.decode("ascii")
-                if filename.lower() == "ff7_en.exe":
-                    CloseHandle(hProcess)
-                    return process_id
-            CloseHandle(hProcess)
+    if Process32First(hProcessSnap, ctypes.byref(pEntry)):
+        while True:
+            exe_name_str = pEntry.szExeFile.decode("ascii")
+            if "ff7_en.exe".casefold() == exe_name_str.casefold():
+                CloseHandle(hProcessSnap)
+                return pEntry.th32ProcessID
+            if not Process32Next(hProcessSnap, ctypes.byref(pEntry)):
+                break
+    CloseHandle(hProcessSnap)
     return None
 
 
@@ -283,16 +334,9 @@ class Hook:
 
     def main(self):
         self.base_cache = None
-        adj_priv_return = adjust_privilege(win32security.SE_DEBUG_NAME)
-        print(f"adj priv return: {adj_priv_return}")
-        err = win32api.GetLastError()
-        print(f"adj priv error (if any): {err}")
 
         # hook into platform
-        self.hooked_process_handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ, True,
-                                                 self.hooked_process_id)
-        # self.hooked_process_handle = OpenProcess(0, True,
-        #                                          self.hooked_process_id)
+        self.hooked_process_handle = OpenProcess(win32con.PROCESS_ALL_ACCESS, False, self.hooked_process_id)
         if self.hooked_process_handle is None or self.hooked_process_handle == 0:
             err = win32api.GetLastError()
             print(f"Hooked process handle error: {err}")

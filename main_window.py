@@ -1,7 +1,10 @@
+import os
 import re
 import sys
 
+import win32process
 from dearpygui import dearpygui as dpg
+from win32comext.shell import shell
 
 import formation_extrapolator_new
 import formation_list_new
@@ -219,6 +222,11 @@ class MainWindow:
 
 
 if __name__ == '__main__':
+    # if sys.argv[-1] == "try_admin":
+    #     script = os.path.abspath(sys.argv[0])
+    #     params = ' '.join([script] + sys.argv[1:-1])
+    #     shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
+    #     sys.exit(0)
     APP = MainWindow()
     try:
         sys.exit(APP.run())
