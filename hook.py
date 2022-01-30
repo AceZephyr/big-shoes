@@ -339,10 +339,15 @@ class Hook:
         self.hooked_process_handle = OpenProcess(win32con.PROCESS_ALL_ACCESS, False, self.hooked_process_id)
         if self.hooked_process_handle is None or self.hooked_process_handle == 0:
             err = win32api.GetLastError()
-            print(f"Hooked process handle error: {err}")
-            # show_error("Bad Hook", f"Hooked process handle error: {err}")
+            error_message = f"Error on OpenProcess: {err}\n{win32api.FormatMessage(err)}\n\n"
+            if err == 5:
+                error_message += (f"""For some reason, your computer has decided that I need admin privileges to be able to hook into this process. Please rerun this program with _run_big_shoes_admin.bat.
 
-        print(f"Hooked process handle: {self.hooked_process_handle}")
+If you are currently running with admin privileges, please contact the developer.""")
+            else:
+                error_message += """Unknown error. Please contact the developer."""
+            win32api.MessageBox(None, error_message, "Error on OpenProcess")
+            raise Exception(error_message)
 
         self.parent_app.update_title(self.parent_app.settings.CONNECTED_TO_TEXT + self.hooked_platform.name)
 
