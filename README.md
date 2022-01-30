@@ -6,7 +6,7 @@ Big Shoes is a standalone Final Fantasy 7 stepgraph viewer written in Python.
 
 Download or pull this repository.
 
-If you don't have Python installed, the easiest way to get it is from the [Microsoft Store](https://www.microsoft.com/en-us/p/python-39/9p7qfqmjrfp7).
+If you don't have Python installed, the easiest way to get it is from the [Microsoft Store](https://www.microsoft.com/en-us/p/python-310/9pjpw5ldxlz5).
 
 Double click _setup_python.bat to install necessary packages.
 
@@ -24,20 +24,15 @@ To connect to the PC version, go to Connect > Connect to PC. If FF7 PC is runnin
 
 To disconnect from FF7, go to Connect > Disconnect
 
+### Watches
+
+View watches with Window > Watches
+
 ### Stepgraph
 
-View the stepgraph with Window > Toggle Stepgraph
+View the stepgraph with Window > Stepgraph
 
-Use the mouse wheel to move left or right. Shift + scroll to scroll faster. Ctrl + scroll to change the y-axis danger scale.
-
-Keys:
-- P: Toggle preemptive stepids
-- Ctrl+P: Toggle preemptive battle checks
-- X: Toggle extrapolation lines
-- M: Toggle encounter marks
-- R: Reset Step Position
-- D: Reset Danger Scaling
-
+Use the mouse wheel to move left or right. Shift + scroll to scroll faster. Ctrl + scroll to change the y-axis danger scale. Alt + scroll to show more or less of the graph at a time.
 ### Formation Extrapolator
 
 Window > Formation Extrapolator.
