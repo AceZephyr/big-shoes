@@ -1,11 +1,9 @@
-import copy
 import ctypes.wintypes
 import os
 import re
 import threading
 import time
 
-import ntsecuritycon
 import win32api
 import win32con
 import win32process
@@ -178,10 +176,11 @@ def psxfin_address_func(hook, process_handle, address: Address, version: str):
 
 
 _BIZHAWK_ADDRESS_MAP = {
-    "1": 0x30DF80,
-    "2": 0x310F80,
-    "3": 0x30DF90,
-    "4": 0x11D880,
+    "2.7": 0x317F80,
+    "2.6.2": 0x30DF80,
+    "2.5.2": 0x310F80,
+    "2.4.1": 0x30DF90,
+    "2.3.2": 0x11D880,
 }
 
 
@@ -231,13 +230,14 @@ def pc_address_func(hook, process_handle, address: Address, version: str):
 
 
 _RETROARCH_KNOWN_ADDRESSES = [
+    0x20000000,
     0x30000000,
     0x7FFF0000,
     0x80000000
 ]
 
 
-def retroarch_try(process_handle, addr: int):
+def manual_try_address(process_handle, addr: int):
     for x in range(0, len(constants.RNG)):
         try:
             if int.from_bytes(win32process.ReadProcessMemory(process_handle, 0xE0638 + addr + x, 1),
@@ -248,17 +248,17 @@ def retroarch_try(process_handle, addr: int):
     return True
 
 
-def retroarch_search(process_id):
+def manual_search(process_id):
     adjust_privilege(win32security.SE_DEBUG_NAME)
     hooked_process_handle = OpenProcess(0x1F0FFF, False, process_id)
     # try known addresses first
     for addr in _RETROARCH_KNOWN_ADDRESSES:
-        if retroarch_try(hooked_process_handle, addr):
+        if manual_try_address(hooked_process_handle, addr):
             CloseHandle(hooked_process_handle)
             return addr
     # attempt to search for it anyway
     for addr in range(0, 0xFFFFFFFF, 0x1000):
-        if retroarch_try(hooked_process_handle, addr):
+        if manual_try_address(hooked_process_handle, addr):
             CloseHandle(hooked_process_handle)
             return addr
     CloseHandle(hooked_process_handle)
@@ -280,16 +280,17 @@ class Hook:
         "BizHawk": (
             "[Ee]mu[Hh]awk",
             [
-                HookablePlatform("BizHawk 2.6.2", True, "1", bizhawk_address_func),
-                HookablePlatform("BizHawk 2.5.2 - 2.6.1", True, "2", bizhawk_address_func),
-                HookablePlatform("BizHawk 2.4.1 - 2.5.1", True, "3", bizhawk_address_func),
-                HookablePlatform("BizHawk 2.3.2 - 2.4.0", True, "4", bizhawk_address_func)
+                HookablePlatform("BizHawk 2.7", True, "2.7", bizhawk_address_func),
+                HookablePlatform("BizHawk 2.6.2 - 2.6.3", True, "2.6.2", bizhawk_address_func),
+                HookablePlatform("BizHawk 2.5.2 - 2.6.1", True, "2.5.2", bizhawk_address_func),
+                HookablePlatform("BizHawk 2.4.1 - 2.5.1", True, "2.4.1", bizhawk_address_func),
+                HookablePlatform("BizHawk 2.3.2 - 2.4.0", True, "2.3.2", bizhawk_address_func),
+                HookablePlatform("BizHawk Manual", True, "__MANUAL__", manual_address_func)
             ]
         ),
         "Retroarch": (
             "[Rr]etro[Aa]rch",
             [
-                HookablePlatform("Retroarch Duckstation", True, "Duck", retroduck_address_func),
                 HookablePlatform("Retroarch (Manual)", True, "__MANUAL__", manual_address_func),
             ]
         )

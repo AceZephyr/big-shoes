@@ -2,6 +2,7 @@ import threading
 import time
 from enum import Enum, auto
 
+import dearpygui.dearpygui
 from dearpygui import dearpygui as dpg
 
 import constants
@@ -160,6 +161,7 @@ class Stepgraph:
 
             if not self.update:
                 continue
+
 
             self.update_axes()
 

@@ -2,6 +2,7 @@ import os
 import re
 import sys
 
+import win32gui
 import win32process
 from dearpygui import dearpygui as dpg
 from win32comext.shell import shell
@@ -55,7 +56,7 @@ class ConnectEmulatorDialog:
         for platform_version in hook.Hook.EMULATOR_MAP[selected_emu][1]:
             if platform_version.name == selected_version:
 
-                if platform_version.version == "__MANUAL__":
+                if platform_version.version.startswith("__MANUAL__"):
                     if re.fullmatch("[0-9a-fA-F]+", manual_address):
                         self.parent_app.hook.manual_address = int(manual_address, 16)
                     else:
@@ -68,6 +69,27 @@ class ConnectEmulatorDialog:
                 self.parent_app.hook.hooked_process_id = int(selected_pid)
                 self.parent_app.hook.start()
                 dpg.delete_item(self.modal_id)
+
+    def click_show_window(self):
+        def _callback(hwnd, pid):
+            thread_id, process_id = win32process.GetWindowThreadProcessId(hwnd)
+            if process_id == pid:
+                win32gui.BringWindowToTop(hwnd)
+
+        win32gui.EnumWindows(_callback, int(dpg.get_value(self.input_emu_pid)))
+
+    def click_manual_calculate(self):
+        for platform_version in hook.Hook.EMULATOR_MAP[dpg.get_value(self.input_emu_name)][1]:
+            if platform_version.name == dpg.get_value(self.input_emu_ver):
+                if platform_version.version != "__MANUAL__":
+                    show_error("Must use Manual Addressing", "Must be on manual addressing to calculate an offset.")
+                    return
+                addr = hook.manual_search(int(dpg.get_value(self.input_emu_pid)))
+                if addr is not None:
+                    dpg.set_value(self.input_manual_addr, hex(addr)[2:].upper())
+                else:
+                    show_error("Could not find memory", "Could not find the memory offset.")
+                    return
 
     def __init__(self, app, pids):
         self.parent_app = app
@@ -87,8 +109,10 @@ class ConnectEmulatorDialog:
                     dpg.add_separator()
                     self.button_connect = dpg.add_button(user_data=(modal_id, 0), label="Connect",
                                                          callback=self.click_connect)
-                    self.button_show_window = dpg.add_button(user_data=(modal_id, 1), label="Show this Window")
-                    self.button_address_search = dpg.add_button(user_data=(modal_id, 2), label="Address Search")
+                    self.button_show_window = dpg.add_button(user_data=(modal_id, 1), label="Show this Window",
+                                                             callback=self.click_show_window)
+                    self.button_address_search = dpg.add_button(user_data=(modal_id, 2), label="Address Search",
+                                                                callback=self.click_manual_calculate)
         center(modal_id)
         self.on_emulator_select()
 
