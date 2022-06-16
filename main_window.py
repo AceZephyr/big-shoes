@@ -46,6 +46,9 @@ class ConnectEmulatorDialog:
         dpg.configure_item(self.input_emu_pid, items=pids, default_value=pids[0])
         versions = [x.name for x in hook.Hook.EMULATOR_MAP[selected_emu][1]]
         dpg.configure_item(self.input_emu_ver, items=versions, default_value=versions[0])
+        if os.path.exists("__cache__" + selected_emu):
+            with open("__cache__" + selected_emu, "r") as f:
+                dpg.configure_item(self.input_manual_addr, default_value=f.read())
 
     def click_connect(self):
         selected_emu = dpg.get_value(self.input_emu_name)
@@ -55,10 +58,11 @@ class ConnectEmulatorDialog:
 
         for platform_version in hook.Hook.EMULATOR_MAP[selected_emu][1]:
             if platform_version.name == selected_version:
-
                 if platform_version.version.startswith("__MANUAL__"):
                     if re.fullmatch("[0-9a-fA-F]+", manual_address):
                         self.parent_app.hook.manual_address = int(manual_address, 16)
+                        with open("__cache__" + selected_emu, "w") as f:
+                            f.write(manual_address)
                     else:
                         self.parent_app.hook.manual_address = None
                         show_error("Invalid manual offset",

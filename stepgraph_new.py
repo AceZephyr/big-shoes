@@ -158,10 +158,17 @@ class Stepgraph:
             self.stored_preempt_gridlines = _v(self.stored_preempt_gridlines, self.menu_preempt_gridlines)
             self.stored_preemt_encounter_thresholds = _v(self.stored_preemt_encounter_thresholds,
                                                          self.menu_preempt_encounter_thresholds)
+            self.stored_walk_danger_projection_lines = _v(self.stored_walk_danger_projection_lines,
+                                                          self.menu_walk_danger_projection_lines)
+            self.stored_run_danger_projection_lines = _v(self.stored_run_danger_projection_lines,
+                                                         self.menu_run_danger_projection_lines)
+            self.stored_run_initial_danger_projection_line = _v(self.stored_run_initial_danger_projection_line,
+                                                                self.menu_run_initial_danger_projection_line)
+
+            self.stored_current_position = _v(self.stored_current_position, self.menu_current_position)
 
             if not self.update:
                 continue
-
 
             self.update_axes()
 
@@ -205,6 +212,7 @@ class Stepgraph:
 
             if connected and self.step_state.table() is not None:
                 next_encounter_data = self.step_state.next_encounter_data()
+                i = 0
                 for walking_steps in next_encounter_data:
                     color = (
                         self.parent_app.settings.WALK_EXTRAPOLATION_COLOR
@@ -219,11 +227,15 @@ class Stepgraph:
                         x_start -= 32768
                     if x_end > 10000:
                         x_end -= 32768
-                    self.plot_elements.append(dpg.draw_line(
-                        (x_start, y_start), (x_end, y_end), thickness=0.25, color=color, parent=self.plot_id))
-                    if self.stored_encounter_marks:
-                        self.plot_elements.append(dpg.draw_circle((x_end, y_end), parent=self.plot_id, radius=0.5,
-                                                                  fill=self.parent_app.settings.BATTLE_MARK_COLOR))
+                    if (walking_steps == -1 and self.stored_walk_danger_projection_lines) or (
+                            walking_steps != -1 and self.stored_run_danger_projection_lines) or (
+                            walking_steps == 0 and self.stored_run_initial_danger_projection_line):
+                        self.plot_elements.append(dpg.draw_line(
+                            (x_start, y_start), (x_end, y_end), thickness=0.25, color=color, parent=self.plot_id))
+                        if self.stored_encounter_marks:
+                            self.plot_elements.append(dpg.draw_circle((x_end, y_end), parent=self.plot_id, radius=0.5,
+                                                                      fill=self.parent_app.settings.BATTLE_MARK_COLOR))
+                    i += 1
                 if self.stored_underwalk_labels:
                     sorted_keys = sorted(set(next_encounter_data.keys()))
                     for i in range(1, len(sorted_keys) - 1):
@@ -244,10 +256,11 @@ class Stepgraph:
                         offset = (offset + 13) % 256
 
             # draw point
-            x = self.track_mode_left_offset
-            y = self.step_state.danger
-            self.plot_elements.append(dpg.draw_circle((x, y), parent=self.plot_id, radius=0.5,
-                                                      fill=self.parent_app.settings.POSITION_MARK_COLOR))
+            if self.stored_current_position:
+                x = self.track_mode_left_offset
+                y = self.step_state.danger
+                self.plot_elements.append(dpg.draw_circle((x, y), parent=self.plot_id, radius=0.5,
+                                                          fill=self.parent_app.settings.POSITION_MARK_COLOR))
 
     def run(self):
         self.thread.start()
@@ -298,6 +311,23 @@ class Stepgraph:
                         label="Encounter Marks", check=True, default_value=True)
                     self.stored_encounter_marks = dpg.get_value(self.menu_encounter_marks)
 
+                    self.menu_walk_danger_projection_lines = dpg.add_menu_item(
+                        label="Walk Danger Projection Lines", check=True, default_value=True)
+                    self.stored_walk_danger_projection_lines = dpg.get_value(self.menu_walk_danger_projection_lines)
+
+                    self.menu_run_danger_projection_lines = dpg.add_menu_item(
+                        label="Run Danger Projection Lines", check=True, default_value=True)
+                    self.stored_run_danger_projection_lines = dpg.get_value(self.menu_run_danger_projection_lines)
+
+                    self.menu_run_initial_danger_projection_line = dpg.add_menu_item(
+                        label="Run Initial Projection Line", check=True, default_value=True)
+                    self.stored_run_initial_danger_projection_line = dpg.get_value(
+                        self.menu_run_initial_danger_projection_line)
+
+                    self.menu_current_position = dpg.add_menu_item(
+                        label="Current Position", check=True, default_value=True)
+                    self.stored_current_position = dpg.get_value(self.menu_current_position)
+
                     dpg.add_separator()
 
                     self.menu_underwalk_labels = dpg.add_menu_item(
@@ -321,7 +351,7 @@ class Stepgraph:
                 with dpg.menu(label="Go To") as goto_menu:
                     self.goto_menu_id = goto_menu
 
-                    self.menu_current_position = dpg.add_menu_item(
+                    self.menu_goto_current_position = dpg.add_menu_item(
                         label="Current Position", callback=self.goto_current_position
                     )
 

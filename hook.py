@@ -213,6 +213,21 @@ def retroduck_address_func(hook, process_handle, address: Address, version: str)
     return hook.base_cache + address.psx_address
 
 
+def duckstation_manual_address_func(hook, process_handle, address: Address, version: str):
+    if hook.manual_address is None:
+        raise Exception("No manual address")
+    if hook.base_cache is None:
+        module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
+        for module_handle in sorted(module_handles):
+            filename = win32process.GetModuleFileNameEx(process_handle, module_handle)
+            filename = filename[filename.rfind("\\") + 1:]
+            if "duckstation" in filename.lower() and ".exe" in filename.lower():
+                hook.base_cache = int.from_bytes(
+                    win32process.ReadProcessMemory(process_handle, module_handle + hook.manual_address, 8),
+                    byteorder='little')
+    return hook.base_cache + address.psx_address
+
+
 def manual_address_func(hook, process_handle, address: Address, version: str):
     if hook.manual_address is None:
         raise Exception("No manual address")
@@ -292,6 +307,12 @@ class Hook:
             "[Rr]etro[Aa]rch",
             [
                 HookablePlatform("Retroarch (Manual)", True, "__MANUAL__", manual_address_func),
+            ]
+        ),
+        "DuckStation": (
+            "[Dd][Uu][Cc][Kk][Ss][Tt][Aa][Tt][Ii][Oo][Nn]",
+            [
+                HookablePlatform("DuckStation (Manual)", True, "__MANUAL__", duckstation_manual_address_func)
             ]
         )
     }
