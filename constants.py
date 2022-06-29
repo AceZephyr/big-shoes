@@ -345,9 +345,9 @@ class Formation:
         self.setup_data = _setup_data
         self.enemies = []
         for _f in fm_data:
-            if _f[0] == 0xFF:
+            if _f[0] == 0xFF and _f[1] == 0xFF:
                 break
-            self.enemies.append(_f[0])
+            self.enemies.append(_f[1] * 256 + _f[0])
         self.encounter_type = Formation.SETUP_DATA_ENCOUNTER_TYPE_MAP[_setup_data[18]]
         self.preemptable = _setup_data[16] & 16 != 0
 
