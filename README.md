@@ -6,6 +6,8 @@ Big Shoes is a standalone Final Fantasy 7 stepgraph viewer written in Python.
 
 You can now run this as a standalone application. Download the latest release, and run big_shoes.exe. Note that big_shoes.exe must be in this folder to work properly (it has to find some files), but you can make a shortcut to it.
 
+To build as a standalone application, you will need `pyinstaller`. Simply run `pyinstaller main_window.spec` to build `big_shoes.exe` in the `dist` folder.
+
 ### Connecting to FF7
 
 To connect to an emulator, go to Connect > Connect to Emulator.
@@ -42,12 +44,7 @@ This window lists the possible formations on this field.
 Big Shoes is compatible with:
 
 - FF7 PC Steam Version
-- BizHawk 2.3.2 to 2.6.2
+- DuckStation (requires manual address search)
+- BizHawk 2.3.2 to 2.7 and 2.9.1
 - Retroarch
 - PSXFin v1.13
-
-## To Do
-
-Considering Linux support.
-
-Settings window.

@@ -13,7 +13,8 @@ import hook
 import settings
 import stepgraph_new
 from watch_window import WatchWindow
-
+from os import path
+bundle_dir = path.abspath(path.dirname(__file__))
 
 def center(modal_id):
     viewport_width = dpg.get_viewport_client_width()

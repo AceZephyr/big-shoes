@@ -2,6 +2,9 @@ import csv
 import enum
 import math
 
+from os import path
+bundle_dir = path.abspath(path.dirname(__file__))
+
 RNG = [177, 202, 238, 108, 90, 113, 46, 85, 214, 0, 204, 153, 144, 107, 125, 235, 79, 160, 7, 172, 223, 138, 86, 158,
        241, 154, 99, 117, 17, 145, 163, 184, 148, 115, 247, 84, 217, 110, 114, 192, 244, 128, 222, 185, 187, 141, 102,
        38, 208, 54, 225, 233, 112, 220, 205, 47, 74, 103, 93, 210, 96, 181, 157, 127, 69, 55, 80, 68, 120, 4, 25, 44,
@@ -276,7 +279,7 @@ NAME_ID_MAP = dict()
 
 # BATTLE_TYPE_NAMES = ["Normal", "Side Attack", "Back Attack", "Pincer"]
 
-with open("encdata.csv", "r") as f:
+with open(path.join(bundle_dir, "encdata.csv"), "r") as f:
     _r = csv.reader(f)
     for _line in _r:
         _map_id = int(_line[46])
@@ -353,8 +356,8 @@ class Formation:
 
 
 ENCOUNTER_DATA = {}
-with open("initial_setup_data_dump", "r") as a:
-    with open("formation_dump", "r") as b:
+with open(path.join(bundle_dir, "initial_setup_data_dump"), "r") as a:
+    with open(path.join(bundle_dir, "formation_dump"), "r") as b:
         setup_lines = a.readlines()
         fmd_lines = b.readlines()
         for s in range(0, 256):

@@ -2,7 +2,6 @@ import threading
 import time
 from enum import Enum, auto
 
-import dearpygui.dearpygui
 from dearpygui import dearpygui as dpg
 
 import constants
@@ -15,6 +14,18 @@ MAX_WIDTH = 500
 
 MAX_TOP_DANGER = 40000
 MIN_TOP_DANGER = 500
+
+
+def is_ctrl_down():
+    return dpg.is_key_down(dpg.mvKey_LControl) or dpg.is_key_down(dpg.mvKey_RControl)
+
+
+def is_alt_down():
+    return dpg.is_key_down(dpg.mvKey_LAlt) or dpg.is_key_down(dpg.mvKey_RAlt)
+
+
+def is_shift_down():
+    return dpg.is_key_down(dpg.mvKey_LShift) or dpg.is_key_down(dpg.mvKey_RShift)
 
 
 class DisplayMode(Enum):
@@ -67,17 +78,17 @@ class Stepgraph:
     def _mouse_wheel_handler(self, sender, scroll_amount):
         with dpg.mutex():
             if dpg.is_item_hovered(self.window_id):
-                if dpg.is_key_down(dpg.mvKey_Control):
-                    if dpg.is_key_down(dpg.mvKey_Shift):
+                if is_ctrl_down():
+                    if is_shift_down():
                         self.top_danger -= scroll_amount * 5000
                     else:
                         self.top_danger -= scroll_amount * 500
-                elif dpg.is_key_down(dpg.mvKey_Alt):
-                    if dpg.is_key_down(dpg.mvKey_Shift):
+                elif is_alt_down():
+                    if is_shift_down():
                         self.width -= scroll_amount * 20
                     else:
                         self.width -= scroll_amount * 2
-                elif dpg.is_key_down(dpg.mvKey_Shift):
+                elif is_shift_down():
                     self.track_mode_left_offset += scroll_amount * 40
                 else:
                     self.track_mode_left_offset += scroll_amount * 4

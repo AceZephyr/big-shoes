@@ -176,6 +176,7 @@ def psxfin_address_func(hook, process_handle, address: Address, version: str):
 
 
 _BIZHAWK_ADDRESS_MAP = {
+    "2.9.1": 0x124b30,
     "2.7": 0x317F80,
     "2.6.2": 0x30DF80,
     "2.5.2": 0x310F80,
@@ -295,6 +296,7 @@ class Hook:
         "BizHawk": (
             "[Ee]mu[Hh]awk",
             [
+                HookablePlatform("BizHawk 2.9.1", True, "2.9.1", bizhawk_address_func),
                 HookablePlatform("BizHawk 2.7", True, "2.7", bizhawk_address_func),
                 HookablePlatform("BizHawk 2.6.2 - 2.6.3", True, "2.6.2", bizhawk_address_func),
                 HookablePlatform("BizHawk 2.5.2 - 2.6.1", True, "2.5.2", bizhawk_address_func),
