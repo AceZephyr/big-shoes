@@ -33,6 +33,51 @@ Process32Next = ctypes.windll.kernel32.Process32Next
 CloseHandle = Kernel32.CloseHandle
 
 
+class MEMORY_BASIC_INFORMATION(ctypes.Structure):
+    _fields_ = [("BaseAddress", ctypes.wintypes.LPVOID),
+                ("AllocationBase", ctypes.wintypes.LPVOID),
+                ("AllocationProtect", ctypes.wintypes.DWORD),
+                ("PartitionId", ctypes.wintypes.WORD),
+                ("RegionSize", ctypes.c_size_t),
+                ("State", ctypes.wintypes.DWORD),
+                ("Protect", ctypes.wintypes.DWORD),
+                ("Type", ctypes.wintypes.DWORD)]
+
+    def __repr__(self):
+        return f'MEMORY_BASIC_INFORMATION(BaseAddress={self.BaseAddress if self.BaseAddress is not None else 0:#x}, ' \
+               f'AllocationBase={self.AllocationBase if self.AllocationBase is not None else 0:#x}, ' \
+               f'AllocationProtect={self.AllocationProtect:#x}, ' \
+               f'PartitionId={self.PartitionId:#x}, ' \
+               f'RegionSize={self.RegionSize:#x}, ' \
+               f'State={self.State:#x}, ' \
+               f'Protect={self.Protect:#x}, ' \
+               f'Type={self.Type:#x})'
+
+
+VirtualQueryEx = ctypes.windll.kernel32.VirtualQueryEx
+VirtualQueryEx.restype = ctypes.c_size_t
+VirtualQueryEx.argtypes = (ctypes.wintypes.HANDLE,
+                           ctypes.wintypes.LPCVOID,
+                           ctypes.POINTER(MEMORY_BASIC_INFORMATION),
+                           ctypes.c_size_t)
+
+
+class MODULEINFO(ctypes.Structure):
+    _fields_ = [
+        ("lpBaseOfDll", ctypes.wintypes.LPVOID),
+        ("SizeOfImage", ctypes.wintypes.DWORD),
+        ("EntryPoint", ctypes.wintypes.LPVOID)
+    ]
+
+
+GetModuleInformation = Psapi.GetModuleInformation
+GetModuleInformation.restype = ctypes.c_bool
+GetModuleInformation.argtypes = (ctypes.wintypes.HANDLE,
+                                 ctypes.wintypes.HMODULE,
+                                 ctypes.POINTER(MODULEINFO),
+                                 ctypes.wintypes.DWORD)
+
+
 class PROCESSENTRY32(ctypes.Structure):
     _fields_ = [('dwSize', ctypes.wintypes.DWORD),
                 ('cntUsage', ctypes.wintypes.DWORD),
@@ -97,24 +142,6 @@ def get_process_list():
                 break
     CloseHandle(hProcessSnap)
     return process_list_out
-
-
-# def find_process_with_name(names: set):
-#     hProcessSnap = CreateToolhelp32Snapshot(0x00000002, 0)
-#
-#     pEntry = PROCESSENTRY32()
-#     pEntry.dwSize = ctypes.sizeof(PROCESSENTRY32)
-#
-#     if Process32First(hProcessSnap, ctypes.byref(pEntry)):
-#         while True:
-#             exe_name_str = pEntry.szExeFile.decode("ascii")
-#             if exe_name_str in names:
-#                 CloseHandle(hProcessSnap)
-#                 return pEntry.th32ProcessID
-#             if not Process32Next(hProcessSnap, ctypes.byref(pEntry)):
-#                 break
-#     CloseHandle(hProcessSnap)
-#     return None
 
 
 def get_emu_process_ids():
@@ -214,19 +241,19 @@ def retroduck_address_func(hook, process_handle, address: Address, version: str)
     return hook.base_cache + address.psx_address
 
 
-def duckstation_manual_address_func(hook, process_handle, address: Address, version: str):
-    if hook.manual_address is None:
-        raise Exception("No manual address")
-    if hook.base_cache is None:
-        module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
-        for module_handle in sorted(module_handles):
-            filename = win32process.GetModuleFileNameEx(process_handle, module_handle)
-            filename = filename[filename.rfind("\\") + 1:]
-            if "duckstation" in filename.lower() and ".exe" in filename.lower():
-                hook.base_cache = int.from_bytes(
-                    win32process.ReadProcessMemory(process_handle, module_handle + hook.manual_address, 8),
-                    byteorder='little')
-    return hook.base_cache + address.psx_address
+# def duckstation_manual_address_func(hook, process_handle, address: Address, version: str):
+#     if hook.manual_address is None:
+#         raise Exception("No manual address")
+#     if hook.base_cache is None:
+#         module_handles = win32process.EnumProcessModulesEx(process_handle, 0x03)
+#         for module_handle in sorted(module_handles):
+#             filename = win32process.GetModuleFileNameEx(process_handle, module_handle)
+#             filename = filename[filename.rfind("\\") + 1:]
+#             if "duckstation" in filename.lower() and ".exe" in filename.lower():
+#                 hook.base_cache = int.from_bytes(
+#                     win32process.ReadProcessMemory(process_handle, module_handle + hook.manual_address, 8),
+#                     byteorder='little')
+#     return hook.base_cache + address.psx_address
 
 
 def manual_address_func(hook, process_handle, address: Address, version: str):
@@ -264,21 +291,52 @@ def manual_try_address(process_handle, addr: int):
     return True
 
 
+def find_base_address_candidates(b: bytes):
+    i = 0
+    while i < len(b):
+        i = b.find(constants.RNG_BYTES, i)
+        if i < 0:
+            return
+        # print(sum(b[i - 0xD0638:i - 0xC0638]))
+        if sum(b[i - 0xD0638:i - 0xD0638 + 128]) == 9178:
+            yield i - 0xE0638
+        i += len(constants.RNG_BYTES)
+
+
 def manual_search(process_id):
     adjust_privilege(win32security.SE_DEBUG_NAME)
     hooked_process_handle = OpenProcess(0x1F0FFF, False, process_id)
-    # try known addresses first
-    for addr in _RETROARCH_KNOWN_ADDRESSES:
-        if manual_try_address(hooked_process_handle, addr):
-            CloseHandle(hooked_process_handle)
-            return addr
-    # attempt to search for it anyway
-    for addr in range(0, 0xFFFFFFFF, 0x1000):
-        if manual_try_address(hooked_process_handle, addr):
-            CloseHandle(hooked_process_handle)
-            return addr
+    mbi = MEMORY_BASIC_INFORMATION()
+    mi = MODULEINFO()
+
+    module_starts = {0: ""}
+
+    module_handles = win32process.EnumProcessModulesEx(hooked_process_handle, 0x03)
+    for module_handle in sorted(module_handles):
+        filename = win32process.GetModuleFileNameEx(hooked_process_handle, module_handle)
+        res = GetModuleInformation(hooked_process_handle, module_handle, ctypes.byref(mi), ctypes.sizeof(mi))
+        if not res:
+            continue
+        module_starts[mi.lpBaseOfDll] = filename.split(os.path.sep)[-1]
+        # print(f"{filename} {mi.lpBaseOfDll:X} {mi.SizeOfImage:X}")
+
+    address = 0
+    while True:
+        result = VirtualQueryEx(hooked_process_handle, address, ctypes.byref(mbi), ctypes.sizeof(mbi))
+        if result:
+            try:
+                # print(f"{address:x} {mbi.BaseAddress:x} {mbi}")
+                fname = module_starts[max(k for k in module_starts.keys() if k <= mbi.AllocationBase)]
+                b = win32process.ReadProcessMemory(hooked_process_handle, address, mbi.RegionSize)
+                for base in find_base_address_candidates(b):
+                    yield fname, address + base
+            except Exception as _:
+                pass
+            address += mbi.RegionSize
+        else:
+            # print(f'err={ctypes.get_last_error()}')
+            break
     CloseHandle(hooked_process_handle)
-    return None
 
 
 class Hook:
@@ -296,12 +354,12 @@ class Hook:
         "BizHawk": (
             "[Ee]mu[Hh]awk",
             [
-                HookablePlatform("BizHawk 2.9.1", True, "2.9.1", bizhawk_address_func),
-                HookablePlatform("BizHawk 2.7", True, "2.7", bizhawk_address_func),
-                HookablePlatform("BizHawk 2.6.2 - 2.6.3", True, "2.6.2", bizhawk_address_func),
-                HookablePlatform("BizHawk 2.5.2 - 2.6.1", True, "2.5.2", bizhawk_address_func),
-                HookablePlatform("BizHawk 2.4.1 - 2.5.1", True, "2.4.1", bizhawk_address_func),
-                HookablePlatform("BizHawk 2.3.2 - 2.4.0", True, "2.3.2", bizhawk_address_func),
+                # HookablePlatform("BizHawk 2.9.1", True, "2.9.1", bizhawk_address_func),
+                # HookablePlatform("BizHawk 2.7", True, "2.7", bizhawk_address_func),
+                # HookablePlatform("BizHawk 2.6.2 - 2.6.3", True, "2.6.2", bizhawk_address_func),
+                # HookablePlatform("BizHawk 2.5.2 - 2.6.1", True, "2.5.2", bizhawk_address_func),
+                # HookablePlatform("BizHawk 2.4.1 - 2.5.1", True, "2.4.1", bizhawk_address_func),
+                # HookablePlatform("BizHawk 2.3.2 - 2.4.0", True, "2.3.2", bizhawk_address_func),
                 HookablePlatform("BizHawk Manual", True, "__MANUAL__", manual_address_func)
             ]
         ),
@@ -314,7 +372,7 @@ class Hook:
         "DuckStation": (
             "[Dd][Uu][Cc][Kk][Ss][Tt][Aa][Tt][Ii][Oo][Nn]",
             [
-                HookablePlatform("DuckStation (Manual)", True, "__MANUAL__", duckstation_manual_address_func)
+                HookablePlatform("DuckStation (Manual)", True, "__MANUAL__", manual_address_func)
             ]
         )
     }

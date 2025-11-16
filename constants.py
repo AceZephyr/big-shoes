@@ -17,6 +17,8 @@ RNG = [177, 202, 238, 108, 90, 113, 46, 85, 214, 0, 204, 153, 144, 107, 125, 235
        195, 132, 252, 119, 134, 19, 78, 191, 242, 83, 91, 237, 33, 139, 109, 194, 65, 182, 219, 60, 211, 40, 236, 45,
        226, 155, 166, 66, 82, 87, 95, 229, 171, 176, 12]
 
+RNG_BYTES = bytes(RNG)
+
 # All offset values in order
 # OFFSET_TABLE[x] = 13*x mod 256
 OFFSET_TABLE = [0, 13, 26, 39, 52, 65, 78, 91, 104, 117, 130, 143, 156, 169, 182, 195, 208, 221, 234, 247, 4, 17, 30,
@@ -301,7 +303,7 @@ with open(path.join(bundle_dir, "encdata.csv"), "r") as f:
             _special = []
             for _i in range(4):
                 _special.append(EncounterSlot(int(_line[2 * _i + 0x18 + 0xE]), int(_line[2 * _i + 0x18 + 0xF])))
-            _table2 = EncounterTable(int(_line[1]), _standard, _special)
+            _table2 = EncounterTable(int(_line[25]), _standard, _special)
         FIELDS[_map_id] = Field(_map_id, _name, _table1, _table2)
         NAME_ID_MAP[_name] = _map_id
 

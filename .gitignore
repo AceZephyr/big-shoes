@@ -1,3 +1,10 @@
 .idea
+.venv*
 /build/
 /dist/
+__cache*
+main_window.cmd
+main_window.exe
+main_window.build*
+main_window.dist*
+main_window.onefile-build*

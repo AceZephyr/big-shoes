@@ -36,8 +36,10 @@ class WatchWindow:
     def __init__(self, app):
         self.parent_app = app
         self.thread = threading.Thread(target=self.main)
+        print("ww: window")
         with dpg.window(label="Watches", width=400, show=False) as window_id:
             self.window_id = window_id
+            print("ww table")
             with dpg.table(header_row=True, resizable=True):
                 dpg.add_table_column(label="Address")
                 self.table_ids = []
@@ -46,6 +48,7 @@ class WatchWindow:
                 self.watch_functions = []
                 for addr, func in WatchWindow.ADDRESSES:
                     with dpg.table_row():
+                        print(f"address: {addr.name}")
                         dpg.add_text(addr.name)
                         k, v = app.hook.register_address(addr, 0)
                         self.address_keys.append(k)

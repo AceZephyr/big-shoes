@@ -54,7 +54,7 @@ class SpecificStepDialog:
                     self.input_stepid = dpg.add_input_text(label="Step ID")
                     self.input_offset = dpg.add_input_text(label="Offset")
                     dpg.add_separator()
-                    self.button_go = dpg.add_button(label="Go", callback=self.go)
+                    self.button_go = dpg.add_button(label="Go", callback=lambda: self.go())
         center(modal_id)
 
 
@@ -113,7 +113,7 @@ class Stepgraph:
         self.track_mode_left_offset = self.step_state.step - step
 
     def click_goto_specific_step(self):
-        SpecificStepDialog(callback=self.specific_step_callback)
+        SpecificStepDialog(callback=lambda: self.specific_step_callback())
 
     def main(self):
         def _r(_orig_val, k):
@@ -291,13 +291,14 @@ class Stepgraph:
         self.stored_top_danger = 0
 
         with dpg.handler_registry():
-            dpg.add_mouse_wheel_handler(callback=self._mouse_wheel_handler)
+            dpg.add_mouse_wheel_handler(
+                callback=lambda sender, scroll_amount: self._mouse_wheel_handler(sender, scroll_amount))
 
         with dpg.window(label="Stepgraph", width=1000, show=False, no_scrollbar=True) as window_id:
             self.window_id = window_id
 
             with dpg.item_handler_registry(tag="widget handler") as window_handler:
-                dpg.add_item_resize_handler(callback=self._window_resize_handler)
+                dpg.add_item_resize_handler(callback=lambda: self._window_resize_handler())
             dpg.bind_item_handler_registry(window_id, window_handler)
 
             with dpg.plot(width=1000, no_mouse_pos=True, no_box_select=True, no_child=True,
@@ -363,11 +364,11 @@ class Stepgraph:
                     self.goto_menu_id = goto_menu
 
                     self.menu_goto_current_position = dpg.add_menu_item(
-                        label="Current Position", callback=self.goto_current_position
+                        label="Current Position", callback=lambda: self.goto_current_position()
                     )
 
                     self.menu_goto_step = dpg.add_menu_item(
-                        label="Specific Step", callback=self.click_goto_specific_step
+                        label="Specific Step", callback=lambda: self.click_goto_specific_step()
                     )
 
         dpg.set_axis_ticks(self.x_axis, tuple([("", x) for x in range(MAX_WIDTH + 1000)]))

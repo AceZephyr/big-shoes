@@ -6,7 +6,7 @@ Big Shoes is a standalone Final Fantasy 7 stepgraph viewer written in Python.
 
 You can now run this as a standalone application. Download the latest release, and run big_shoes.exe. Note that big_shoes.exe must be in this folder to work properly (it has to find some files), but you can make a shortcut to it.
 
-To build as a standalone application, you will need `pyinstaller`. Simply run `pyinstaller main_window.spec` to build `big_shoes.exe` in the `dist` folder.
+To build as a standalone application, you will need `Nuitka`. Run the installer script `__build_bigshoes.bat` to build it `big_shoes.exe`.
 
 ### Connecting to FF7
 

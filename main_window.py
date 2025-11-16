@@ -14,7 +14,9 @@ import settings
 import stepgraph_new
 from watch_window import WatchWindow
 from os import path
+
 bundle_dir = path.abspath(path.dirname(__file__))
+
 
 def center(modal_id):
     viewport_width = dpg.get_viewport_client_width()
@@ -35,7 +37,8 @@ def show_error(title, message, selection_callback=None):
     with dpg.mutex():
         with dpg.window(label=title, modal=True, no_close=True) as modal_id:
             dpg.add_text(message)
-            dpg.add_button(label="Ok", width=75, user_data=(modal_id, True), callback=_callback)
+            dpg.add_button(label="Ok", width=75, user_data=(modal_id, True),
+                           callback=lambda a, b, c: _callback(a, b, c))
 
     center(modal_id)
 
@@ -83,18 +86,37 @@ class ConnectEmulatorDialog:
 
         win32gui.EnumWindows(_callback, int(dpg.get_value(self.input_emu_pid)))
 
-    def click_manual_calculate(self):
+    def button_manual_search_modal(self, addr, modal_id):
+        dpg.set_value(item=self.input_manual_addr, value=f"{addr:X}")
+        dpg.delete_item(modal_id)
+
+    def click_manual_search(self):
         for platform_version in hook.Hook.EMULATOR_MAP[dpg.get_value(self.input_emu_name)][1]:
             if platform_version.name == dpg.get_value(self.input_emu_ver):
                 if platform_version.version != "__MANUAL__":
                     show_error("Must use Manual Addressing", "Must be on manual addressing to calculate an offset.")
                     return
-                addr = hook.manual_search(int(dpg.get_value(self.input_emu_pid)))
-                if addr is not None:
-                    dpg.set_value(self.input_manual_addr, hex(addr)[2:].upper())
+                # print("Starting search")
+                results = list(hook.manual_search(int(dpg.get_value(self.input_emu_pid))))
+                if len(results) == 0:
+                    show_error("Address Candidates",
+                               "No results. Please make sure FF7 is running and you are on a field map.")
+                elif len(results) == 1:
+                    dpg.set_value(item=self.input_manual_addr, value=f"{results[0][1]:X}")
+                    with dpg.mutex():
+                        with dpg.window(label="Address Candidate", modal=True, no_collapse=True,
+                                        no_resize=True) as modal_id:
+                            dpg.add_text(f"Found one address candidate: {results[0][1]:X}")
+                    center(modal_id)
                 else:
-                    show_error("Could not find memory", "Could not find the memory offset.")
-                    return
+                    with dpg.mutex():
+                        with dpg.window(label="Address Candidates", modal=True, no_collapse=True,
+                                        no_resize=True) as modal_id:
+                            for fname, addr in results:
+                                dpg.add_button(label=f"{fname} {addr:X}",
+                                               callback=lambda: self.button_manual_search_modal(addr, modal_id))
+                    center(modal_id)
+                # print("Search finished")
 
     def __init__(self, app, pids):
         self.parent_app = app
@@ -102,22 +124,22 @@ class ConnectEmulatorDialog:
         self.pid_names = sorted(list(self.pids.keys()), key=lambda x: x.lower())
 
         with dpg.mutex():
-            with dpg.window(label="Connect to Emulator", modal=True, no_collapse=True, no_resize=True) as modal_id:
+            with dpg.window(label="Connect to Emulator", modal=False, no_collapse=True, no_resize=False) as modal_id:
                 self.modal_id = modal_id
                 with dpg.group(width=200):
                     self.input_emu_name = dpg.add_combo(
                         label="Emulator Name", items=self.pid_names, default_value=self.pid_names[0],
-                        callback=self.on_emulator_select)
+                        callback=lambda: self.on_emulator_select())
                     self.input_emu_pid = dpg.add_combo(label="Emulator Process ID")
                     self.input_emu_ver = dpg.add_combo(label="Emulator Version")
                     self.input_manual_addr = dpg.add_input_text(label="Manual Address")
                     dpg.add_separator()
                     self.button_connect = dpg.add_button(user_data=(modal_id, 0), label="Connect",
-                                                         callback=self.click_connect)
+                                                         callback=lambda: self.click_connect())
                     self.button_show_window = dpg.add_button(user_data=(modal_id, 1), label="Show this Window",
-                                                             callback=self.click_show_window)
+                                                             callback=lambda: self.click_show_window())
                     self.button_address_search = dpg.add_button(user_data=(modal_id, 2), label="Address Search",
-                                                                callback=self.click_manual_calculate)
+                                                                callback=lambda: self.click_manual_search())
         center(modal_id)
         self.on_emulator_select()
 
@@ -182,80 +204,97 @@ class MainWindow:
             dpg.show_item(self.formation_list.window_id)
 
     def run(self):
+        print("begin run")
         dpg.set_exit_callback(self.click_exit)
 
-        dpg.create_viewport(title="Big Shoes", width=1200, height=800)
-
-        dpg.setup_dearpygui()
         dpg.show_viewport()
         dpg.set_primary_window(self.primary_window, True)
         self.running = True
 
+        print("running windows...")
         self.watch_window.run()
         self.stepgraph.run()
         self.formation_extrapolator.run()
         self.formation_list.run()
 
         self.update_title(self.settings.DISCONNECTED_TEXT)
-
+        print("start dpg")
         dpg.start_dearpygui()
-
+        print("after start dpg")
         self.click_exit()
+        print("after click exit")
 
     def __init__(self):
         self.running = False
 
-        dpg.create_context()
+        print("creating viewport...")
+        dpg.create_viewport(title="Big Shoes", width=1200, height=800)
 
+        print("init settings...")
         self.settings = settings.Settings()
 
+        print("init hook...")
         self.hook = hook.Hook(self)
 
+        print("creating window...")
+        self.primary_window = dpg.add_window()
+
+        print("creating watch window...")
         self.watch_window = WatchWindow(self)
+        print("creating stepgraph...")
         self.stepgraph = stepgraph_new.Stepgraph(self)
+        print("creating formation extrapolator...")
         self.formation_extrapolator = formation_extrapolator_new.FormationExtrapolatorWindow(self)
+        print("creating formation list...")
         self.formation_list = formation_list_new.FormationListWindow(self)
 
+        print("creating menu bar...")
         with dpg.viewport_menu_bar() as menu_bar:
             self.menu_bar = menu_bar
             with dpg.menu(label="File") as file_menu:
                 self.file_menu = file_menu
-                dpg.add_menu_item(label="Exit", callback=self.click_exit)
+                dpg.add_menu_item(label="Exit", callback=lambda: self.click_exit())
             with dpg.menu(label="Connect") as connect_menu:
                 self.connect_menu = connect_menu
-                dpg.add_menu_item(label="Connect to Emulator", callback=self.click_connect_to_emulator)
-                dpg.add_menu_item(label="Connect to PC", callback=self.click_connect_to_pc)
+                dpg.add_menu_item(label="Connect to Emulator", callback=lambda: self.click_connect_to_emulator())
+                dpg.add_menu_item(label="Connect to PC", callback=lambda: self.click_connect_to_pc())
                 dpg.add_separator()
-                dpg.add_menu_item(label="Disconnect", callback=self.click_disconnect)
+                dpg.add_menu_item(label="Disconnect", callback=lambda: self.click_disconnect())
             with dpg.menu(label="Window") as window_menu:
                 self.window_menu = window_menu
-                dpg.add_menu_item(label="Watches", callback=self.click_watch_window)
+                dpg.add_menu_item(label="Watches", callback=lambda: self.click_watch_window())
                 dpg.add_separator()
-                dpg.add_menu_item(label="Stepgraph", callback=self.click_stepgraph)
+                dpg.add_menu_item(label="Stepgraph", callback=lambda: self.click_stepgraph())
                 dpg.add_separator()
-                dpg.add_menu_item(label="Formation Extrapolator", callback=self.click_fmext)
-                dpg.add_menu_item(label="Formation List", callback=self.click_fmlist)
+                dpg.add_menu_item(label="Formation Extrapolator", callback=lambda: self.click_fmext())
+                dpg.add_menu_item(label="Formation List", callback=lambda: self.click_fmlist())
             with dpg.menu(label="Debug") as debug_menu:
                 self.debug_menu = debug_menu
-                dpg.add_menu_item(label="About", callback=dpg.show_about)
-                dpg.add_menu_item(label="Debug", callback=dpg.show_debug)
-                dpg.add_menu_item(label="Documentation", callback=dpg.show_documentation)
-                dpg.add_menu_item(label="Font Manager", callback=dpg.show_font_manager)
-                dpg.add_menu_item(label="Item Registry", callback=dpg.show_item_registry)
-                dpg.add_menu_item(label="Metrics", callback=dpg.show_metrics)
-                dpg.add_menu_item(label="Style Editor", callback=dpg.show_style_editor)
+                dpg.add_menu_item(label="About", callback=lambda: dpg.show_about())
+                dpg.add_menu_item(label="Debug", callback=lambda: dpg.show_debug())
+                dpg.add_menu_item(label="Documentation", callback=lambda: dpg.show_documentation())
+                dpg.add_menu_item(label="Font Manager", callback=lambda: dpg.show_font_manager())
+                dpg.add_menu_item(label="Item Registry", callback=lambda: dpg.show_item_registry())
+                dpg.add_menu_item(label="Metrics", callback=lambda: dpg.show_metrics())
+                dpg.add_menu_item(label="Style Editor", callback=lambda: dpg.show_style_editor())
 
-        self.primary_window = dpg.add_window()
-
+        print("configuring app...")
         dpg.configure_app(docking=True)
 
 
 if __name__ == '__main__':
+    print("entered main")
     if sys.argv[-1] == "try_admin":
         script = os.path.abspath(sys.argv[0])
         params = ' '.join([script] + sys.argv[1:-1])
         shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
         sys.exit(0)
+
+    print("creating dpg context...")
+    dpg.create_context()
+    print("setting up dpg...")
+    dpg.setup_dearpygui()
+    print("calling mainwindow constructor...")
     APP = MainWindow()
     try:
         sys.exit(APP.run())

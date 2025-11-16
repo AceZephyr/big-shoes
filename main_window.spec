@@ -23,7 +23,7 @@ exe = EXE(
     a.datas,
     [],
     name='big_shoes',
-    debug=False,
+    debug=True,
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
