@@ -112,11 +112,12 @@ class ConnectEmulatorDialog:
                     with dpg.mutex():
                         with dpg.window(label="Address Candidates", modal=True, no_collapse=True,
                                         no_resize=True) as modal_id:
-                            for fname, addr in results:
+                            def create_button(fname, addr):
                                 dpg.add_button(label=f"{fname} {addr:X}",
                                                callback=lambda: self.button_manual_search_modal(addr, modal_id))
+                            for fname, addr in results:
+                                create_button(fname, addr)
                     center(modal_id)
-                # print("Search finished")
 
     def __init__(self, app, pids):
         self.parent_app = app

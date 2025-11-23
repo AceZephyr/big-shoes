@@ -3,6 +3,7 @@
 /build/
 /dist/
 __cache*
+big_shoes.exe
 main_window.cmd
 main_window.exe
 main_window.build*
