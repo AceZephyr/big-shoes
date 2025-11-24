@@ -45,6 +45,6 @@ Big Shoes is compatible with:
 
 - FF7 PC Steam Version
 - DuckStation (requires manual address search)
-- BizHawk 2.3.2 to 2.7 and 2.9.1
+- BizHawk 2.3.2 to 2.7 and 2.9.1 (Octoshock core, not Nymashock)
 - Retroarch
 - PSXFin v1.13
