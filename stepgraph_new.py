@@ -113,7 +113,7 @@ class Stepgraph:
         self.track_mode_left_offset = self.step_state.step - step
 
     def click_goto_specific_step(self):
-        SpecificStepDialog(callback=lambda: self.specific_step_callback())
+        SpecificStepDialog(callback=lambda s: self.specific_step_callback(s))
 
     def main(self):
         def _r(_orig_val, k):
