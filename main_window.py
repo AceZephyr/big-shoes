@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import threading
 
 import win32gui
 import win32process
@@ -210,7 +211,8 @@ class MainWindow:
 
         dpg.show_viewport()
         dpg.set_primary_window(self.primary_window, True)
-        self.running = True
+        with self.running_lock:
+            self.running = True
 
         print("running windows...")
         self.watch_window.run()
@@ -227,6 +229,7 @@ class MainWindow:
 
     def __init__(self):
         self.running = False
+        self.running_lock = threading.Lock()
 
         print("creating viewport...")
         dpg.create_viewport(title="Big Shoes", width=1200, height=800)
@@ -301,5 +304,6 @@ if __name__ == '__main__':
         sys.exit(APP.run())
     except KeyboardInterrupt as inter:
         print("stopping due to keyboard interrupt")
-        APP.running = False
+        with APP.running_lock:
+            APP.running = False
         sys.exit(-1)

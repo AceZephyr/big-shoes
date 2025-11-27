@@ -130,7 +130,10 @@ class Stepgraph:
             self.update = self.update or _new_val != _orig_val
             return _new_val
 
-        while self.parent_app.running:
+        while True:
+            with self.parent_app.running_lock:
+                if not self.parent_app.running:
+                    return
 
             time.sleep(1 / 15)
 

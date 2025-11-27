@@ -12,7 +12,11 @@ class FormationListWindow:
     ADDR_SELTABLE = hook.Address(0x9AC30, 0x8C0DC4, 8, "Selected Table")
 
     def main(self):
-        while self.parent_app.running:
+        while True:
+            with self.parent_app.running_lock:
+                if not self.parent_app.running:
+                    return
+
             time.sleep(1 / 2)
 
             if not dpg.is_item_shown(self.window_id) or not self.parent_app.hook.is_running():

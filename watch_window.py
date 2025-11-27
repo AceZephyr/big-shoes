@@ -22,8 +22,13 @@ class WatchWindow:
     ]
 
     def main(self):
-        while self.parent_app.running:
+        while True:
+            with self.parent_app.running_lock:
+                if not self.parent_app.running:
+                    return
             time.sleep(1 / 30)
+            if not dpg.is_item_shown(self.window_id):
+                continue
             for i in range(len(self.address_keys)):
                 self.address_values[i] = self.parent_app.hook.read_key(self.address_keys[i])
             with dpg.mutex():

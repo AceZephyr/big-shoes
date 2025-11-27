@@ -15,7 +15,10 @@ class FormationExtrapolatorWindow:
     ADDR_LASTENC = hook.Address(0x7E774, 0x8C1654, 16, "Last Encounter Formation")
 
     def main(self):
-        while self.parent_app.running:
+        while True:
+            with self.parent_app.running_lock:
+                if not self.parent_app.running:
+                    return
 
             time.sleep(1 / 2)
 
